@@ -166,20 +166,26 @@ const faqSchema = JSON.stringify({
 				</div>
 			</div>
 
-			<!-- Tabs -->
-			<div class="flex flex-wrap gap-2 mb-10" id="model-tabs">
-				{
-					repairCatalog.map((catalog, index) => (
-						<button
-							class={`tab-btn px-5 py-2.5 rounded text-sm transition-all duration-200 ${index === 2 ? "bg-[#111111] text-white active-tab" : "bg-[#FFFFFF] border border-[#EAEAEA] text-[#787774] hover:bg-[#F9F9F8]"}`}
-							data-target={catalog.id}
-							data-umami-event="repairs_tab_click"
-							data-umami-event-tab={catalog.id}
-						>
-							{catalog.series}
-						</button>
-					))
-				}
+			<!-- Selector de Series -->
+			<div class="flex justify-center mb-10 w-full max-w-xs mx-auto">
+				<div class="relative w-full">
+					<select 
+						id="model-select" 
+						data-umami-event="repairs_select_changed"
+						class="w-full bg-white border border-[#EAEAEA] rounded-lg px-4 py-3 text-sm font-medium text-[#111111] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
+					>
+						{repairCatalog.map((catalog, index) => (
+							<option value={catalog.id} selected={index === 2}>
+								{catalog.series}
+							</option>
+						))}
+					</select>
+					<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#787774]">
+						<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+							<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+						</svg>
+					</div>
+				</div>
 			</div>
 
 			<!-- Tab Contents -->
@@ -429,35 +435,18 @@ const faqSchema = JSON.stringify({
 </Layout>
 
 <script>
-	// Tab Switching Logic
-	const tabs = document.querySelectorAll(".tab-btn");
+	// Model Selector Logic
+	const modelSelect = document.getElementById("model-select");
 	const contents = document.querySelectorAll(".tab-content");
 
-	tabs.forEach((tab) => {
-		tab.addEventListener("click", () => {
-			tabs.forEach((t) => {
-				t.classList.remove("bg-[#111111]", "text-white", "active-tab");
-				t.classList.add(
-					"bg-[#FFFFFF]",
-					"border",
-					"border-[#EAEAEA]",
-					"text-[#787774]",
-				);
-			});
+	if (modelSelect) {
+		modelSelect.addEventListener("change", (e) => {
+			const targetId = (e.target as HTMLSelectElement).value;
 			contents.forEach((c) => c.classList.add("hidden"));
-
-			tab.classList.remove(
-				"bg-[#FFFFFF]",
-				"border",
-				"border-[#EAEAEA]",
-				"text-[#787774]",
-			);
-			tab.classList.add("bg-[#111111]", "text-white", "active-tab");
-			const targetId = tab.getAttribute("data-target");
 			const targetEl = document.getElementById(targetId);
 			if (targetEl) targetEl.classList.remove("hidden");
 		});
-	});
+	}
 
 	// WhatsApp Links Builder
 	const PHONE_NUMBER = "528111913676";
