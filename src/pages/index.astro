@@ -21,8 +21,8 @@ const faqs = [
     answer: "Sí, nuestras piezas son originales autorizadas por Google. Las importamos de iFixit y otros distribuidores oficiales de alta calidad en EE. UU. (OEM). Esto garantiza total compatibilidad, calibración oficial de componentes y el rendimiento original del dispositivo."
   },
   {
-    question: "¿Pueden enviar mi Google Pixel a garantía de fábrica con Google?",
-    answer: "Sí. Si tu equipo aún cuenta con garantía vigente directa con Google, nosotros gestionamos el diagnóstico, envío internacional y retorno con el soporte técnico oficial de Google en USA para que mantengas tu cobertura de fábrica sin complicaciones logísticas."
+    question: "¿Cómo funciona el trámite de garantía con Google si estoy en México?",
+    answer: "Dado que Google no ofrece soporte técnico físico directo en México, tramitar la garantía requiere una dirección postal en EE. UU. y logística internacional de aduanas. En Pixel Fix nos encargamos de todo: realizamos un diagnóstico previo para confirmar que tu fallo califique, lo trasladamos a nuestras oficinas en EE. UU. para enviarlo al centro oficial de soporte de Google en USA, y gestionamos la importación de retorno a México de forma 100% segura."
   }
 ];
 
@@ -243,7 +243,7 @@ const productsSchema = JSON.stringify({
 				</p>
 			</div>
 
-			<div class="grid md:grid-cols-2 gap-8">
+			<div class="grid md:grid-cols-2 gap-8 mb-12">
 				<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col justify-between hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow">
 					<div>
 						<div class="inline-flex items-center gap-2 px-3 py-1 bg-[#E8F5E9] text-[#2E7D32] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-6">
@@ -271,6 +271,34 @@ const productsSchema = JSON.stringify({
 					</div>
 					<div class="text-xs font-mono text-[#787774]">
 						Trámite Logístico Seguro • Cobertura Google USA
+					</div>
+				</div>
+			</div>
+
+			<!-- Flujo detallado del trámite de garantía -->
+			<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl">
+				<h3 class="text-lg font-medium text-[#111111] mb-6">¿Cómo gestionamos tu garantía con Google desde México?</h3>
+				<div class="grid sm:grid-cols-3 gap-8">
+					<div>
+						<span class="text-xs font-mono text-[#1F6C9F] block mb-2">Paso 01</span>
+						<h4 class="text-sm font-medium text-[#111111] mb-2">Diagnóstico de Calificación</h4>
+                        <p class="text-xs text-[#787774] leading-[1.6]">
+                            Evaluamos físicamente tu Pixel para descartar daños accidentales (pantallas rotas, humedad o golpes) que anulen la garantía de Google. Si califica, procedemos con el trámite.
+                        </p>
+					</div>
+					<div>
+						<span class="text-xs font-mono text-[#1F6C9F] block mb-2">Paso 02</span>
+						<h4 class="text-sm font-medium text-[#111111] mb-2">Logística Fronteriza y Envío</h4>
+                        <p class="text-xs text-[#787774] leading-[1.6]">
+                            Trasladamos de forma segura tu equipo a nuestras oficinas de importación en EE. UU., activamos la orden de soporte con Google y lo enviamos directamente a su centro de servicio técnico oficial.
+                        </p>
+					</div>
+					<div>
+						<span class="text-xs font-mono text-[#1F6C9F] block mb-2">Paso 03</span>
+						<h4 class="text-sm font-medium text-[#111111] mb-2">Importación y Entrega</h4>
+                        <p class="text-xs text-[#787774] leading-[1.6]">
+                            Una vez que Google repara o reemplaza el dispositivo bajo garantía, lo recibimos en USA, gestionamos la aduana y logística de retorno a México, y te lo entregamos en Monterrey o lo enviamos a tu domicilio.
+                        </p>
 					</div>
 				</div>
 			</div>
