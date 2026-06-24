@@ -1,61 +1,106 @@
-# Catálogo y Precios — Pixel Fix México
+# Catálogo de Precios y Políticas — Pixel Fix México
 
-Especialistas en Reparación y Refacciones Google Pixel en México.
-Piezas originales y calidad OEM. Todas las refacciones son importadas y oficiales.
+Especialistas en Reparación, Refacciones y Venta de Google Pixel en México.
 
 > Precios en Pesos Mexicanos (MXN). Tiempos de entrega: 10-12 días hábiles de importación.
-> Para cotizaciones exactas o confirmar stock para entrega inmediata en Monterrey: https://wa.me/528111913676
-
-## Pixel 10 / 10 Pro
-- Pantalla Original / OEM: Cotizar por WhatsApp
-- Batería Nueva Original: Cotizar por WhatsApp
-- Carcasa Trasera: Cotizar por WhatsApp
-
-## Pixel 9 / 9 Pro
-- Pantalla Original / OEM: Cotizar por WhatsApp
-- Batería Nueva Original: Cotizar por WhatsApp
-- Carcasa Trasera: Cotizar por WhatsApp
-
-## Pixel 8 / 8 Pro
-- Pantalla Original / OEM:
-  - Refacción sola: $4,800 MXN
-  - Con instalación en Monterrey: $5,400 MXN
-- Batería Nueva Original:
-  - Refacción sola: $1,400 MXN
-  - Con instalación en Monterrey: $1,900 MXN
-- Carcasa Trasera:
-  - Refacción sola: $2,500 MXN
-  - Con instalación en Monterrey: $3,000 MXN
-
-## Pixel 7 / 7 Pro
-- Pantalla Original / OEM:
-  - Refacción sola: $4,000 MXN
-  - Con instalación en Monterrey: $4,600 MXN
-- Batería Nueva Original:
-  - Refacción sola: $1,300 MXN
-  - Con instalación en Monterrey: $1,800 MXN
-- Carcasa Trasera:
-  - Refacción sola: $2,000 MXN
-  - Con instalación en Monterrey: $2,500 MXN
-
-## Pixel 6 / 6 Pro
-- Pantalla Original / OEM:
-  - Refacción sola: $4,800 MXN
-  - Con instalación en Monterrey: $5,400 MXN
-- Batería Nueva Original:
-  - Refacción sola: $1,300 MXN
-  - Con instalación en Monterrey: $1,800 MXN
-- Carcasa Trasera:
-  - Refacción sola: $1,800 MXN
-  - Con instalación en Monterrey: $2,300 MXN
+> Para cotizaciones exactas o confirmar disponibilidad inmediata en Monterrey: https://wa.me/528111913676
 
 ---
-**Garantía y Origen de Refacciones:**
-- Todas nuestras refacciones son originales autorizadas por Google, importadas directamente desde **iFixit** y otros distribuidores oficiales de alta calidad en USA (OEM).
-- Ofrecemos soporte técnico oficial y cobertura de garantía real gestionada localmente en Monterrey, Nuevo León, México, sin trámites complejos para el cliente.
 
-**Gestión de Garantía Oficial de Fábrica:**
-- Dado que Google no opera físicamente en México, hacer válida la garantía de fábrica requiere una dirección en EE. UU. y logística internacional de aduanas. Si tu Google Pixel aún cuenta con garantía de Google y el fallo califica (fallas de hardware/fábrica sin golpes ni humedad), nosotros gestionamos todo el trámite: diagnóstico previo de calificación, envío seguro a nuestras oficinas en EE. UU., entrega al centro de servicio de Google USA, retorno, aduana e importación a México para su entrega final.
+## 1. Venta de Dispositivos Google Pixel
+*Todos los equipos en venta son **Originales Usados Estética 9 (Sin caja)** o **Open Box (Con caja y accesorios completos - Serie 10)**. No vendemos equipos reacondicionados.*
 
-**Proceso de envío para clientes fuera de Monterrey:**
-El cliente envía su equipo por paquetería asegurada, nosotros lo reparamos en nuestro laboratorio con refacciones originales y lo devolvemos asegurado. También es posible únicamente comprar la refacción para envío nacional.
+### Promoción Incluida con tu Compra:
+Cada dispositivo vendido incluye de regalo:
+- Micas protectoras de pantalla
+- Cubo de Carga Rápida (Fast Charge)
+- Funda protectora (transparente o color)
+
+### Incrementos por Almacenamiento (Sobre Precio Base):
+- **+256 GB:** +$900 MXN
+- **+512 GB:** +$1,800 MXN
+
+### Lista de Precios Base (128 GB):
+- **Pixel 10 Pro Fold** (Open Box): $16,000 MXN
+- **Pixel 10 Pro XL** (Open Box): $14,500 MXN
+- **Pixel 10 Pro** (Open Box): $13,000 MXN
+- **Pixel 10** (Open Box): $10,500 MXN
+- **Pixel 10a** (Open Box): $9,200 MXN
+- **Pixel 9 Pro Fold** (Usado Estética 9): $13,800 MXN
+- **Pixel 9 Pro XL** (Usado Estética 9): $10,800 MXN
+- **Pixel 9 Pro** (Usado Estética 9): $9,800 MXN
+- **Pixel 9** (Usado Estética 9): $8,800 MXN
+- **Pixel 9a** (Usado Estética 9): $8,500 MXN
+- **Pixel 8 Pro** (Usado Estética 9): $6,900 MXN
+- **Pixel 8** (Usado Estética 9): $6,500 MXN
+- **Pixel 8a** (Usado Estética 9): $6,200 MXN
+- **Pixel 7 Pro** (Usado Estética 9): $5,300 MXN
+- **Pixel 7** (Usado Estética 9): $4,600 MXN
+- **Pixel 7a** (Usado Estética 9): $4,300 MXN
+- **Pixel 6 Pro** (Usado Estética 9): $4,850 MXN
+- **Pixel 6** (Usado Estética 9): $4,000 MXN
+- **Pixel 6a** (Usado Estética 9): $3,900 MXN
+
+---
+
+## 2. Refacciones para Reparación
+*Las pantallas son paneles OLED con sensor de huella activo de calidad réplica excelente. Las pilas son nuevas y 100% originales.*
+
+### Pantallas OLED con Huella (Excelente Calidad Réplica):
+- **Pixel 10 Pro XL:** $4,000 MXN *(Instalación: $4,600 MXN)*
+- **Pixel 10 Pro:** $3,900 MXN *(Instalación: $4,500 MXN)*
+- **Pixel 10 / 10a:** $3,800 MXN *(Instalación: $4,400 MXN)*
+- **Pixel 9 Pro XL:** $3,850 MXN *(Instalación: $4,450 MXN)*
+- **Pixel 9 Pro:** $3,550 MXN *(Instalación: $4,150 MXN)*
+- **Pixel 9:** $3,300 MXN *(Instalación: $3,900 MXN)*
+- **Pixel 9a:** $3,000 MXN *(Instalación: $3,600 MXN)*
+- **Pixel 8 Pro:** $2,900 MXN *(Instalación: $3,500 MXN)*
+- **Pixel 8:** $2,500 MXN *(Instalación: $3,100 MXN)*
+- **Pixel 7 Pro:** $2,850 MXN *(Instalación: $3,450 MXN)*
+- **Pixel 7 / 7a:** $2,500 MXN *(Instalación: $3,100 MXN)*
+- **Pixel 6 / 6 Pro / 6a:** $2,300 MXN *(Instalación: $2,900 MXN)*
+
+### Pilas Nuevas Originales:
+- **Pixel 10 Pro XL:** $2,800 MXN *(Instalación: $3,300 MXN)*
+- **Pixel 10 Pro:** $2,700 MXN *(Instalación: $3,200 MXN)*
+- **Pixel 10 / 10a:** $2,500 MXN *(Instalación: $3,000 MXN)*
+- **Pixel 9 Pro XL:** $2,300 MXN *(Instalación: $2,800 MXN)*
+- **Pixel 9 Pro:** $2,100 MXN *(Instalación: $2,600 MXN)*
+- **Pixel 9 / 9a:** $1,900 MXN *(Instalación: $2,400 MXN)*
+- **Pixel 8 Pro:** $1,500 MXN *(Instalación: $2,000 MXN)*
+- **Pixel 8a:** $1,300 MXN *(Instalación: $1,800 MXN)*
+- **Pixel 8:** $1,200 MXN *(Instalación: $1,700 MXN)*
+- **Pixel 7 / 7 Pro / 7a:** $1,000 MXN *(Instalación: $1,500 MXN)*
+- **Pixel 6 / 6 Pro / 6a:** $1,000 MXN *(Instalación: $1,500 MXN)*
+- **Pixel 5 / 5a:** $1,000 MXN *(Instalación: $1,500 MXN)*
+
+---
+
+## 3. Tarifas y Trámites de Garantía Directa con Google USA
+*Pixel Fix realiza la logística internacional para aplicar tu garantía de fábrica con Google si tu dispositivo califica.*
+
+### Condiciones Obligatorias:
+- Válida únicamente en USA.
+- El dispositivo debe ser **versión americana o global** (no versión europea o asiática, sujeto a verificación de IMEI).
+- Cubre únicamente fallas de **hardware/fábrica** (no aplica para accidentes, golpes o humedad).
+
+### Costos del Servicio Logístico Pixel Fix:
+- **Fallas de Pantalla (Línea verde o rosa de fábrica):**
+  * Pixel 8: $3,300 MXN
+  * Pixel 9 Pro / 9 Pro XL: $4,000 MXN
+- **Pila Inflada de Fábrica:**
+  * Pixel 7a: $2,500 MXN
+- **Dispositivo Muerto / No enciende tras actualización (Pixel 9 Pro Fold):**
+  * Gestión de cambio de dispositivo a Pixel 10 Pro: $6,000 MXN
+  * Gestión de cambio de dispositivo a Pixel 10 Pro XL: $8,000 MXN
+  * Gestión de cambio de dispositivo a Pixel 10 Pro Fold: $10,500 MXN
+- **Gestión General de Garantías Activas (Periodo 2026/2027):**
+  * Series 9: $2,500 MXN
+  * Serie 10: $3,000 MXN
+
+---
+
+## 4. Políticas de Garantía del Taller y Devoluciones
+- **Póliza de Garantía:** Toda venta de piezas sueltas o teléfonos cuenta con únicamente **28 días de garantía**.
+- **Devoluciones:** Transcurridos los 28 días desde la compra o entrega, **no se aceptan devoluciones ni cambios** bajo ninguna circunstancia.
+- **Logística para Clientes Foráneos:** Para clientes fuera de Monterrey, el cliente cubre los costos de envío. Las refacciones y equipos se envían asegurados por paquetería express.

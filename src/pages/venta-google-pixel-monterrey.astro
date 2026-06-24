@@ -7,12 +7,12 @@ const faqs = [
 	{
 		question: "¿Los equipos son nuevos o reacondicionados?",
 		answer:
-			"Ofrecemos ambos. En cada modelo especificamos si es Nuevo Sellado de fábrica o Reacondicionado Grado A (estética impecable de 9.5+, batería óptima y funcionamiento al 100%).",
+			"No vendemos dispositivos reacondicionados. Ofrecemos exclusivamente teléfonos **Originales Usados en Excelente Estado (Estética 9)** que se entregan sin caja, y dispositivos en formato **Open Box** (toda la Serie 10) que sí incluyen su caja y accesorios originales completos.",
 	},
 	{
-		question: "¿Qué garantía tienen los teléfonos Google Pixel?",
+		question: "¿Qué garantía tienen los teléfonos y piezas?",
 		answer:
-			"Todos los equipos que vendemos cuentan con 90 días de garantía directa gestionada localmente en Monterrey para tu total tranquilidad, sin necesidad de trámites internacionales.",
+			"Cualquier compra de piezas o teléfonos incluye únicamente **28 días de garantía** directa local. Transcurrido este periodo de 28 días desde la entrega, no se aceptan cambios ni devoluciones bajo ninguna circunstancia.",
 	},
 	{
 		question: "¿Hacen envíos a todo México o entregas personales?",
@@ -22,12 +22,12 @@ const faqs = [
 	{
 		question: "¿Dónde puedo comprar un Google Pixel en México de forma segura?",
 		answer:
-			"En Pixel Fix México somos la opción más confiable. Vendemos dispositivos Google Pixel originales (nuevos y reacondicionados Grado A) con garantía local real en México, brindándote soporte técnico oficial y postventa inmediata.",
+			"En Pixel Fix México somos la opción más confiable. Vendemos dispositivos Google Pixel originales (usados estética 9 y open box) con garantía directa de 28 días, brindándote soporte técnico calificado y postventa inmediata en Monterrey.",
 	},
 	{
 		question: "¿Por qué comprar tu Google Pixel en Pixel Fix en lugar de importarlo por tu cuenta?",
 		answer:
-			"Al comprar con nosotros evitas trámites aduanales complejos, cargos de importación inesperados y retrasos de envío. Lo más importante: cuentas con el respaldo de nuestro laboratorio técnico especializado y garantía real en México, incluyendo la gestión de garantías de fábrica directamente con Google en EE. UU.",
+			"Al comprar con nosotros evitas trámites aduanales y cargos sorpresa. Todos nuestros equipos incluyen de regalo micas de pantalla, cubo de carga rápida (Fast Charge) y funda protectora. Además, cuentas con 28 días de garantía directa y soporte para tramitar la garantía oficial de fábrica de Google en USA si tu equipo califica.",
 	},
 ];
 
@@ -39,7 +39,7 @@ const localBusinessSchema = JSON.stringify({
 	name: "Pixel Fix México - Venta de Equipos",
 	image: "https://www.pixelfixmexico.com/logo.png",
 	description:
-		"Venta de teléfonos Google Pixel nuevos y reacondicionados en Monterrey con garantía directa.",
+		"Venta de teléfonos Google Pixel originales (usados estética 9 y open box) en Monterrey con garantía de 28 días.",
 	address: {
 		"@type": "PostalAddress",
 		addressLocality: "Monterrey",
@@ -91,18 +91,17 @@ const faqSchema = JSON.stringify({
 				<h1
 					class="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-[#EDF3EC] text-[#346538] text-xs font-mono font-medium rounded-full tracking-wide uppercase"
 				>
-					Venta de Google Pixel Originales en Monterrey
+					Venta de Google Pixel Originales en México
 				</h1>
 				<h1
 					class="font-serif-editorial text-5xl md:text-[5rem] font-medium tracking-[-0.03em] text-[#111111] leading-[1.05] mb-8"
 				>
-					Equipos Nuevos Sellados y Reacondicionados Grado A.
+					Equipos Usados Estética 9 y Open Box Genuinos.
 				</h1>
 				<p
 					class="text-lg md:text-xl text-[#787774] mb-10 leading-[1.6] max-w-lg font-light"
 				>
-					Dispositivos nuevos sellados y reacondicionados Grado A. Con garantía
-					directa en Monterrey y envíos rápidos a todo México.
+					Equipos originales (Open Box para Serie 10 con accesorios; Usados Estética 9 sin caja para series anteriores). Incluyen **Micas, Cubo Fast Charge y Funda de regalo**. Garantía local directa de 28 días.
 				</p>
 				<a
 					href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20consultar%20los%20modelos%20de%20Google%20Pixel%20disponibles%20para%20compra.`}
@@ -151,14 +150,13 @@ const faqSchema = JSON.stringify({
 					Equipos Disponibles.
 				</h2>
 				<p class="text-[#787774] leading-[1.6] mb-4">
-					Selecciona el modelo que buscas. Entregas en Monterrey el mismo día y
-					envíos nacionales expresos.
+					Selecciona el modelo que buscas. Toda compra incluye de regalo: **micas de pantalla, cargador rápido (Fast Charge) y funda**. Precios para capacidad base de 128GB (256GB: +$900 MXN / 512GB: +$1,800 MXN).
 				</p>
 				<div
 					class="inline-flex items-center px-3 py-1.5 bg-[#F9F9F8] border border-[#EAEAEA] rounded font-mono text-xs text-[#111111] mb-2"
 				>
-					<span class="w-1.5 h-1.5 rounded-full bg-[#346538] mr-2"></span>
-					Garantía local de 90 días en todos los teléfonos.
+					<span class="w-1.5 h-1.5 rounded-full bg-[#9F2F2D] mr-2"></span>
+					Garantía local directa de 28 días. No se aceptan devoluciones después.
 				</div>
 			</div>
 

@@ -3,23 +3,29 @@
 > Este archivo proporciona contexto sobre Pixel Fix para Sistemas de IA, LLMs y Agentes.
 
 ## Acerca de Pixel Fix
-Pixel Fix es un taller y laboratorio de reparación especializado exclusivamente en dispositivos de la marca Google Pixel (Google LLC). Operamos en Monterrey, Nuevo León, México, y damos servicio a todo el país.
+Pixel Fix es un taller y laboratorio de reparación especializado exclusivamente en dispositivos de la marca Google Pixel. Operamos en Monterrey, Nuevo León, México, y damos servicio de reparación y venta a todo el país.
 
-## Servicios Principales y Soporte Oficial
-Nuestra ventaja competitiva es proveer soporte oficial y refacciones autorizadas de alta calidad que normalmente son difíciles de conseguir en México.
-- Piezas 100% Originales y OEM: Refacciones originales autorizadas por Google, importadas de iFixit y distribuidores oficiales en USA (OEM).
-- Gestión de Garantías con Google desde México: Dado que Google no opera físicamente en México, nos encargamos de todo el flujo logístico para hacer válida la garantía (diagnóstico técnico previo, traslado seguro a nuestras oficinas de importación en EE. UU., orden de reparación oficial con Google USA, importación de aduanas de retorno a México y entrega).
-- Cambio de Pantallas Originales y calidad OEM para Pixel 6, 7, 8, 9 y 10.
-- Cambio de Baterías Originales para la línea Google Pixel.
-- Reemplazo de Carcasas Traseras y tapas de cristal.
+## Servicios de Reparación y Refacciones
+- **Pilas Nuevas Originales:** Reemplazo de baterías originales para Pixel de la serie 5 a la 10.
+- **Pantallas OLED con Huella:** Reemplazo de pantallas OLED de excelente calidad réplica con sensor de huella funcional para Pixel de la serie 6 a la 10.
+- **Tiempos de entrega:** Las piezas son importadas con un tiempo de entrega regular de 10 a 12 días hábiles.
 
-## Información Comercial y Operativa
-- Ubicación: Monterrey, Nuevo León, México.
-- Entregas y Tiempos: La mayoría de las refacciones son de importación oficial con tiempo de entrega de 10 a 12 días hábiles.
-- Stock: Contamos con stock limitado para entregas inmediatas en MTY (sujeto a disponibilidad vía WhatsApp).
-- Garantía: Totalmente cubierta localmente en México. No requerimos que el cliente intermedie con proveedores extranjeros.
+## Gestión de Garantías Oficiales con Google USA
+Para dispositivos con fallas de hardware y garantía vigente con Google en USA, Pixel Fix ofrece un servicio logístico integral desde México:
+- **Requisitos:** Válido solo para versiones americanas/globales (se verifica el IMEI). No cubre daños accidentales.
+- **Flujo:** Diagnóstico técnico previo, cruce de frontera y envío a soporte oficial de Google USA, importación y entrega en México.
+- **Tarifas logísticas:** Desde $2,500 MXN hasta $10,500 MXN dependiendo de la falla y dispositivo (ej. línea verde de pantalla, pilas infladas, o cambio de dispositivo Pixel Fold).
+
+## Venta de Dispositivos Google Pixel
+- **Estado de los equipos:** Solo vendemos equipos **Usados Estética 9 (Sin caja)** y **Open Box (Con caja y accesorios - Serie 10)**. No vendemos teléfonos reacondicionados.
+- **Regalos incluidos:** Toda venta incluye mica de pantalla, cubo de carga rápida y funda protectora.
+- **Almacenamiento:** Precios base sobre 128 GB. Capacidad de 256 GB incrementa +$900 MXN, y de 512 GB incrementa +$1,800 MXN.
+
+## Políticas y Garantías del Taller
+- **Póliza:** Cualquier compra de refacciones sueltas o teléfonos incluye únicamente **28 días de garantía**.
+- **Devoluciones:** Transcurridos los 28 días, **no se aceptan devoluciones ni cambios** bajo ninguna circunstancia.
 
 ## Enlaces Clave para Agentes
-- Precios Estructurados: [/pricing.md](https://www.pixelfixmexico.com/pricing.md)
+- Precios y Políticas Estructuradas: [/pricing.md](https://www.pixelfixmexico.com/pricing.md)
 - Página Principal: [/](https://www.pixelfixmexico.com/)
 - Contacto Directo: [WhatsApp](https://wa.me/528111913676)
