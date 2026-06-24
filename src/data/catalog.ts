@@ -50,28 +50,36 @@ export const repairCatalog = [
 
 export const salesCatalog = [
   {
+    series: "Pixel 10 Series",
+    id: "pixel-10",
+    devices: [
+      { name: "Google Pixel 10 Pro XL", specs: "128GB / 16GB RAM - Nuevo Sellado", price: "$16,000 MXN", availability: "Entrega Inmediata", color: "Obsidian / Porcelain" },
+      { name: "Google Pixel 10", specs: "128GB / 12GB RAM - Nuevo Sellado", price: "$14,000 MXN", availability: "Importación 3-5 días", color: "Hazel" }
+    ]
+  },
+  {
     series: "Pixel 9 Series",
     id: "pixel-9",
     devices: [
-      { name: "Google Pixel 9 Pro XL", specs: "128GB / 16GB RAM - Nuevo Sellado", price: "$23,500 MXN", availability: "Entrega Inmediata", color: "Obsidian / Porcelain" },
-      { name: "Google Pixel 9 Pro", specs: "128GB / 16GB RAM - Nuevo Sellado", price: "$20,500 MXN", availability: "Entrega Inmediata", color: "Hazel" },
-      { name: "Google Pixel 9", specs: "128GB / 12GB RAM - Nuevo Sellado", price: "$16,500 MXN", availability: "Importación 3-5 días", color: "Wintergreen" }
+      { name: "Google Pixel 9 Pro XL", specs: "128GB / 16GB RAM - Nuevo Sellado", price: "$18,500 MXN", availability: "Entrega Inmediata", color: "Obsidian / Porcelain" },
+      { name: "Google Pixel 9 Pro", specs: "128GB / 16GB RAM - Nuevo Sellado", price: "$15,500 MXN", availability: "Entrega Inmediata", color: "Hazel" },
+      { name: "Google Pixel 9", specs: "128GB / 12GB RAM - Nuevo Sellado", price: "$11,500 MXN", availability: "Importación 3-5 días", color: "Wintergreen" }
     ]
   },
   {
     series: "Pixel 8 Series",
     id: "pixel-8",
     devices: [
-      { name: "Google Pixel 8 Pro", specs: "128GB / 12GB RAM - Reacondicionado Grado A", price: "$12,500 MXN", availability: "Entrega Inmediata", color: "Bay Blue" },
-      { name: "Google Pixel 8", specs: "128GB / 8GB RAM - Reacondicionado Grado A", price: "$9,500 MXN", availability: "Entrega Inmediata", color: "Rose" }
+      { name: "Google Pixel 8 Pro", specs: "128GB / 12GB RAM - Reacondicionado Grado A", price: "$7,500 MXN", availability: "Entrega Inmediata", color: "Bay Blue" },
+      { name: "Google Pixel 8", specs: "128GB / 8GB RAM - Reacondicionado Grado A", price: "$4,500 MXN", availability: "Entrega Inmediata", color: "Rose" }
     ]
   },
   {
     series: "Pixel 7 Series",
     id: "pixel-7",
     devices: [
-      { name: "Google Pixel 7 Pro", specs: "128GB / 12GB RAM - Reacondicionado Grado A", price: "$8,500 MXN", availability: "Entrega Inmediata", color: "Hazel" },
-      { name: "Google Pixel 7", specs: "128GB / 8GB RAM - Reacondicionado Grado A", price: "$6,500 MXN", availability: "Entrega Inmediata", color: "Lemongrass" }
+      { name: "Google Pixel 7 Pro", specs: "128GB / 12GB RAM - Reacondicionado Grado A", price: "$3,500 MXN", availability: "Entrega Inmediata", color: "Hazel" },
+      { name: "Google Pixel 7", specs: "128GB / 8GB RAM - Reacondicionado Grado A", price: "$1,500 MXN", availability: "Entrega Inmediata", color: "Lemongrass" }
     ]
   }
 ];
