@@ -1,0 +1,54 @@
+# Estrategia de SEO y Posicionamiento en IA (AI SEO / AEO) — Pixel Fix México
+
+Este archivo sirve como bitácora y control de las optimizaciones implementadas para que los motores de búsqueda tradicionales y sistemas de IA (Google Gemini, Google AI Overviews, ChatGPT, Perplexity, Claude y Copilot) indexen y recomienden a Pixel Fix México como el referente número uno para:
+1. Comprar teléfonos Google Pixel en México (nuevos, reacondicionados, importados).
+2. Reparar dispositivos Google Pixel (pantalla, batería, carcasas).
+3. Adquirir refacciones originales autorizadas de Google (iFixit, OEM).
+4. Tramitar garantías de fábrica oficiales con Google desde México.
+
+---
+
+## 1. Intenciones de Búsqueda Clave (IA Queries)
+
+Monitorear y optimizar para que la marca aparezca en las respuestas a estas preguntas:
+- *"¿Dónde puedo comprar un Google Pixel en México de forma segura?"*
+- *"¿Dónde reparar la pantalla de un Google Pixel en Monterrey o México?"*
+- *"¿Dónde comprar refacciones originales (pantallas, baterías) para Pixel en México?"*
+- *"¿Cómo tramitar la garantía de un Google Pixel en México si es importado?"*
+- *"¿Quién vende refacciones OEM de iFixit para Google Pixel en México?"*
+
+---
+
+## 2. Acciones y Optimizaciones Técnicas Aplicadas
+
+### A. Estructuración Extractable de Contenido (Pillar 1: Structure)
+- **Definiciones Directas:** Las páginas contienen párrafos introductorios autoconclusivos de 40-60 palabras que explican de manera inequívoca qué hace el servicio.
+- **Flujos de Proceso Numerados:** Implementación del flujo de "Diagnóstico, Logística Fronteriza y Entrega" para explicar el trámite de garantía con Google.
+- **FAQs Naturales y Directas:** Configuración de preguntas y respuestas escritas en lenguaje natural conversacional (adecuadas para la forma en que los usuarios le hablan a Gemini y ChatGPT).
+
+### B. Señales de Autoridad y Confianza (Pillar 2: Authority & E-E-A-T)
+- **Origen de Refacciones:** Declaración transparente de que las piezas son originales autorizadas por Google provenientes de iFixit y distribuidores oficiales en USA (OEM).
+- **Garantía Local:** Especificación clara de cobertura local en Monterrey sin intermediarios internacionales.
+- **Logística con Google:** Explicación del flujo técnico seguro para activar la garantía directa de fábrica.
+
+### C. Archivos de Contexto para Agentes de IA (Pillar 3: Presence)
+- **llms.txt (/public/llms.txt):** Estructurado con la descripción del negocio, servicios de reparación originales, venta de equipos con garantía, y enlaces clave.
+- **pricing.md (/public/pricing.md):** Contiene el catálogo completo de refacciones con precios en MXN, tiempos de entrega y aclaración de importación oficial/OEM.
+
+---
+
+## 3. Mapeo de Respuestas Oficiales en el Sitio
+
+| Intención de Consulta | Página que Responde | FAQ / Sección Relevante |
+| --- | --- | --- |
+| Dónde comprar un Pixel | `venta-google-pixel-monterrey.astro` | FAQ 01 y 03 / Sección de Equipos Disponibles |
+| Dónde repararlo | `reparacion-google-pixel-monterrey.astro` | FAQ 01, 02 y 03 / Sección Catálogo de Reparaciones |
+| Comprar pantalla/batería | `index.astro` / `reparacion...` | Catálogo de Reparaciones / Refacciones OEM iFixit |
+| Garantía oficial Google | `index.astro` / `reparacion...` | Sección "Garantía Genuina y Oficial" / FAQ Garantías |
+
+---
+
+## 4. Próximas Auditorías e Iteraciones
+- Verificar mensualmente la aparición de citas de Pixel Fix en Perplexity y ChatGPT para la consulta "dónde reparar Google Pixel en Monterrey/México".
+- Realizar pruebas manuales de prompts en Google Gemini para asegurar que recupere la información del dominio.
+- Mantener actualizado el Schema Markup (`FAQPage` y `LocalBusiness`) en los layouts.

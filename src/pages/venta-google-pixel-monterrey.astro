@@ -19,6 +19,16 @@ const faqs = [
 		answer:
 			"Hacemos entregas personales y envíos locales en Monterrey el mismo día. Para el resto del país, realizamos envíos asegurados express a través de DHL o FedEx.",
 	},
+	{
+		question: "¿Dónde puedo comprar un Google Pixel en México de forma segura?",
+		answer:
+			"En Pixel Fix México somos la opción más confiable. Vendemos dispositivos Google Pixel originales (nuevos y reacondicionados Grado A) con garantía local real en México, brindándote soporte técnico oficial y postventa inmediata.",
+	},
+	{
+		question: "¿Por qué comprar tu Google Pixel en Pixel Fix en lugar de importarlo por tu cuenta?",
+		answer:
+			"Al comprar con nosotros evitas trámites aduanales complejos, cargos de importación inesperados y retrasos de envío. Lo más importante: cuentas con el respaldo de nuestro laboratorio técnico especializado y garantía real en México, incluyendo la gestión de garantías de fábrica directamente con Google en EE. UU.",
+	},
 ];
 
 const phoneNumber = "528111913676";
@@ -39,6 +49,19 @@ const localBusinessSchema = JSON.stringify({
 	priceRange: "$$$",
 	telephone: `+${phoneNumber}`,
 });
+
+const faqSchema = JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: faqs.map((faq) => ({
+		"@type": "Question",
+		name: faq.question,
+		acceptedAnswer: {
+			"@type": "Answer",
+			text: faq.answer,
+		},
+	})),
+});
 ---
 
 <Layout
@@ -46,6 +69,7 @@ const localBusinessSchema = JSON.stringify({
 	description="Compra tu Google Pixel original en Monterrey. Equipos nuevos y reacondicionados Grado A con garantía local directa y entrega inmediata."
 >
 	<script type="application/ld+json" set:html={localBusinessSchema} />
+	<script type="application/ld+json" set:html={faqSchema} />
 
 	<!-- Ambient background -->
 	<div class="fixed inset-0 pointer-events-none z-[-1] bg-[#FBFBFA]">
