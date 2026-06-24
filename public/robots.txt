@@ -1,0 +1,25 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Permitir explícitamente a los rastreadores de motores de búsqueda de IA
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Bloquear rastreadores genéricos de entrenamiento masivo no orientados a citas
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://www.pixelfixmexico.com/sitemap-index.xml
