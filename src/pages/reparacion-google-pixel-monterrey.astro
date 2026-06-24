@@ -105,27 +105,36 @@ const faqSchema = JSON.stringify({
 					Servicio técnico profesional de pantallas, baterías y tapas traseras
 					originales. Garantía real local y envíos nacionales.
 				</p>
-				<a
-					href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20cotizar%20la%20reparaci%C3%B3n%20de%20mi%20Google%20Pixel%20en%20Monterrey.`}
-					target="_blank"
-					rel="noopener noreferrer"
-					data-umami-event="repairs_hero_whatsapp_click"
-					class="group inline-flex items-center justify-center px-8 py-4 bg-[#111111] text-white text-sm font-medium rounded transition-transform hover:scale-[0.98]"
-				>
-					<span>Cotizar mi reparación por WhatsApp</span>
-					<svg
-						class="w-4 h-4 ml-3 opacity-70 group-hover:opacity-100 transition-opacity"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
+				<div class="flex flex-wrap gap-4 w-full">
+					<a
+						href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20cotizar%20la%20reparaci%C3%B3n%20de%20mi%20Google%20Pixel%20en%20Monterrey.`}
+						target="_blank"
+						rel="noopener noreferrer"
+						data-umami-event="repairs_hero_whatsapp_click"
+						class="group inline-flex items-center justify-center px-8 py-4 bg-[#111111] text-white text-sm font-medium rounded transition-transform hover:scale-[0.98] w-full sm:w-auto"
 					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-					</svg>
-				</a>
+						<span>Cotizar mi reparación por WhatsApp</span>
+						<svg
+							class="w-4 h-4 ml-3 opacity-70 group-hover:opacity-100 transition-opacity"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+						</svg>
+					</a>
+					<a
+						href="#cotizador"
+						data-umami-event="repairs_hero_view_parts_click"
+						class="inline-flex items-center justify-center px-8 py-4 bg-white border border-[#EAEAEA] text-[#111111] text-sm font-medium rounded hover:bg-[#F9F9F8] transition-all hover:scale-[0.98] w-full sm:w-auto"
+					>
+						<span>Ver Catálogo de Piezas</span>
+					</a>
+				</div>
 			</div>
 			<div class="flex-1 w-full relative h-[400px] md:h-[500px]">
 				<div
