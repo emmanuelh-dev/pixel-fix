@@ -4,7 +4,7 @@ Especialistas en Reparación y Refacciones Google Pixel en México.
 Piezas originales y calidad OEM. Todas las refacciones son importadas y oficiales.
 
 > Precios en Pesos Mexicanos (MXN). Tiempos de entrega: 10-12 días hábiles de importación.
-> Para cotizaciones exactas o confirmar stock para entrega inmediata en Monterrey: https://wa.me/528100000000
+> Para cotizaciones exactas o confirmar stock para entrega inmediata en Monterrey: https://wa.me/528111913676
 
 ## Pixel 10 / 10 Pro
 - Pantalla Original / OEM: Cotizar por WhatsApp
