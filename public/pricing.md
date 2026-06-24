@@ -56,7 +56,8 @@ Cada dispositivo vendido incluye de regalo:
 - **Pixel 9 Pro:** $3,950 MXN *(Instalación: $4,750 MXN)*
 - **Pixel 9:** $3,700 MXN *(Instalación: $4,500 MXN)*
 - **Pixel 9a:** $3,400 MXN *(Instalación: $4,200 MXN)*
-- **Pixel 8 Pro:** $3,300 MXN *(Instalación: $4,100 MXN)*
+- **Pixel 8 Pro (Original Reacondicionada):** $4,200 MXN *(Instalación: $5,000 MXN)*
+- **Pixel 8 Pro (Original Nueva):** $5,800 MXN *(Instalación: $6,600 MXN)*
 - **Pixel 8:** $2,900 MXN *(Instalación: $3,700 MXN)*
 - **Pixel 7 Pro:** $3,250 MXN *(Instalación: $4,050 MXN)*
 - **Pixel 7 / 7a:** $2,900 MXN *(Instalación: $3,700 MXN)*

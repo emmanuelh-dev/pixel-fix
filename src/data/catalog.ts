@@ -37,7 +37,8 @@ export const repairCatalog = [
     series: "Pixel 8 Series",
     id: "pixel-8",
     parts: [
-      { name: "Pantalla OLED con Huella (Réplica Excelente)", model: "Pixel 8 Pro", pricePart: 2900, priceInstall: 3700, ganancia: 400, delivery: "10-12 días hábiles" },
+      { name: "Pantalla OLED Original Reacondicionada", model: "Pixel 8 Pro", pricePart: 3800, priceInstall: 4600, ganancia: 400, delivery: "10-12 días hábiles" },
+      { name: "Pantalla OLED Original Nueva", model: "Pixel 8 Pro", pricePart: 5400, priceInstall: 6200, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pantalla OLED con Huella (Réplica Excelente)", model: "Pixel 8", pricePart: 2500, priceInstall: 3300, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pila Nueva Original", model: "Pixel 8 Pro", pricePart: 1500, priceInstall: 2300, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pila Nueva Original", model: "Pixel 8a", pricePart: 1300, priceInstall: 2100, ganancia: 400, delivery: "10-12 días hábiles" },
