@@ -1,87 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
   <defs>
-    <!-- Gradiente para el destello principal (Sparkle) -->
+    <!-- Gradiente de fondo del círculo (Azul oscuro / Negro premium) -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121824" />
+      <stop offset="100%" stop-color="#080B11" />
+    </linearGradient>
+
+    <!-- Gradiente para el destello (Sparkle) -->
     <linearGradient id="sparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#00F0FF" />
       <stop offset="100%" stop-color="#0066FF" />
     </linearGradient>
 
-    <!-- Gradiente para el destello interior (brillo de alta intensidad) -->
-    <linearGradient id="innerSparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Gradiente para el mango del destornillador -->
+    <linearGradient id="handleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4B5263" />
+      <stop offset="100%" stop-color="#1F232D" />
+    </linearGradient>
+
+    <!-- Gradiente para la punta de metal -->
+    <linearGradient id="shaftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="100%" stop-color="#A3F7FF" />
-    </linearGradient>
-
-    <!-- Gradiente para el cuerpo del teléfono -->
-    <linearGradient id="phoneBody" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="var(--phone-start, #3A3F47)" />
-      <stop offset="100%" stop-color="var(--phone-end, #15171C)" />
-    </linearGradient>
-
-    <!-- Gradiente para la barra de la cámara -->
-    <linearGradient id="cameraBar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="var(--bar-start, #4F5661)" />
-      <stop offset="50%" stop-color="var(--bar-mid, #6B7585)" />
-      <stop offset="100%" stop-color="var(--bar-end, #3D434D)" />
+      <stop offset="100%" stop-color="#9AA0A6" />
     </linearGradient>
   </defs>
 
   <style>
-    :root {
-      --phone-start: #E1E3E6;
-      --phone-end: #BFC2C7;
-      --phone-border: #8F939C;
-      --bar-start: #9AA0A6;
-      --bar-mid: #BDC1C6;
-      --bar-end: #80868B;
-      --camera-lens: #202124;
-      --flash: #F8F9FA;
-      --sparkle-glow: rgba(0, 240, 255, 0.18);
-    }
-
+    .bg-circle { fill: url(#bgGrad); stroke: #1E293B; stroke-width: 2; }
     @media (prefers-color-scheme: dark) {
-      :root {
-        --phone-start: #2D3139;
-        --phone-end: #12151A;
-        --phone-border: #4A505A;
-        --bar-start: #3C4043;
-        --bar-mid: #5F6368;
-        --bar-end: #202124;
-        --camera-lens: #0D0E10;
-        --flash: #F8F9FA;
-        --sparkle-glow: rgba(0, 240, 255, 0.3);
-      }
+      .bg-circle { stroke: #334155; }
     }
-
-    .phone-border { stroke: var(--phone-border); stroke-width: 4; }
-    .phone-fill { fill: url(#phoneBody); }
-    .bar-fill { fill: url(#cameraBar); }
-    .lens-fill { fill: var(--camera-lens); }
-    .flash-fill { fill: var(--flash); }
   </style>
 
-  <!-- Resplandor suave detrás del destello -->
-  <circle cx="96" cy="32" r="22" fill="#00F0FF" opacity="0.1" />
-  <circle cx="96" cy="32" r="12" fill="#0066FF" opacity="0.15" />
+  <!-- Círculo de fondo principal -->
+  <circle cx="64" cy="64" r="58" class="bg-circle" />
 
-  <!-- Teléfono principal -->
-  <rect x="36" y="22" width="56" height="84" rx="12" class="phone-fill phone-border" />
+  <!-- Destornillador rotado 45 grados para quedar diagonal -->
+  <g transform="rotate(45, 64, 64)">
+    <!-- Mango del destornillador -->
+    <rect x="56" y="68" width="16" height="38" rx="6" fill="url(#handleGrad)" stroke="#0D0E12" stroke-width="2.5" />
+    <!-- Líneas de agarre del mango -->
+    <line x1="60" y1="74" x2="60" y2="96" stroke="#1F232D" stroke-width="2" stroke-linecap="round" />
+    <line x1="68" y1="74" x2="68" y2="96" stroke="#1F232D" stroke-width="2" stroke-linecap="round" />
+    
+    <!-- Vástago metálico -->
+    <rect x="61" y="38" width="6" height="30" fill="url(#shaftGrad)" stroke="#1F232D" stroke-width="0.5" />
+    
+    <!-- Punta plana del destornillador -->
+    <polygon points="59,38 69,38 67,32 61,32" fill="url(#shaftGrad)" stroke="#1F232D" stroke-width="0.5" />
+  </g>
 
-  <!-- Barra de cámara icónica del Pixel (sobrepasa ligeramente los bordes) -->
-  <rect x="32" y="34" width="64" height="18" rx="3" class="bar-fill" />
-  
-  <!-- Lentes de la cámara trasera (diseño de píldora negra) -->
-  <rect x="42" y="39" width="22" height="8" rx="4" class="lens-fill" />
-  <!-- Lentes internas sutiles -->
-  <circle cx="47" cy="43" r="1.5" fill="#000000" opacity="0.6" />
-  <circle cx="59" cy="43" r="1.5" fill="#000000" opacity="0.6" />
+  <!-- Destello (Sparkle) en la punta del destornillador (87, 41) -->
+  <g transform="translate(87, 41)">
+    <!-- Resplandor suave -->
+    <circle cx="0" cy="0" r="18" fill="#00F0FF" opacity="0.15" />
+    <circle cx="0" cy="0" r="8" fill="#0066FF" opacity="0.25" />
+    
+    <!-- Destello estrella exterior grande -->
+    <path d="M 0 -18 Q 0 0 18 0 Q 0 0 0 18 Q 0 0 -18 0 Q 0 0 0 -18 Z" fill="url(#sparkleGrad)" />
+    <!-- Destello estrella interna blanca brillante -->
+    <path d="M 0 -8 Q 0 0 8 0 Q 0 0 0 8 Q 0 0 -8 0 Q 0 0 0 -8 Z" fill="#FFFFFF" />
+  </g>
 
-  <!-- Flash -->
-  <circle cx="82" cy="43" r="2.5" class="flash-fill" />
-
-  <!-- Destello de reparación / Fix (Sparkle) -->
-  <!-- Destello exterior grande -->
-  <path d="M 96 14 Q 96 32 114 32 Q 96 32 96 50 Q 96 32 78 32 Q 96 32 96 14 Z" fill="url(#sparkleGrad)" />
-  <!-- Destello secundario diagonal cruzado más pequeño para dar dinamismo -->
-  <path d="M 96 23 Q 96 32 105 32 Q 96 32 96 41 Q 96 32 87 32 Q 96 32 96 23 Z" fill="url(#innerSparkleGrad)" opacity="0.9" />
+  <!-- Píxel flotante azul brillante (representando la reparación completada) -->
+  <rect x="94" y="60" width="10" height="10" rx="2" fill="#00F0FF" opacity="0.85" transform="rotate(15, 99, 65)" />
 </svg>
