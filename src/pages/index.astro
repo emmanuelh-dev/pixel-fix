@@ -1,5 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+let testimonialImages = [];
+try {
+  const testimonialsDir = path.join(process.cwd(), 'public/testimonials');
+  if (fs.existsSync(testimonialsDir)) {
+    testimonialImages = fs.readdirSync(testimonialsDir)
+      .filter(file => /\.(png|jpe?g|webp|svg|gif)$/i.test(file))
+      .map(file => `/testimonials/${file}`);
+  }
+} catch (e) {
+  console.error("Error reading testimonials:", e);
+}
 
 // Array to easily manage products, models, and prices
 const repairCatalog = [
@@ -145,6 +159,7 @@ const productsSchema = JSON.stringify({
 			<nav class="hidden md:flex items-center gap-8 text-sm text-[#787774]">
 				<a href="#cotizador" class="hover:text-[#111111] transition-colors">Cotizador</a>
 				<a href="#proceso" class="hover:text-[#111111] transition-colors">Proceso</a>
+				<a href="#testimoniales" class="hover:text-[#111111] transition-colors">Testimoniales</a>
 				<a href="#faq" class="hover:text-[#111111] transition-colors">Dudas Frecuentes</a>
 			</nav>
 			<a href={`https://wa.me/${phoneNumber}`} target="_blank" class="px-4 py-2 bg-[#111111] text-white text-xs font-medium rounded transition-transform hover:scale-[0.98]">
@@ -274,6 +289,40 @@ const productsSchema = JSON.stringify({
 					</p>
 				</div>
 			</div>
+		</section>
+
+		<!-- Testimoniales -->
+		<section id="testimoniales" class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal">
+			<div class="mb-12 max-w-2xl">
+				<h2 class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4">Lo Que Dicen Nuestros Clientes.</h2>
+				<p class="text-[#787774] leading-[1.6]">Opiniones reales y capturas de conversaciones con clientes satisfechos que repararon su Google Pixel con nosotros.</p>
+			</div>
+
+			{testimonialImages.length > 0 ? (
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+					{testimonialImages.map((img) => (
+						<div class="bg-[#FFFFFF] border border-[#EAEAEA] rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all duration-300 group">
+							<div class="p-2 bg-[#F9F9F8] border-b border-[#EAEAEA] flex items-center justify-between text-[10px] text-[#787774] font-mono">
+								<span>Evidencia Real</span>
+								<a href={img} target="_blank" rel="noopener noreferrer" class="hover:text-[#111111] transition-colors underline">Ampliar</a>
+							</div>
+							<div class="relative overflow-hidden bg-[#FBFBFA] flex items-center justify-center p-4">
+								<img 
+									src={img} 
+									alt="Captura de testimonio de reparación Google Pixel" 
+									class="w-full h-auto max-h-[400px] object-contain rounded-lg border border-[#EAEAEA]/50 opacity-95 saturate-[0.85] contrast-[1.05] group-hover:scale-[1.01] transition-transform duration-500" 
+									loading="lazy"
+								/>
+							</div>
+						</div>
+					))}
+				</div>
+			) : (
+				<div class="border border-dashed border-[#EAEAEA] rounded-xl p-12 text-center text-sm text-[#787774] bg-[#F9F9F8]/50">
+					<p class="mb-2 font-mono">No hay capturas de testimoniales cargadas aún.</p>
+					<p class="text-xs text-[#787774]">Coloca capturas de WhatsApp o Google Maps en la carpeta <code class="bg-[#F7F6F3] px-1 py-0.5 rounded border border-[#EAEAEA] text-xs font-mono">public/testimonials/</code> y aparecerán aquí automáticamente.</p>
+				</div>
+			)}
 		</section>
 
 		<!-- Direct Answer FAQ Block (Extractable Content for AI) -->
