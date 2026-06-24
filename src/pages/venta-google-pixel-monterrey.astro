@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Testimonials from "../components/Testimonials.astro";
-import { salesCatalog } from "../data/catalog";
+import { salesCatalog, formatPrice } from "../data/catalog";
 
 const faqs = [
 	{
@@ -209,7 +209,7 @@ const faqSchema = JSON.stringify({
 											<div class="flex justify-between pt-1">
 												<span>Precio Especial:</span>
 												<span class="font-bold text-[#111111] font-mono text-base">
-													{device.price}
+													{formatPrice(device.price, device.ganancia)}
 												</span>
 											</div>
 										</div>
@@ -217,7 +217,7 @@ const faqSchema = JSON.stringify({
 									<div class="w-full md:w-64 shrink-0 flex flex-col gap-3 justify-center">
 										<a
 											href="#"
-											data-msg={`Hola Pixel Fix, me interesa comprar el ${device.name} (${device.specs}) que tienen en $ ${device.price}.`}
+											data-msg={`Hola Pixel Fix, me interesa comprar el ${device.name} (${device.specs}) que tienen en ${formatPrice(device.price, device.ganancia)}.`}
 											class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform"
 										>
 											Apartar / Comprar Equipo

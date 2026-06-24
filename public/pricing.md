@@ -21,25 +21,25 @@ Cada dispositivo vendido incluye de regalo:
 - **+512 GB:** +$1,800 MXN
 
 ### Lista de Precios Base (128 GB):
-- **Pixel 10 Pro Fold** (Open Box): $16,000 MXN
-- **Pixel 10 Pro XL** (Open Box): $14,500 MXN
-- **Pixel 10 Pro** (Open Box): $13,000 MXN
-- **Pixel 10** (Open Box): $10,500 MXN
-- **Pixel 10a** (Open Box): $9,200 MXN
-- **Pixel 9 Pro Fold** (Usado Estética 9): $13,800 MXN
-- **Pixel 9 Pro XL** (Usado Estética 9): $10,800 MXN
-- **Pixel 9 Pro** (Usado Estética 9): $9,800 MXN
-- **Pixel 9** (Usado Estética 9): $8,800 MXN
-- **Pixel 9a** (Usado Estética 9): $8,500 MXN
-- **Pixel 8 Pro** (Usado Estética 9): $6,900 MXN
-- **Pixel 8** (Usado Estética 9): $6,500 MXN
-- **Pixel 8a** (Usado Estética 9): $6,200 MXN
-- **Pixel 7 Pro** (Usado Estética 9): $5,300 MXN
-- **Pixel 7** (Usado Estética 9): $4,600 MXN
-- **Pixel 7a** (Usado Estética 9): $4,300 MXN
-- **Pixel 6 Pro** (Usado Estética 9): $4,850 MXN
-- **Pixel 6** (Usado Estética 9): $4,000 MXN
-- **Pixel 6a** (Usado Estética 9): $3,900 MXN
+- **Pixel 10 Pro Fold** (Open Box): $16,400 MXN
+- **Pixel 10 Pro XL** (Open Box): $14,900 MXN
+- **Pixel 10 Pro** (Open Box): $13,400 MXN
+- **Pixel 10** (Open Box): $10,900 MXN
+- **Pixel 10a** (Open Box): $9,600 MXN
+- **Pixel 9 Pro Fold** (Usado Estética 9): $14,200 MXN
+- **Pixel 9 Pro XL** (Usado Estética 9): $11,200 MXN
+- **Pixel 9 Pro** (Usado Estética 9): $10,200 MXN
+- **Pixel 9** (Usado Estética 9): $9,200 MXN
+- **Pixel 9a** (Usado Estética 9): $8,900 MXN
+- **Pixel 8 Pro** (Usado Estética 9): $7,300 MXN
+- **Pixel 8** (Usado Estética 9): $6,900 MXN
+- **Pixel 8a** (Usado Estética 9): $6,600 MXN
+- **Pixel 7 Pro** (Usado Estética 9): $5,700 MXN
+- **Pixel 7** (Usado Estética 9): $5,000 MXN
+- **Pixel 7a** (Usado Estética 9): $4,700 MXN
+- **Pixel 6 Pro** (Usado Estética 9): $5,250 MXN
+- **Pixel 6** (Usado Estética 9): $4,400 MXN
+- **Pixel 6a** (Usado Estética 9): $4,300 MXN
 
 ---
 
@@ -47,32 +47,32 @@ Cada dispositivo vendido incluye de regalo:
 *Las pantallas son paneles OLED con sensor de huella activo de calidad réplica excelente. Las pilas son nuevas y 100% originales.*
 
 ### Pantallas OLED con Huella (Excelente Calidad Réplica):
-- **Pixel 10 Pro XL:** $4,000 MXN *(Instalación: $4,600 MXN)*
-- **Pixel 10 Pro:** $3,900 MXN *(Instalación: $4,500 MXN)*
-- **Pixel 10 / 10a:** $3,800 MXN *(Instalación: $4,400 MXN)*
-- **Pixel 9 Pro XL:** $3,850 MXN *(Instalación: $4,450 MXN)*
-- **Pixel 9 Pro:** $3,550 MXN *(Instalación: $4,150 MXN)*
-- **Pixel 9:** $3,300 MXN *(Instalación: $3,900 MXN)*
-- **Pixel 9a:** $3,000 MXN *(Instalación: $3,600 MXN)*
-- **Pixel 8 Pro:** $2,900 MXN *(Instalación: $3,500 MXN)*
-- **Pixel 8:** $2,500 MXN *(Instalación: $3,100 MXN)*
-- **Pixel 7 Pro:** $2,850 MXN *(Instalación: $3,450 MXN)*
-- **Pixel 7 / 7a:** $2,500 MXN *(Instalación: $3,100 MXN)*
-- **Pixel 6 / 6 Pro / 6a:** $2,300 MXN *(Instalación: $2,900 MXN)*
+- **Pixel 10 Pro XL:** $4,400 MXN *(Instalación: $5,000 MXN)*
+- **Pixel 10 Pro:** $4,300 MXN *(Instalación: $4,900 MXN)*
+- **Pixel 10 / 10a:** $4,200 MXN *(Instalación: $4,800 MXN)*
+- **Pixel 9 Pro XL:** $4,250 MXN *(Instalación: $4,850 MXN)*
+- **Pixel 9 Pro:** $3,950 MXN *(Instalación: $4,550 MXN)*
+- **Pixel 9:** $3,700 MXN *(Instalación: $4,300 MXN)*
+- **Pixel 9a:** $3,400 MXN *(Instalación: $4,000 MXN)*
+- **Pixel 8 Pro:** $3,300 MXN *(Instalación: $3,900 MXN)*
+- **Pixel 8:** $2,900 MXN *(Instalación: $3,500 MXN)*
+- **Pixel 7 Pro:** $3,250 MXN *(Instalación: $3,850 MXN)*
+- **Pixel 7 / 7a:** $2,900 MXN *(Instalación: $3,500 MXN)*
+- **Pixel 6 / 6 Pro / 6a:** $2,700 MXN *(Instalación: $3,300 MXN)*
 
 ### Pilas Nuevas Originales:
-- **Pixel 10 Pro XL:** $2,800 MXN *(Instalación: $3,300 MXN)*
-- **Pixel 10 Pro:** $2,700 MXN *(Instalación: $3,200 MXN)*
-- **Pixel 10 / 10a:** $2,500 MXN *(Instalación: $3,000 MXN)*
-- **Pixel 9 Pro XL:** $2,300 MXN *(Instalación: $2,800 MXN)*
-- **Pixel 9 Pro:** $2,100 MXN *(Instalación: $2,600 MXN)*
-- **Pixel 9 / 9a:** $1,900 MXN *(Instalación: $2,400 MXN)*
-- **Pixel 8 Pro:** $1,500 MXN *(Instalación: $2,000 MXN)*
-- **Pixel 8a:** $1,300 MXN *(Instalación: $1,800 MXN)*
-- **Pixel 8:** $1,200 MXN *(Instalación: $1,700 MXN)*
-- **Pixel 7 / 7 Pro / 7a:** $1,000 MXN *(Instalación: $1,500 MXN)*
-- **Pixel 6 / 6 Pro / 6a:** $1,000 MXN *(Instalación: $1,500 MXN)*
-- **Pixel 5 / 5a:** $1,000 MXN *(Instalación: $1,500 MXN)*
+- **Pixel 10 Pro XL:** $3,200 MXN *(Instalación: $3,700 MXN)*
+- **Pixel 10 Pro:** $3,100 MXN *(Instalación: $3,600 MXN)*
+- **Pixel 10 / 10a:** $2,900 MXN *(Instalación: $3,400 MXN)*
+- **Pixel 9 Pro XL:** $2,700 MXN *(Instalación: $3,200 MXN)*
+- **Pixel 9 Pro:** $2,500 MXN *(Instalación: $3,000 MXN)*
+- **Pixel 9 / 9a:** $2,300 MXN *(Instalación: $2,800 MXN)*
+- **Pixel 8 Pro:** $1,900 MXN *(Instalación: $2,400 MXN)*
+- **Pixel 8a:** $1,700 MXN *(Instalación: $2,200 MXN)*
+- **Pixel 8:** $1,600 MXN *(Instalación: $2,100 MXN)*
+- **Pixel 7 / 7 Pro / 7a:** $1,400 MXN *(Instalación: $1,900 MXN)*
+- **Pixel 6 / 6 Pro / 6a:** $1,400 MXN *(Instalación: $1,900 MXN)*
+- **Pixel 5 / 5a:** $1,400 MXN *(Instalación: $1,900 MXN)*
 
 ---
 

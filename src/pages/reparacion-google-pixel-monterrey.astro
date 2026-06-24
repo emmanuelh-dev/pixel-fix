@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Testimonials from "../components/Testimonials.astro";
-import { repairCatalog } from "../data/catalog";
+import { repairCatalog, formatPrice } from "../data/catalog";
 
 const faqs = [
 	{
@@ -200,13 +200,13 @@ const faqSchema = JSON.stringify({
 											<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
 												<span>Refacción sola:</span>
 												<span class="font-medium text-[#111111] font-mono">
-													{part.pricePart}
+													{formatPrice(part.pricePart, part.ganancia)}
 												</span>
 											</div>
 											<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
 												<span>Con instalación en MTY:</span>
 												<span class="font-medium text-[#111111] font-mono">
-													{part.priceInstall}
+													{formatPrice(part.priceInstall, part.ganancia)}
 												</span>
 											</div>
 											<div class="flex justify-between pt-1">

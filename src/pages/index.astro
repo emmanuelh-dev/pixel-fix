@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Testimonials from '../components/Testimonials.astro';
-import { repairCatalog } from '../data/catalog';
+import { repairCatalog, formatPrice } from '../data/catalog';
 
 const faqs = [
   {
@@ -73,7 +73,7 @@ const productsSchema = JSON.stringify({
         "offers": {
           "@type": "Offer",
           "priceCurrency": "MXN",
-          "price": part.pricePart.replace(/[^0-9.]/g, '') || "0",
+          "price": (part.pricePart + (part.ganancia || 0)).toString(),
           "availability": "https://schema.org/InStock",
           "seller": {
             "@type": "Organization",
@@ -169,11 +169,11 @@ const productsSchema = JSON.stringify({
 									<div class="space-y-4 text-sm text-[#787774]">
 										<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
 											<span>Refacción sola:</span>
-											<span class="font-medium text-[#111111] font-mono">{part.pricePart}</span>
+											<span class="font-medium text-[#111111] font-mono">{formatPrice(part.pricePart, part.ganancia)}</span>
 										</div>
 										<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
 											<span>Con instalación en MTY:</span>
-											<span class="font-medium text-[#111111] font-mono">{part.priceInstall}</span>
+											<span class="font-medium text-[#111111] font-mono">{formatPrice(part.priceInstall, part.ganancia)}</span>
 										</div>
 										<div class="flex justify-between pt-1">
 											<span>Tiempo de entrega oficial:</span>
