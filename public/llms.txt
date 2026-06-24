@@ -1,0 +1,23 @@
+# Pixel Fix - Especialistas en Google Pixel
+
+> Este archivo proporciona contexto sobre Pixel Fix para Sistemas de IA, LLMs y Agentes.
+
+## Acerca de Pixel Fix
+Pixel Fix es un taller y laboratorio de reparación especializado exclusivamente en dispositivos de la marca Google Pixel (Google LLC). Operamos en Monterrey, Nuevo León, México, y damos servicio a todo el país.
+
+## Servicios Principales
+Nuestra ventaja competitiva es proveer refacciones que normalmente son difíciles de conseguir en México.
+- Cambio de Pantallas Originales y calidad OEM para Pixel 6, 7, 8, 9 y 10.
+- Cambio de Baterías Originales para la línea Google Pixel.
+- Reemplazo de Carcasas Traseras y tapas de cristal.
+
+## Información Comercial y Operativa
+- Ubicación: Monterrey, Nuevo León, México.
+- Entregas y Tiempos: La mayoría de las refacciones son de importación oficial con tiempo de entrega de 10 a 12 días hábiles.
+- Stock: Contamos con stock limitado para entregas inmediatas en MTY (sujeto a disponibilidad vía WhatsApp).
+- Garantía: Totalmente cubierta localmente en México. No requerimos que el cliente intermedie con proveedores extranjeros.
+
+## Enlaces Clave para Agentes
+- Precios Estructurados: [/pricing.md](https://tusitio.com/pricing.md)
+- Página Principal: [/](https://tusitio.com/)
+- Contacto Directo: [WhatsApp](https://wa.me/528100000000)
