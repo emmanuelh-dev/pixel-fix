@@ -1,35 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Testimonials from '../components/Testimonials.astro';
-
-// Array to manage available devices and sales prices
-const salesCatalog = [
-  {
-    series: "Pixel 9 Series",
-    id: "pixel-9",
-    devices: [
-      { name: "Google Pixel 9 Pro XL", specs: "128GB / 16GB RAM - Nuevo Sellado", price: "$23,500 MXN", availability: "Entrega Inmediata", color: "Obsidian / Porcelain" },
-      { name: "Google Pixel 9 Pro", specs: "128GB / 16GB RAM - Nuevo Sellado", price: "$20,500 MXN", availability: "Entrega Inmediata", color: "Hazel" },
-      { name: "Google Pixel 9", specs: "128GB / 12GB RAM - Nuevo Sellado", price: "$16,500 MXN", availability: "Importación 3-5 días", color: "Wintergreen" }
-    ]
-  },
-  {
-    series: "Pixel 8 Series",
-    id: "pixel-8",
-    devices: [
-      { name: "Google Pixel 8 Pro", specs: "128GB / 12GB RAM - Reacondicionado Grado A", price: "$12,500 MXN", availability: "Entrega Inmediata", color: "Bay Blue" },
-      { name: "Google Pixel 8", specs: "128GB / 8GB RAM - Reacondicionado Grado A", price: "$9,500 MXN", availability: "Entrega Inmediata", color: "Rose" }
-    ]
-  },
-  {
-    series: "Pixel 7 Series",
-    id: "pixel-7",
-    devices: [
-      { name: "Google Pixel 7 Pro", specs: "128GB / 12GB RAM - Reacondicionado Grado A", price: "$8,500 MXN", availability: "Entrega Inmediata", color: "Hazel" },
-      { name: "Google Pixel 7", specs: "128GB / 8GB RAM - Reacondicionado Grado A", price: "$6,500 MXN", availability: "Entrega Inmediata", color: "Lemongrass" }
-    ]
-  }
-];
+import { salesCatalog } from '../data/catalog';
 
 const faqs = [
   {
@@ -76,21 +48,7 @@ const localBusinessSchema = JSON.stringify({
 		<div class="absolute inset-0 opacity-[0.03] animate-[pulse_20s_ease-in-out_infinite]" style="background: radial-gradient(circle at 50% 0%, #111111 0%, transparent 60%);"></div>
 	</div>
 
-	<!-- Header -->
-	<header class="w-full border-b border-[#EAEAEA] bg-[#FBFBFA]/80 backdrop-blur-md sticky top-0 z-50">
-		<div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-			<div class="font-bold text-[#111111] tracking-tight"><a href="/">Pixel Fix.</a></div>
-			<nav class="hidden md:flex items-center gap-6 text-xs font-mono tracking-wider uppercase text-[#787774]">
-				<a href="/" class="hover:text-[#111111] transition-colors">Inicio</a>
-				<a href="/reparacion-google-pixel-monterrey" class="hover:text-[#111111] transition-colors">Reparación</a>
-				<a href="/venta-google-pixel-monterrey" class="hover:text-[#111111] transition-colors">Venta de Equipos</a>
-				<a href="#testimoniales" class="hover:text-[#111111] transition-colors">Testimoniales</a>
-			</nav>
-			<a href={`https://wa.me/${phoneNumber}`} target="_blank" class="px-4 py-2 bg-[#111111] text-white text-xs font-medium rounded transition-transform hover:scale-[0.98]">
-				Contacto
-			</a>
-		</div>
-	</header>
+
 
 	<main class="min-h-screen">
 		<!-- Hero Section -->
@@ -224,20 +182,7 @@ const localBusinessSchema = JSON.stringify({
 			</div>
 		</section>
 		
-		<!-- Footer -->
-		<footer class="py-12 border-t border-[#EAEAEA] bg-[#FBFBFA]">
-			<div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#787774] font-mono">
-				<div>
-					<p class="mb-1">© 2026 Pixel Fix. Especialistas Google Pixel.</p>
-					<p class="text-[10px] opacity-70">Precios y stock actualizados a {new Date().toLocaleString('es-MX', { month: 'long', year: 'numeric' })}.</p>
-					<p class="text-[10px] opacity-70 mt-2">Tecnología y logística respaldada por <a href="/respaldo-bysmax" class="underline hover:text-[#111111]">Bysmax</a> (<a href="https://bysmax.com" target="_blank" rel="noopener" class="hover:text-[#111111] transition-colors">Empresa de Desarrollo de Software en Monterrey</a>).</p>
-				</div>
-				<div class="flex gap-6">
-					<a href="#" class="hover:text-[#111111] transition-colors">Términos y Condiciones</a>
-					<a href="#" class="hover:text-[#111111] transition-colors">Política de Privacidad</a>
-				</div>
-			</div>
-		</footer>
+
 	</main>
 </Layout>
 

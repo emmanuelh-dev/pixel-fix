@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
 	title: string;
@@ -48,6 +50,8 @@ const { title, description } = Astro.props;
 		</style>
 	</head>
 	<body class="bg-[#FBFBFA] text-[#111111] antialiased selection:bg-[#E1F3FE] selection:text-[#1F6C9F]">
+		<Header />
 		<slot />
+		<Footer />
 	</body>
 </html>

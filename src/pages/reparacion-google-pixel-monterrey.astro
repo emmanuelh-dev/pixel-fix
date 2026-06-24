@@ -1,105 +1,61 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Testimonials from '../components/Testimonials.astro';
-
-// Array to easily manage products, models, and prices
-const repairCatalog = [
-  {
-    series: "Pixel 10 Series",
-    id: "pixel-10",
-    parts: [
-      { name: "Pantalla Original / OEM", model: "Pixel 10 / 10 Pro", pricePart: "$ Cotizar", priceInstall: "$ Cotizar", delivery: "10-12 días hábiles" },
-      { name: "Batería Nueva Original", model: "Pixel 10 / 10 Pro", pricePart: "$ Cotizar", priceInstall: "$ Cotizar", delivery: "10-12 días hábiles" },
-      { name: "Carcasa Trasera", model: "Pixel 10 / 10 Pro", pricePart: "$ Cotizar", priceInstall: "$ Cotizar", delivery: "10-12 días hábiles" }
-    ]
-  },
-  {
-    series: "Pixel 9 Series",
-    id: "pixel-9",
-    parts: [
-      { name: "Pantalla Original / OEM", model: "Pixel 9 / 9 Pro", pricePart: "$ Cotizar", priceInstall: "$ Cotizar", delivery: "10-12 días hábiles" },
-      { name: "Batería Nueva Original", model: "Pixel 9 / 9 Pro", pricePart: "$ Cotizar", priceInstall: "$ Cotizar", delivery: "10-12 días hábiles" },
-      { name: "Carcasa Trasera", model: "Pixel 9 / 9 Pro", pricePart: "$ Cotizar", priceInstall: "$ Cotizar", delivery: "10-12 días hábiles" }
-    ]
-  },
-  {
-    series: "Pixel 8 Series",
-    id: "pixel-8",
-    parts: [
-      { name: "Pantalla Original / OEM", model: "Pixel 8 / 8 Pro", pricePart: "$4,800 MXN", priceInstall: "$5,400 MXN", delivery: "10-12 días hábiles" },
-      { name: "Batería Nueva Original", model: "Pixel 8 / 8 Pro", pricePart: "$1,400 MXN", priceInstall: "$1,900 MXN", delivery: "10-12 días hábiles" },
-      { name: "Carcasa Trasera", model: "Pixel 8 / 8 Pro", pricePart: "$2,500 MXN", priceInstall: "$3,000 MXN", delivery: "10-12 días hábiles" }
-    ]
-  },
-  {
-    series: "Pixel 7 Series",
-    id: "pixel-7",
-    parts: [
-      { name: "Pantalla Original / OEM", model: "Pixel 7 / 7 Pro", pricePart: "$4,000 MXN", priceInstall: "$4,600 MXN", delivery: "10-12 días hábiles" },
-      { name: "Batería Nueva Original", model: "Pixel 7 / 7 Pro", pricePart: "$1,300 MXN", priceInstall: "$1,800 MXN", delivery: "10-12 días hábiles" },
-      { name: "Carcasa Trasera", model: "Pixel 7 / 7 Pro", pricePart: "$2,000 MXN", priceInstall: "$2,500 MXN", delivery: "10-12 días hábiles" }
-    ]
-  },
-  {
-    series: "Pixel 6 Series",
-    id: "pixel-6",
-    parts: [
-      { name: "Pantalla Original / OEM", model: "Pixel 6 / 6 Pro", pricePart: "$4,800 MXN", priceInstall: "$5,400 MXN", delivery: "10-12 días hábiles" },
-      { name: "Batería Nueva Original", model: "Pixel 6 / 6 Pro", pricePart: "$1,300 MXN", priceInstall: "$1,800 MXN", delivery: "10-12 días hábiles" },
-      { name: "Carcasa Trasera", model: "Pixel 6 / 6 Pro", pricePart: "$1,800 MXN", priceInstall: "$2,300 MXN", delivery: "10-12 días hábiles" }
-    ]
-  }
-];
+import Layout from "../layouts/Layout.astro";
+import Testimonials from "../components/Testimonials.astro";
+import { repairCatalog } from "../data/catalog";
 
 const faqs = [
-  {
-    question: "¿Cuánto cuesta reparar la pantalla del Pixel 8 en México?",
-    answer: "El cambio de pantalla original o calidad OEM para la línea Pixel 8 tiene un costo promedio desde $4,800 MXN la refacción sola, o $5,400 MXN con instalación especializada en nuestro laboratorio de Monterrey. El tiempo de entrega oficial de importación es de 10-12 días hábiles."
-  },
-  {
-    question: "¿Dónde puedo cambiar la batería de un Google Pixel?",
-    answer: "En Pixel Fix somos especialistas. Realizamos el cambio de batería original para líneas Pixel 6, 7, 8, 9 y 10 desde $1,300 MXN la refacción o $1,800 MXN con instalación, y te ofrecemos garantía directa en México."
-  },
-  {
-    question: "¿Qué garantía tienen las reparaciones y refacciones de Pixel?",
-    answer: "Todas las piezas que instalamos o enviamos son de importación oficial o de calidad OEM. Cuentan con garantía real gestionada localmente en Monterrey, sin que el cliente tenga que tramitar devoluciones con intermediarios o proveedores extranjeros."
-  }
+	{
+		question: "¿Cuánto cuesta reparar la pantalla del Pixel 8 en México?",
+		answer:
+			"El cambio de pantalla original o calidad OEM para la línea Pixel 8 tiene un costo promedio desde $4,800 MXN la refacción sola, o $5,400 MXN con instalación especializada en nuestro laboratorio de Monterrey. El tiempo de entrega oficial de importación es de 10-12 días hábiles.",
+	},
+	{
+		question: "¿Dónde puedo cambiar la batería de un Google Pixel?",
+		answer:
+			"En Pixel Fix somos especialistas. Realizamos el cambio de batería original para líneas Pixel 6, 7, 8, 9 y 10 desde $1,300 MXN la refacción o $1,800 MXN con instalación, y te ofrecemos garantía directa en México.",
+	},
+	{
+		question: "¿Qué garantía tienen las reparaciones y refacciones de Pixel?",
+		answer:
+			"Todas las piezas que instalamos o enviamos son de importación oficial o de calidad OEM. Cuentan con garantía real gestionada localmente en Monterrey, sin que el cliente tenga que tramitar devoluciones con intermediarios o proveedores extranjeros.",
+	},
 ];
 
 const phoneNumber = "528111913676";
 
 // Generar LD+JSON Scripts estáticos para Astro
 const localBusinessSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Pixel Fix México",
-  "image": "https://www.pixelfixmexico.com/logo.png",
-  "description": "Especialistas en Reparación de Google Pixel en Monterrey. Pantallas, tapas y baterías originales.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Monterrey",
-    "addressRegion": "NL",
-    "addressCountry": "MX"
-  },
-  "priceRange": "$$",
-  "telephone": `+${phoneNumber}`
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	name: "Pixel Fix México",
+	image: "https://www.pixelfixmexico.com/logo.png",
+	description:
+		"Especialistas en Reparación de Google Pixel en Monterrey. Pantallas, tapas y baterías originales.",
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "Monterrey",
+		addressRegion: "NL",
+		addressCountry: "MX",
+	},
+	priceRange: "$$",
+	telephone: `+${phoneNumber}`,
 });
 
 const faqSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
-    "@type": "Question",
-    "name": faq.question,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": faq.answer
-    }
-  }))
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: faqs.map((faq) => ({
+		"@type": "Question",
+		name: faq.question,
+		acceptedAnswer: {
+			"@type": "Answer",
+			text: faq.answer,
+		},
+	})),
 });
 ---
 
-<Layout 
+<Layout
 	title="Reparación Google Pixel en Monterrey | Especialistas Pixel Fix"
 	description="Servicio técnico especializado para Google Pixel en Monterrey. Cambio de pantalla, batería y tapas originales con garantía directa local."
 >
@@ -108,59 +64,89 @@ const faqSchema = JSON.stringify({
 
 	<!-- Ambient background -->
 	<div class="fixed inset-0 pointer-events-none z-[-1] bg-[#FBFBFA]">
-		<div class="absolute inset-0 opacity-[0.03] animate-[pulse_20s_ease-in-out_infinite]" style="background: radial-gradient(circle at 50% 0%, #111111 0%, transparent 60%);"></div>
-	</div>
-
-	<!-- Header -->
-	<header class="w-full border-b border-[#EAEAEA] bg-[#FBFBFA]/80 backdrop-blur-md sticky top-0 z-50">
-		<div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-			<div class="font-bold text-[#111111] tracking-tight"><a href="/">Pixel Fix.</a></div>
-			<nav class="hidden md:flex items-center gap-6 text-xs font-mono tracking-wider uppercase text-[#787774]">
-				<a href="/" class="hover:text-[#111111] transition-colors">Inicio</a>
-				<a href="/reparacion-google-pixel-monterrey" class="hover:text-[#111111] transition-colors">Reparación</a>
-				<a href="/venta-google-pixel-monterrey" class="hover:text-[#111111] transition-colors">Venta de Equipos</a>
-				<a href="#testimoniales" class="hover:text-[#111111] transition-colors">Testimoniales</a>
-			</nav>
-			<a href={`https://wa.me/${phoneNumber}`} target="_blank" class="px-4 py-2 bg-[#111111] text-white text-xs font-medium rounded transition-transform hover:scale-[0.98]">
-				Contacto
-			</a>
+		<div
+			class="absolute inset-0 opacity-[0.03] animate-[pulse_20s_ease-in-out_infinite]"
+			style="background: radial-gradient(circle at 50% 0%, #111111 0%, transparent 60%);"
+		>
 		</div>
-	</header>
+	</div>
 
 	<main class="min-h-screen">
 		<!-- Hero Section -->
-		<section class="max-w-5xl mx-auto px-6 py-24 md:py-32 flex flex-col md:flex-row items-center gap-12 reveal">
+		<section
+			class="max-w-5xl mx-auto px-6 py-24 md:py-32 flex flex-col md:flex-row items-center gap-12 reveal"
+		>
 			<div class="flex-1 flex flex-col items-start text-left">
-				<div class="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase">
-					Laboratorio Monterrey
+				<div
+					class="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase"
+				>
+					Piezas Originales para Google Pixel. Pantallas , Baterias, Carcasas y
+					más.
 				</div>
-				<h1 class="font-serif-editorial text-5xl md:text-[5rem] font-medium tracking-[-0.03em] text-[#111111] leading-[1.05] mb-8">
+				<h1
+					class="font-serif-editorial text-5xl md:text-[5rem] font-medium tracking-[-0.03em] text-[#111111] leading-[1.05] mb-8"
+				>
 					Reparación Google Pixel en Monterrey.
 				</h1>
-				<p class="text-lg md:text-xl text-[#787774] mb-10 leading-[1.6] max-w-lg font-light">
-					Servicio técnico profesional de pantallas, baterías y tapas traseras originales. Garantía real local y envíos nacionales.
+				<p
+					class="text-lg md:text-xl text-[#787774] mb-10 leading-[1.6] max-w-lg font-light"
+				>
+					Servicio técnico profesional de pantallas, baterías y tapas traseras
+					originales. Garantía real local y envíos nacionales.
 				</p>
-				<a href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20cotizar%20la%20reparaci%C3%B3n%20de%20mi%20Google%20Pixel%20en%20Monterrey.`} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center px-8 py-4 bg-[#111111] text-white text-sm font-medium rounded transition-transform hover:scale-[0.98]">
+				<a
+					href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20cotizar%20la%20reparaci%C3%B3n%20de%20mi%20Google%20Pixel%20en%20Monterrey.`}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="group inline-flex items-center justify-center px-8 py-4 bg-[#111111] text-white text-sm font-medium rounded transition-transform hover:scale-[0.98]"
+				>
 					<span>Cotizar mi reparación por WhatsApp</span>
-					<svg class="w-4 h-4 ml-3 opacity-70 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+					<svg
+						class="w-4 h-4 ml-3 opacity-70 group-hover:opacity-100 transition-opacity"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
 					</svg>
 				</a>
 			</div>
 			<div class="flex-1 w-full relative h-[400px] md:h-[500px]">
-				<div class="absolute inset-0 bg-[#F9F9F8] border border-[#EAEAEA] rounded-xl overflow-hidden">
-					<img src="https://picsum.photos/seed/pixelrepair/800/1000" alt="Laboratorio de reparación Google Pixel" class="w-full h-full object-cover opacity-90 saturate-50 contrast-125 mix-blend-multiply" />
+				<div
+					class="absolute inset-0 bg-[#F9F9F8] border border-[#EAEAEA] rounded-xl overflow-hidden"
+				>
+					<img
+						src="https://picsum.photos/seed/pixelrepair/800/1000"
+						alt="Laboratorio de reparación Google Pixel"
+						class="w-full h-full object-cover opacity-90 saturate-50 contrast-125 mix-blend-multiply"
+					/>
 					<div class="absolute inset-0 bg-[#111111] opacity-[0.02]"></div>
 				</div>
 			</div>
 		</section>
 
 		<!-- Selector de Modelos y Precios -->
-		<section id="cotizador" class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal">
+		<section
+			id="cotizador"
+			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+		>
 			<div class="mb-12 max-w-2xl">
-				<h2 class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4">Catálogo de Reparaciones.</h2>
-				<p class="text-[#787774] leading-[1.6] mb-4">Cotiza la refacción original o OEM que requieres con o sin instalación en Monterrey.</p>
-				<div class="inline-flex items-center px-3 py-1.5 bg-[#F9F9F8] border border-[#EAEAEA] rounded font-mono text-xs text-[#111111] mb-2">
+				<h2
+					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
+				>
+					Catálogo de Reparaciones.
+				</h2>
+				<p class="text-[#787774] leading-[1.6] mb-4">
+					Cotiza la refacción original o OEM que requieres con o sin instalación
+					en Monterrey.
+				</p>
+				<div
+					class="inline-flex items-center px-3 py-1.5 bg-[#F9F9F8] border border-[#EAEAEA] rounded font-mono text-xs text-[#111111] mb-2"
+				>
 					<span class="w-1.5 h-1.5 rounded-full bg-[#111111] mr-2"></span>
 					Piezas oficiales importadas. Garantía directa sin intermediarios.
 				</div>
@@ -168,73 +154,142 @@ const faqSchema = JSON.stringify({
 
 			<!-- Tabs -->
 			<div class="flex flex-wrap gap-2 mb-10" id="model-tabs">
-				{repairCatalog.map((catalog, index) => (
-					<button class={`tab-btn px-5 py-2.5 rounded text-sm transition-all duration-200 ${index === 2 ? 'bg-[#111111] text-white active-tab' : 'bg-[#FFFFFF] border border-[#EAEAEA] text-[#787774] hover:bg-[#F9F9F8]'}`} data-target={catalog.id}>
-						{catalog.series}
-					</button>
-				))}
+				{
+					repairCatalog.map((catalog, index) => (
+						<button
+							class={`tab-btn px-5 py-2.5 rounded text-sm transition-all duration-200 ${index === 2 ? "bg-[#111111] text-white active-tab" : "bg-[#FFFFFF] border border-[#EAEAEA] text-[#787774] hover:bg-[#F9F9F8]"}`}
+							data-target={catalog.id}
+						>
+							{catalog.series}
+						</button>
+					))
+				}
 			</div>
 
 			<!-- Tab Contents -->
 			<div class="relative min-h-[300px]">
-				{repairCatalog.map((catalog, index) => (
-					<div class={`tab-content grid gap-6 ${index === 2 ? '' : 'hidden'}`} id={catalog.id}>
-						{catalog.parts.map(part => (
-							<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col md:flex-row md:items-start justify-between gap-8 transition-shadow hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-								<div class="flex-1">
-									<div class="flex items-center gap-3 mb-4">
-										<h3 class="text-xl font-medium text-[#111111]">{part.name}</h3>
-										<span class="text-[10px] uppercase tracking-[0.05em] font-medium text-[#111111] bg-[#F9F9F8] border border-[#EAEAEA] px-2 py-0.5 rounded-full">{part.model}</span>
+				{
+					repairCatalog.map((catalog, index) => (
+						<div
+							class={`tab-content grid gap-6 ${index === 2 ? "" : "hidden"}`}
+							id={catalog.id}
+						>
+							{catalog.parts.map((part) => (
+								<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col md:flex-row md:items-start justify-between gap-8 transition-shadow hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+									<div class="flex-1">
+										<div class="flex items-center gap-3 mb-4">
+											<h3 class="text-xl font-medium text-[#111111]">
+												{part.name}
+											</h3>
+											<span class="text-[10px] uppercase tracking-[0.05em] font-medium text-[#111111] bg-[#F9F9F8] border border-[#EAEAEA] px-2 py-0.5 rounded-full">
+												{part.model}
+											</span>
+										</div>
+										<div class="space-y-4 text-sm text-[#787774]">
+											<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
+												<span>Refacción sola:</span>
+												<span class="font-medium text-[#111111] font-mono">
+													{part.pricePart}
+												</span>
+											</div>
+											<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
+												<span>Con instalación en MTY:</span>
+												<span class="font-medium text-[#111111] font-mono">
+													{part.priceInstall}
+												</span>
+											</div>
+											<div class="flex justify-between pt-1">
+												<span>Tiempo de entrega oficial:</span>
+												<span class="font-medium text-[#956400]">
+													{part.delivery}
+												</span>
+											</div>
+										</div>
 									</div>
-									<div class="space-y-4 text-sm text-[#787774]">
-										<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
-											<span>Refacción sola:</span>
-											<span class="font-medium text-[#111111] font-mono">{part.pricePart}</span>
-										</div>
-										<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
-											<span>Con instalación en MTY:</span>
-											<span class="font-medium text-[#111111] font-mono">{part.priceInstall}</span>
-										</div>
-										<div class="flex justify-between pt-1">
-											<span>Tiempo de entrega oficial:</span>
-											<span class="font-medium text-[#956400]">{part.delivery}</span>
-										</div>
+									<div class="w-full md:w-64 shrink-0 flex flex-col gap-3 justify-center">
+										<a
+											href="#"
+											data-msg={`Hola Pixel Fix, quiero solicitar reparación de ${part.name} para mi ${part.model} en Monterrey.`}
+											class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform"
+										>
+											Solicitar Cita de Reparación
+										</a>
 									</div>
 								</div>
-								<div class="w-full md:w-64 shrink-0 flex flex-col gap-3 justify-center">
-									<a href="#" data-msg={`Hola Pixel Fix, quiero solicitar reparación de ${part.name} para mi ${part.model} en Monterrey.`} class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform">Solicitar Cita de Reparación</a>
-								</div>
-							</div>
-						))}
-					</div>
-				))}
+							))}
+						</div>
+					))
+				}
 			</div>
 		</section>
 
 		<!-- El Proceso de Confianza & Logística -->
-		<section id="proceso" class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal">
+		<section
+			id="proceso"
+			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+		>
 			<div class="mb-16 max-w-xl">
-				<h2 class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4">Proceso de Servicio.</h2>
-				<p class="text-[#787774] leading-[1.6]">Repara tu dispositivo de manera transparente y con técnicos capacitados.</p>
+				<h2
+					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
+				>
+					Proceso de Servicio.
+				</h2>
+				<p class="text-[#787774] leading-[1.6]">
+					Repara tu dispositivo de manera transparente y con técnicos
+					capacitados.
+				</p>
 			</div>
-			
+
 			<div class="grid md:grid-cols-3 gap-6">
-				<div class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col">
-					<div class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded">01</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">Envías o Agendas</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">Nos contactas por WhatsApp para agendar tu cita física en Monterrey o coordinar envío por paquetería.</p>
+				<div
+					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
+				>
+					<div
+						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
+					>
+						01
+					</div>
+					<h3 class="text-base font-medium text-[#111111] mb-2">
+						Envías o Agendas
+					</h3>
+					<p class="text-[#787774] text-sm leading-[1.6]">
+						Nos contactas por WhatsApp para agendar tu cita física en Monterrey
+						o coordinar envío por paquetería.
+					</p>
 				</div>
 
-				<div class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col">
-					<div class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded">02</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">Diagnóstico y Reparación</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">Instalamos las refacciones originales o calidad OEM seleccionadas bajo estrictos controles técnicos.</p>
+				<div
+					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
+				>
+					<div
+						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
+					>
+						02
+					</div>
+					<h3 class="text-base font-medium text-[#111111] mb-2">
+						Diagnóstico y Reparación
+					</h3>
+					<p class="text-[#787774] text-sm leading-[1.6]">
+						Instalamos las refacciones originales o calidad OEM seleccionadas
+						bajo estrictos controles técnicos.
+					</p>
 				</div>
 
-				<div class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col">
-					<div class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded">03</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">Garantía Directa</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">Te devolvemos tu Google Pixel reparado con sello de garantía local en Monterrey.</p>
+				<div
+					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
+				>
+					<div
+						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
+					>
+						03
+					</div>
+					<h3 class="text-base font-medium text-[#111111] mb-2">
+						Garantía Directa
+					</h3>
+					<p class="text-[#787774] text-sm leading-[1.6]">
+						Te devolvemos tu Google Pixel reparado con sello de garantía local
+						en Monterrey.
+					</p>
 				</div>
 			</div>
 		</section>
@@ -243,84 +298,98 @@ const faqSchema = JSON.stringify({
 		<Testimonials />
 
 		<!-- Dudas Frecuentes -->
-		<section id="faq" class="max-w-3xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal">
+		<section
+			id="faq"
+			class="max-w-3xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+		>
 			<div class="mb-12">
-				<h2 class="font-serif-editorial text-3xl tracking-tight text-[#111111] mb-4">Dudas Frecuentes.</h2>
-				<p class="text-[#787774] leading-[1.6]">Respuestas sobre el servicio técnico y garantía local.</p>
+				<h2
+					class="font-serif-editorial text-3xl tracking-tight text-[#111111] mb-4"
+				>
+					Dudas Frecuentes.
+				</h2>
+				<p class="text-[#787774] leading-[1.6]">
+					Respuestas sobre el servicio técnico y garantía local.
+				</p>
 			</div>
 
 			<div class="space-y-6">
-				{faqs.map(faq => (
-					<div class="pb-6 border-b border-[#EAEAEA]">
-						<h3 class="text-lg font-medium text-[#111111] mb-3">{faq.question}</h3>
-						<p class="text-[#787774] text-sm leading-[1.6]">{faq.answer}</p>
-					</div>
-				))}
+				{
+					faqs.map((faq) => (
+						<div class="pb-6 border-b border-[#EAEAEA]">
+							<h3 class="text-lg font-medium text-[#111111] mb-3">
+								{faq.question}
+							</h3>
+							<p class="text-[#787774] text-sm leading-[1.6]">{faq.answer}</p>
+						</div>
+					))
+				}
 			</div>
 		</section>
-		
-		<!-- Footer -->
-		<footer class="py-12 border-t border-[#EAEAEA] bg-[#FBFBFA]">
-			<div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#787774] font-mono">
-				<div>
-					<p class="mb-1">© 2026 Pixel Fix. Especialistas Google Pixel.</p>
-					<p class="text-[10px] opacity-70">Precios y stock actualizados a {new Date().toLocaleString('es-MX', { month: 'long', year: 'numeric' })}.</p>
-					<p class="text-[10px] opacity-70 mt-2">Tecnología y logística respaldada por <a href="/respaldo-bysmax" class="underline hover:text-[#111111]">Bysmax</a> (<a href="https://bysmax.com" target="_blank" rel="noopener" class="hover:text-[#111111] transition-colors">Empresa de Desarrollo de Software en Monterrey</a>).</p>
-				</div>
-				<div class="flex gap-6">
-					<a href="#" class="hover:text-[#111111] transition-colors">Términos y Condiciones</a>
-					<a href="#" class="hover:text-[#111111] transition-colors">Política de Privacidad</a>
-				</div>
-			</div>
-		</footer>
 	</main>
 </Layout>
 
 <script>
 	// Tab Switching Logic
-	const tabs = document.querySelectorAll('.tab-btn');
-	const contents = document.querySelectorAll('.tab-content');
+	const tabs = document.querySelectorAll(".tab-btn");
+	const contents = document.querySelectorAll(".tab-content");
 
-	tabs.forEach(tab => {
-		tab.addEventListener('click', () => {
-			tabs.forEach(t => {
-				t.classList.remove('bg-[#111111]', 'text-white', 'active-tab');
-				t.classList.add('bg-[#FFFFFF]', 'border', 'border-[#EAEAEA]', 'text-[#787774]');
+	tabs.forEach((tab) => {
+		tab.addEventListener("click", () => {
+			tabs.forEach((t) => {
+				t.classList.remove("bg-[#111111]", "text-white", "active-tab");
+				t.classList.add(
+					"bg-[#FFFFFF]",
+					"border",
+					"border-[#EAEAEA]",
+					"text-[#787774]",
+				);
 			});
-			contents.forEach(c => c.classList.add('hidden'));
+			contents.forEach((c) => c.classList.add("hidden"));
 
-			tab.classList.remove('bg-[#FFFFFF]', 'border', 'border-[#EAEAEA]', 'text-[#787774]');
-			tab.classList.add('bg-[#111111]', 'text-white', 'active-tab');
-			const targetId = tab.getAttribute('data-target');
+			tab.classList.remove(
+				"bg-[#FFFFFF]",
+				"border",
+				"border-[#EAEAEA]",
+				"text-[#787774]",
+			);
+			tab.classList.add("bg-[#111111]", "text-white", "active-tab");
+			const targetId = tab.getAttribute("data-target");
 			const targetEl = document.getElementById(targetId);
-			if (targetEl) targetEl.classList.remove('hidden');
+			if (targetEl) targetEl.classList.remove("hidden");
 		});
 	});
 
 	// WhatsApp Links Builder
-	const PHONE_NUMBER = "528111913676"; 
-	const waLinks = document.querySelectorAll('.wa-link');
-	
-	waLinks.forEach(link => {
-		const msg = link.getAttribute('data-msg');
-		if(msg) {
-			link.setAttribute('href', `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`);
-			link.setAttribute('target', '_blank');
-			link.setAttribute('rel', 'noopener noreferrer');
+	const PHONE_NUMBER = "528111913676";
+	const waLinks = document.querySelectorAll(".wa-link");
+
+	waLinks.forEach((link) => {
+		const msg = link.getAttribute("data-msg");
+		if (msg) {
+			link.setAttribute(
+				"href",
+				`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`,
+			);
+			link.setAttribute("target", "_blank");
+			link.setAttribute("rel", "noopener noreferrer");
 		}
 	});
 
 	// Scroll Reveal
-	const observer = new IntersectionObserver((entries, obs) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add('revealed');
-				obs.unobserve(entry.target);
-			}
-		});
-	}, { threshold: 0.1 });
+	const observer = new IntersectionObserver(
+		(entries, obs) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add("revealed");
+					obs.unobserve(entry.target);
+				}
+			});
+		},
+		{ threshold: 0.1 },
+	);
 
-	document.querySelectorAll('.reveal').forEach(el => {
+	document.querySelectorAll(".reveal").forEach((el) => {
 		observer.observe(el);
 	});
 </script>
@@ -329,7 +398,9 @@ const faqSchema = JSON.stringify({
 	.reveal {
 		opacity: 0;
 		transform: translateY(12px);
-		transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+		transition:
+			opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
 	.reveal.revealed {
 		opacity: 1;
