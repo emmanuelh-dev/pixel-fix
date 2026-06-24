@@ -65,10 +65,10 @@ const faqSchema = JSON.stringify({
 ---
 
 <Layout
-	title="Venta de Google Pixel en Monterrey | Equipos Nuevos y Reacondicionados"
-	description="Compra tu Google Pixel original en Monterrey. Equipos nuevos y reacondicionados Grado A con garantía local directa y entrega inmediata."
+	title="Venta de Google Pixel en Monterrey | Equipos Usados y Open Box"
+	description="Compra tu Google Pixel original en Monterrey. Celulares Usados Estética 9 y Open Box con garantía directa local de 28 días e importación segura."
 	image="https://www.pixelfixmexico.com/og-image-ventas.jpg"
-	url="https://www.pixelfixmexico.com/venta-google-pixel-monterrey"
+	url="https://www.pixelfixmexico.com/venta-google-pixel-monterrey/"
 >
 	<script type="application/ld+json" set:html={localBusinessSchema} />
 	<script type="application/ld+json" set:html={faqSchema} />
@@ -107,6 +107,7 @@ const faqSchema = JSON.stringify({
 					href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20consultar%20los%20modelos%20de%20Google%20Pixel%20disponibles%20para%20compra.`}
 					target="_blank"
 					rel="noopener noreferrer"
+					data-umami-event="sales_hero_whatsapp_click"
 					class="group inline-flex items-center justify-center px-8 py-4 bg-[#111111] text-white text-sm font-medium rounded transition-transform hover:scale-[0.98]"
 				>
 					<span>Consultar stock en WhatsApp</span>
@@ -167,6 +168,8 @@ const faqSchema = JSON.stringify({
 						<button
 							class={`tab-btn px-5 py-2.5 rounded text-sm transition-all duration-200 ${index === 0 ? "bg-[#111111] text-white active-tab" : "bg-[#FFFFFF] border border-[#EAEAEA] text-[#787774] hover:bg-[#F9F9F8]"}`}
 							data-target={catalog.id}
+							data-umami-event="sales_tab_click"
+							data-umami-event-tab={catalog.id}
 						>
 							{catalog.series}
 						</button>
@@ -218,6 +221,9 @@ const faqSchema = JSON.stringify({
 										<a
 											href="#"
 											data-msg={`Hola Pixel Fix, me interesa comprar el ${device.name} (${device.specs}) que tienen en ${formatPrice(device.price, device.ganancia)}.`}
+											data-umami-event="sales_comprar_click"
+											data-umami-event-device={device.name}
+											data-umami-event-price={formatPrice(device.price, device.ganancia)}
 											class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform"
 										>
 											Apartar / Comprar Equipo
@@ -237,10 +243,10 @@ const faqSchema = JSON.stringify({
 				<div class="max-w-xl">
 					<h3 class="text-lg font-medium text-[#111111] mb-2">¿Ya tienes un Google Pixel y necesita reparación?</h3>
 					<p class="text-sm text-[#787774] leading-[1.6]">
-						Ofrecemos servicio técnico especializado, cambio de baterías y pantallas originales con piezas autorizadas de Google importadas desde iFixit. Conoce nuestro laboratorio de <a href="/reparacion-google-pixel-monterrey" class="text-[#111111] underline hover:text-[#1F6C9F] transition-colors">reparación de Google Pixel en Monterrey y envíos nacionales</a>.
+						Ofrecemos servicio técnico especializado, cambio de baterías y pantallas originales con piezas autorizadas de Google importadas desde iFixit. Conoce nuestro laboratorio de <a href="/reparacion-google-pixel-monterrey" data-umami-event="sales_contextual_repairs_link_click" class="text-[#111111] underline hover:text-[#1F6C9F] transition-colors">reparación de Google Pixel en Monterrey y envíos nacionales</a>.
 					</p>
 				</div>
-				<a href="/reparacion-google-pixel-monterrey" class="px-6 py-3.5 bg-[#111111] text-white text-xs font-mono font-medium rounded hover:scale-[0.98] transition-all shrink-0">
+				<a href="/reparacion-google-pixel-monterrey" data-umami-event="sales_go_to_repairs_click" class="px-6 py-3.5 bg-[#111111] text-white text-xs font-mono font-medium rounded hover:scale-[0.98] transition-all shrink-0">
 					Servicio de Reparación
 				</a>
 			</div>

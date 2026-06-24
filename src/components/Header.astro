@@ -4,14 +4,14 @@ const phoneNumber = "528111913676";
 
 <header class="w-full border-b border-[#EAEAEA] bg-[#F3F3F1]/80 backdrop-blur-md sticky top-0 z-50">
 	<div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-		<a href="/" class="font-bold text-[#111111] tracking-tight hover:opacity-80 transition-opacity">Pixel Fix.</a>
+		<a href="/" data-umami-event="header_logo_click" class="font-bold text-[#111111] tracking-tight hover:opacity-80 transition-opacity">Pixel Fix.</a>
 		<nav class="hidden md:flex items-center gap-6 text-xs font-mono tracking-wider uppercase text-[#787774]">
-			<a href="/" class="hover:text-[#111111] transition-colors">Inicio</a>
-			<a href="/reparacion-google-pixel-monterrey" class="hover:text-[#111111] transition-colors">Reparación</a>
-			<a href="/venta-google-pixel-monterrey" class="hover:text-[#111111] transition-colors">Venta de Equipos</a>
-			<a href="#testimoniales" class="hover:text-[#111111] transition-colors">Testimoniales</a>
+			<a href="/" data-umami-event="header_nav_click" data-umami-event-page="inicio" class="hover:text-[#111111] transition-colors">Inicio</a>
+			<a href="/reparacion-google-pixel-monterrey" data-umami-event="header_nav_click" data-umami-event-page="reparacion" class="hover:text-[#111111] transition-colors">Reparación</a>
+			<a href="/venta-google-pixel-monterrey" data-umami-event="header_nav_click" data-umami-event-page="venta" class="hover:text-[#111111] transition-colors">Venta de Equipos</a>
+			<a href="#testimoniales" data-umami-event="header_nav_click" data-umami-event-page="testimoniales" class="hover:text-[#111111] transition-colors">Testimoniales</a>
 		</nav>
-		<a href={`https://wa.me/${phoneNumber}`} target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-[#111111] text-white text-xs font-medium rounded transition-transform hover:scale-[0.98]">
+		<a href={`https://wa.me/${phoneNumber}`} target="_blank" rel="noopener noreferrer" data-umami-event="header_contact_click" class="px-4 py-2 bg-[#111111] text-white text-xs font-medium rounded transition-transform hover:scale-[0.98]">
 			Contacto
 		</a>
 	</div>

@@ -89,6 +89,7 @@ const productsSchema = JSON.stringify({
 <Layout 
 	title="Pixel Fix | Especialistas Google Pixel en México"
 	description="Reparación y venta de refacciones originales para Google Pixel. Pantallas, baterías y carcasas. Envíos nacionales y garantía en Monterrey."
+	url="https://www.pixelfixmexico.com/"
 >
 	<script type="application/ld+json" set:html={localBusinessSchema} />
 	<script type="application/ld+json" set:html={faqSchema} />
@@ -112,16 +113,16 @@ const productsSchema = JSON.stringify({
 					Reparación especializada y venta de equipos Google Pixel en México. Refacciones originales con garantía local y envíos a todo el país.
 				</p>
 				<div class="flex flex-wrap gap-4 mt-8 w-full">
-					<a href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20cotizar%20un%20servicio%20o%20equipo.`} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center px-6 py-3.5 bg-[#111111] text-white text-xs font-mono font-medium rounded transition-transform hover:scale-[0.98] w-full sm:w-auto">
+					<a href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20cotizar%20un%20servicio%20o%20equipo.`} target="_blank" rel="noopener noreferrer" data-umami-event="hero_whatsapp_click" class="group inline-flex items-center justify-center px-6 py-3.5 bg-[#111111] text-white text-xs font-mono font-medium rounded transition-transform hover:scale-[0.98] w-full sm:w-auto">
 						<span>WhatsApp de Contacto</span>
 						<svg class="w-3.5 h-3.5 ml-2 opacity-70 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
 						</svg>
 					</a>
-					<a href="/reparacion-google-pixel-monterrey" class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-[#EAEAEA] text-[#111111] text-xs font-mono font-medium rounded hover:bg-[#F9F9F8] transition-all hover:scale-[0.98] w-full sm:w-auto">
+					<a href="/reparacion-google-pixel-monterrey" data-umami-event="hero_reparacion_click" class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-[#EAEAEA] text-[#111111] text-xs font-mono font-medium rounded hover:bg-[#F9F9F8] transition-all hover:scale-[0.98] w-full sm:w-auto">
 						<span>Reparación y Piezas</span>
 					</a>
-					<a href="/venta-google-pixel-monterrey" class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-[#EAEAEA] text-[#111111] text-xs font-mono font-medium rounded hover:bg-[#F9F9F8] transition-all hover:scale-[0.98] w-full sm:w-auto">
+					<a href="/venta-google-pixel-monterrey" data-umami-event="hero_venta_click" class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-[#EAEAEA] text-[#111111] text-xs font-mono font-medium rounded hover:bg-[#F9F9F8] transition-all hover:scale-[0.98] w-full sm:w-auto">
 						<span>Comprar Equipos</span>
 					</a>
 				</div>
@@ -149,7 +150,7 @@ const productsSchema = JSON.stringify({
 			<!-- Tabs -->
 			<div class="flex flex-wrap gap-2 mb-10" id="model-tabs">
 				{repairCatalog.map((catalog, index) => (
-					<button class={`tab-btn px-5 py-2.5 rounded text-sm transition-all duration-200 ${index === 2 ? 'bg-[#111111] text-white active-tab' : 'bg-[#FFFFFF] border border-[#EAEAEA] text-[#787774] hover:bg-[#F9F9F8]'}`} data-target={catalog.id}>
+					<button class={`tab-btn px-5 py-2.5 rounded text-sm transition-all duration-200 ${index === 2 ? 'bg-[#111111] text-white active-tab' : 'bg-[#FFFFFF] border border-[#EAEAEA] text-[#787774] hover:bg-[#F9F9F8]'}`} data-target={catalog.id} data-umami-event="cotizador_tab_click" data-umami-event-tab={catalog.id}>
 						{catalog.series}
 					</button>
 				))}
@@ -182,7 +183,7 @@ const productsSchema = JSON.stringify({
 									</div>
 								</div>
 								<div class="w-full md:w-64 shrink-0 flex flex-col gap-3 justify-center">
-									<a href="#" data-msg={`Hola Pixel Fix, quiero solicitar reparación / compra para la ${part.name} del ${part.model}. Pásame los detalles.`} class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform">Seleccionar y Solicitar Reparación</a>
+									<a href="#" data-msg={`Hola Pixel Fix, quiero solicitar reparación / compra para la ${part.name} del ${part.model}. Pásame los detalles.`} data-umami-event="cotizar_reparacion_click" data-umami-event-model={part.model} data-umami-event-part={part.name} class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform">Seleccionar y Solicitar Reparación</a>
 								</div>
 							</div>
 						))}
