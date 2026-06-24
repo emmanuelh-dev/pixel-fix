@@ -159,32 +159,33 @@ const productsSchema = JSON.stringify({
 			<!-- Tab Contents -->
 			<div class="relative min-h-[300px]">
 				{repairCatalog.map((catalog, index) => (
-					<div class={`tab-content grid gap-6 ${index === 2 ? '' : 'hidden'}`} id={catalog.id}>
+					<div class={`tab-content grid grid-cols-2 lg:grid-cols-3 gap-4 ${index === 2 ? '' : 'hidden'}`} id={catalog.id}>
 						{catalog.parts.map(part => (
-							<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col md:flex-row md:items-start justify-between gap-8 transition-shadow hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-								<div class="flex-1">
-									<div class="flex items-center gap-3 mb-4">
-										<h3 class="text-xl font-medium text-[#111111]">{part.name}</h3>
-										<span class="text-[10px] uppercase tracking-[0.05em] font-medium text-[#111111] bg-[#F9F9F8] border border-[#EAEAEA] px-2 py-0.5 rounded-full">{part.model}</span>
+							<div class="bg-[#FFFFFF] p-5 border border-[#EAEAEA] rounded-xl flex flex-col justify-between transition-all hover:shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:border-[#CCCCCC]">
+								<div>
+									<div class="flex items-center justify-between gap-2 mb-3">
+										<span class="text-[9px] uppercase tracking-[0.05em] font-mono text-[#787774]">{part.model}</span>
+										<span class="text-[9px] font-mono text-[#956400] bg-[#FBF3DB] px-1.5 py-0.5 rounded">{part.delivery}</span>
 									</div>
-									<div class="space-y-4 text-sm text-[#787774]">
-										<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
+									<h3 class="text-sm font-medium text-[#111111] leading-snug mb-4 min-h-[40px] line-clamp-2">
+										{part.name}
+									</h3>
+									
+									<div class="space-y-2.5 text-xs text-[#787774] border-t border-[#F3F3F1] pt-3 mb-5">
+										<div class="flex justify-between">
 											<span>Refacción sola:</span>
 											<span class="font-medium text-[#111111] font-mono">{formatPrice(part.pricePart, part.ganancia)}</span>
 										</div>
-										<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
-											<span>Con instalación en MTY:</span>
+										<div class="flex justify-between">
+											<span>Instalada MTY:</span>
 											<span class="font-medium text-[#111111] font-mono">{formatPrice(part.priceInstall, part.ganancia)}</span>
-										</div>
-										<div class="flex justify-between pt-1">
-											<span>Tiempo de entrega oficial:</span>
-											<span class="font-medium text-[#956400]">{part.delivery}</span>
 										</div>
 									</div>
 								</div>
-								<div class="w-full md:w-64 shrink-0 flex flex-col gap-3 justify-center">
-									<a href="#" data-msg={`Hola Pixel Fix, quiero solicitar reparación / compra para la ${part.name} del ${part.model}. Pásame los detalles.`} data-umami-event="cotizar_reparacion_click" data-umami-event-model={part.model} data-umami-event-part={part.name} class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform">Seleccionar y Solicitar Reparación</a>
-								</div>
+								
+								<a href="#" data-msg={`Hola Pixel Fix, quiero solicitar reparación / compra para la ${part.name} del ${part.model}. Pásame los detalles.`} data-umami-event="cotizar_reparacion_click" data-umami-event-model={part.model} data-umami-event-part={part.name} class="wa-link block w-full text-center py-2.5 bg-[#111111] hover:bg-[#222222] text-white text-xs font-mono font-medium rounded transition-transform hover:scale-[0.98]">
+									Cotizar Servicio
+								</a>
 							</div>
 						))}
 					</div>
