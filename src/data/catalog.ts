@@ -76,49 +76,50 @@ export const salesCatalog = [
     series: "Pixel 10 Series",
     id: "pixel-10",
     devices: [
-      { name: "Google Pixel 10 Pro Fold", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 16000, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
-      { name: "Google Pixel 10 Pro XL", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 14500, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
-      { name: "Google Pixel 10 Pro", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 13000, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Hazel" },
-      { name: "Google Pixel 10", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 10500, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Hazel" },
-      { name: "Google Pixel 10a", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 9200, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
+      { name: "Google Pixel 10 Pro Fold", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 16500, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
+      { name: "Google Pixel 10 Pro XL", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 15000, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
+      { name: "Google Pixel 10 Pro", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 13500, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Hazel" },
+      { name: "Google Pixel 10", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 11000, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Hazel" },
+      { name: "Google Pixel 10a", specs: "128GB - Open Box (Incluye Caja y Accesorios)", price: 9700, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
     ]
   },
   {
     series: "Pixel 9 Series",
     id: "pixel-9",
     devices: [
-      { name: "Google Pixel 9 Pro Fold", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 13800, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" },
-      { name: "Google Pixel 9 Pro XL", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 10800, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
-      { name: "Google Pixel 9 Pro", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 9800, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Hazel" },
-      { name: "Google Pixel 9", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 8800, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Wintergreen" },
-      { name: "Google Pixel 9a", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 8500, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
+      { name: "Google Pixel 9 Pro Fold", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 14300, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" },
+      { name: "Google Pixel 9 Pro XL", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 11300, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
+      { name: "Google Pixel 9 Pro", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 10300, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Hazel" },
+      { name: "Google Pixel 9", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 9300, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Wintergreen" },
+      { name: "Google Pixel 9a", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 9000, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
     ]
   },
   {
     series: "Pixel 8 Series",
     id: "pixel-8",
     devices: [
-      { name: "Google Pixel 8 Pro", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 6900, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Bay Blue" },
-      { name: "Google Pixel 8", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 6500, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Rose" },
-      { name: "Google Pixel 8a", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 6200, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
+      { name: "Google Pixel 8 Pro", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 7400, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Bay Blue" },
+      { name: "Google Pixel 8", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 7000, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Rose" },
+      { name: "Google Pixel 8a", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 6700, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
     ]
   },
   {
     series: "Pixel 7 Series",
     id: "pixel-7",
     devices: [
-      { name: "Google Pixel 7 Pro", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 5300, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Hazel" },
-      { name: "Google Pixel 7", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 4600, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Lemongrass" },
-      { name: "Google Pixel 7a", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 4300, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
+      { name: "Google Pixel 7 Pro", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 5800, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Hazel" },
+      { name: "Google Pixel 7", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 5100, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Lemongrass" },
+      { name: "Google Pixel 7a", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 4800, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
     ]
   },
   {
     series: "Pixel 6 Series",
     id: "pixel-6",
     devices: [
-      { name: "Google Pixel 6 Pro", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 4850, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Stormy Black" },
-      { name: "Google Pixel 6", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 4000, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Sorta Seafoam" },
-      { name: "Google Pixel 6a", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 3900, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Charcoal" }
+      { name: "Google Pixel 6 Pro", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 5350, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Stormy Black" },
+      { name: "Google Pixel 6", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 4500, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Sorta Seafoam" },
+      { name: "Google Pixel 6a", specs: "128GB - Usado Estética 9 (Sin Caja)", price: 4400, ganancia: 400, availability: "Importación 10-12 días hábiles", color: "Charcoal" }
     ]
   }
 ];
+

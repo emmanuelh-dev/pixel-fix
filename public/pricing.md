@@ -21,25 +21,25 @@ Cada dispositivo vendido incluye de regalo:
 - **+512 GB:** +$1,800 MXN
 
 ### Lista de Precios Base (128 GB):
-- **Pixel 10 Pro Fold** (Open Box): $16,400 MXN
-- **Pixel 10 Pro XL** (Open Box): $14,900 MXN
-- **Pixel 10 Pro** (Open Box): $13,400 MXN
-- **Pixel 10** (Open Box): $10,900 MXN
-- **Pixel 10a** (Open Box): $9,600 MXN
-- **Pixel 9 Pro Fold** (Usado Estética 9): $14,200 MXN
-- **Pixel 9 Pro XL** (Usado Estética 9): $11,200 MXN
-- **Pixel 9 Pro** (Usado Estética 9): $10,200 MXN
-- **Pixel 9** (Usado Estética 9): $9,200 MXN
-- **Pixel 9a** (Usado Estética 9): $8,900 MXN
-- **Pixel 8 Pro** (Usado Estética 9): $7,300 MXN
-- **Pixel 8** (Usado Estética 9): $6,900 MXN
-- **Pixel 8a** (Usado Estética 9): $6,600 MXN
-- **Pixel 7 Pro** (Usado Estética 9): $5,700 MXN
-- **Pixel 7** (Usado Estética 9): $5,000 MXN
-- **Pixel 7a** (Usado Estética 9): $4,700 MXN
-- **Pixel 6 Pro** (Usado Estética 9): $5,250 MXN
-- **Pixel 6** (Usado Estética 9): $4,400 MXN
-- **Pixel 6a** (Usado Estética 9): $4,300 MXN
+- **Pixel 10 Pro Fold** (Open Box): $16,900 MXN
+- **Pixel 10 Pro XL** (Open Box): $15,400 MXN
+- **Pixel 10 Pro** (Open Box): $13,900 MXN
+- **Pixel 10** (Open Box): $11,400 MXN
+- **Pixel 10a** (Open Box): $10,100 MXN
+- **Pixel 9 Pro Fold** (Usado Estética 9): $14,700 MXN
+- **Pixel 9 Pro XL** (Usado Estética 9): $11,700 MXN
+- **Pixel 9 Pro** (Usado Estética 9): $10,700 MXN
+- **Pixel 9** (Usado Estética 9): $9,700 MXN
+- **Pixel 9a** (Usado Estética 9): $9,400 MXN
+- **Pixel 8 Pro** (Usado Estética 9): $7,800 MXN
+- **Pixel 8** (Usado Estética 9): $7,400 MXN
+- **Pixel 8a** (Usado Estética 9): $7,100 MXN
+- **Pixel 7 Pro** (Usado Estética 9): $6,200 MXN
+- **Pixel 7** (Usado Estética 9): $5,500 MXN
+- **Pixel 7a** (Usado Estética 9): $5,200 MXN
+- **Pixel 6 Pro** (Usado Estética 9): $5,750 MXN
+- **Pixel 6** (Usado Estética 9): $4,900 MXN
+- **Pixel 6a** (Usado Estética 9): $4,800 MXN
 
 ---
 
