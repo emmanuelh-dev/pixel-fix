@@ -1,43 +1,47 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Testimonials from '../components/Testimonials.astro';
-import { salesCatalog } from '../data/catalog';
+import Layout from "../layouts/Layout.astro";
+import Testimonials from "../components/Testimonials.astro";
+import { salesCatalog } from "../data/catalog";
 
 const faqs = [
-  {
-    question: "¿Los equipos son nuevos o reacondicionados?",
-    answer: "Ofrecemos ambos. En cada modelo especificamos si es Nuevo Sellado de fábrica o Reacondicionado Grado A (estética impecable de 9.5+, batería óptima y funcionamiento al 100%)."
-  },
-  {
-    question: "¿Qué garantía tienen los teléfonos Google Pixel?",
-    answer: "Todos los equipos que vendemos cuentan con 90 días de garantía directa gestionada localmente en Monterrey para tu total tranquilidad, sin necesidad de trámites internacionales."
-  },
-  {
-    question: "¿Hacen envíos a todo México o entregas personales?",
-    answer: "Hacemos entregas personales y envíos locales en Monterrey el mismo día. Para el resto del país, realizamos envíos asegurados express a través de DHL o FedEx."
-  }
+	{
+		question: "¿Los equipos son nuevos o reacondicionados?",
+		answer:
+			"Ofrecemos ambos. En cada modelo especificamos si es Nuevo Sellado de fábrica o Reacondicionado Grado A (estética impecable de 9.5+, batería óptima y funcionamiento al 100%).",
+	},
+	{
+		question: "¿Qué garantía tienen los teléfonos Google Pixel?",
+		answer:
+			"Todos los equipos que vendemos cuentan con 90 días de garantía directa gestionada localmente en Monterrey para tu total tranquilidad, sin necesidad de trámites internacionales.",
+	},
+	{
+		question: "¿Hacen envíos a todo México o entregas personales?",
+		answer:
+			"Hacemos entregas personales y envíos locales en Monterrey el mismo día. Para el resto del país, realizamos envíos asegurados express a través de DHL o FedEx.",
+	},
 ];
 
 const phoneNumber = "528111913676";
 
 const localBusinessSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Pixel Fix México - Venta de Equipos",
-  "image": "https://www.pixelfixmexico.com/logo.png",
-  "description": "Venta de teléfonos Google Pixel nuevos y reacondicionados en Monterrey con garantía directa.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Monterrey",
-    "addressRegion": "NL",
-    "addressCountry": "MX"
-  },
-  "priceRange": "$$$",
-  "telephone": `+${phoneNumber}`
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	name: "Pixel Fix México - Venta de Equipos",
+	image: "https://www.pixelfixmexico.com/logo.png",
+	description:
+		"Venta de teléfonos Google Pixel nuevos y reacondicionados en Monterrey con garantía directa.",
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "Monterrey",
+		addressRegion: "NL",
+		addressCountry: "MX",
+	},
+	priceRange: "$$$",
+	telephone: `+${phoneNumber}`,
 });
 ---
 
-<Layout 
+<Layout
 	title="Venta de Google Pixel en Monterrey | Equipos Nuevos y Reacondicionados"
 	description="Compra tu Google Pixel original en Monterrey. Equipos nuevos y reacondicionados Grado A con garantía local directa y entrega inmediata."
 >
@@ -45,45 +49,88 @@ const localBusinessSchema = JSON.stringify({
 
 	<!-- Ambient background -->
 	<div class="fixed inset-0 pointer-events-none z-[-1] bg-[#FBFBFA]">
-		<div class="absolute inset-0 opacity-[0.03] animate-[pulse_20s_ease-in-out_infinite]" style="background: radial-gradient(circle at 50% 0%, #111111 0%, transparent 60%);"></div>
+		<div
+			class="absolute inset-0 opacity-[0.03] animate-[pulse_20s_ease-in-out_infinite]"
+			style="background: radial-gradient(circle at 50% 0%, #111111 0%, transparent 60%);"
+		>
+		</div>
 	</div>
-
-
 
 	<main class="min-h-screen">
 		<!-- Hero Section -->
-		<section class="max-w-5xl mx-auto px-6 py-24 md:py-32 flex flex-col md:flex-row items-center gap-12 reveal">
+		<section
+			class="max-w-5xl mx-auto px-6 py-24 md:py-32 flex flex-col md:flex-row items-center gap-12 reveal"
+		>
 			<div class="flex-1 flex flex-col items-start text-left">
-				<div class="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-[#EDF3EC] text-[#346538] text-xs font-mono font-medium rounded-full tracking-wide uppercase">
-					Equipos Originales
-				</div>
-				<h1 class="font-serif-editorial text-5xl md:text-[5rem] font-medium tracking-[-0.03em] text-[#111111] leading-[1.05] mb-8">
-					Venta de Google Pixel en Monterrey.
+				<h1
+					class="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-[#EDF3EC] text-[#346538] text-xs font-mono font-medium rounded-full tracking-wide uppercase"
+				>
+					Venta de Google Pixel Originales en Monterrey
 				</h1>
-				<p class="text-lg md:text-xl text-[#787774] mb-10 leading-[1.6] max-w-lg font-light">
-					Dispositivos nuevos sellados y reacondicionados Grado A. Con garantía directa en Monterrey y envíos rápidos a todo México.
+				<h1
+					class="font-serif-editorial text-5xl md:text-[5rem] font-medium tracking-[-0.03em] text-[#111111] leading-[1.05] mb-8"
+				>
+					Equipos Nuevos Sellados y Reacondicionados Grado A.
+				</h1>
+				<p
+					class="text-lg md:text-xl text-[#787774] mb-10 leading-[1.6] max-w-lg font-light"
+				>
+					Dispositivos nuevos sellados y reacondicionados Grado A. Con garantía
+					directa en Monterrey y envíos rápidos a todo México.
 				</p>
-				<a href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20consultar%20los%20modelos%20de%20Google%20Pixel%20disponibles%20para%20compra.`} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center px-8 py-4 bg-[#111111] text-white text-sm font-medium rounded transition-transform hover:scale-[0.98]">
+				<a
+					href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20consultar%20los%20modelos%20de%20Google%20Pixel%20disponibles%20para%20compra.`}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="group inline-flex items-center justify-center px-8 py-4 bg-[#111111] text-white text-sm font-medium rounded transition-transform hover:scale-[0.98]"
+				>
 					<span>Consultar stock en WhatsApp</span>
-					<svg class="w-4 h-4 ml-3 opacity-70 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+					<svg
+						class="w-4 h-4 ml-3 opacity-70 group-hover:opacity-100 transition-opacity"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
 					</svg>
 				</a>
 			</div>
 			<div class="flex-1 w-full relative h-[400px] md:h-[500px]">
-				<div class="absolute inset-0 bg-[#F9F9F8] border border-[#EAEAEA] rounded-xl overflow-hidden">
-					<img src="https://picsum.photos/seed/pixelphone/800/1000" alt="Modelos de Google Pixel en venta" class="w-full h-full object-cover opacity-90 saturate-50 contrast-125 mix-blend-multiply" />
+				<div
+					class="absolute inset-0 bg-[#F9F9F8] border border-[#EAEAEA] rounded-xl overflow-hidden"
+				>
+					<img
+						src="https://picsum.photos/seed/pixelphone/800/1000"
+						alt="Modelos de Google Pixel en venta"
+						class="w-full h-full object-cover opacity-90 saturate-50 contrast-125 mix-blend-multiply"
+					/>
 					<div class="absolute inset-0 bg-[#111111] opacity-[0.02]"></div>
 				</div>
 			</div>
 		</section>
 
 		<!-- Catálogo de Dispositivos -->
-		<section id="catalogo" class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal">
+		<section
+			id="catalogo"
+			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+		>
 			<div class="mb-12 max-w-2xl">
-				<h2 class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4">Equipos Disponibles.</h2>
-				<p class="text-[#787774] leading-[1.6] mb-4">Selecciona el modelo que buscas. Entregas en Monterrey el mismo día y envíos nacionales expresos.</p>
-				<div class="inline-flex items-center px-3 py-1.5 bg-[#F9F9F8] border border-[#EAEAEA] rounded font-mono text-xs text-[#111111] mb-2">
+				<h2
+					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
+				>
+					Equipos Disponibles.
+				</h2>
+				<p class="text-[#787774] leading-[1.6] mb-4">
+					Selecciona el modelo que buscas. Entregas en Monterrey el mismo día y
+					envíos nacionales expresos.
+				</p>
+				<div
+					class="inline-flex items-center px-3 py-1.5 bg-[#F9F9F8] border border-[#EAEAEA] rounded font-mono text-xs text-[#111111] mb-2"
+				>
 					<span class="w-1.5 h-1.5 rounded-full bg-[#346538] mr-2"></span>
 					Garantía local de 90 días en todos los teléfonos.
 				</div>
@@ -91,73 +138,142 @@ const localBusinessSchema = JSON.stringify({
 
 			<!-- Tabs -->
 			<div class="flex flex-wrap gap-2 mb-10" id="model-tabs">
-				{salesCatalog.map((catalog, index) => (
-					<button class={`tab-btn px-5 py-2.5 rounded text-sm transition-all duration-200 ${index === 0 ? 'bg-[#111111] text-white active-tab' : 'bg-[#FFFFFF] border border-[#EAEAEA] text-[#787774] hover:bg-[#F9F9F8]'}`} data-target={catalog.id}>
-						{catalog.series}
-					</button>
-				))}
+				{
+					salesCatalog.map((catalog, index) => (
+						<button
+							class={`tab-btn px-5 py-2.5 rounded text-sm transition-all duration-200 ${index === 0 ? "bg-[#111111] text-white active-tab" : "bg-[#FFFFFF] border border-[#EAEAEA] text-[#787774] hover:bg-[#F9F9F8]"}`}
+							data-target={catalog.id}
+						>
+							{catalog.series}
+						</button>
+					))
+				}
 			</div>
 
 			<!-- Tab Contents -->
 			<div class="relative min-h-[300px]">
-				{salesCatalog.map((catalog, index) => (
-					<div class={`tab-content grid gap-6 ${index === 0 ? '' : 'hidden'}`} id={catalog.id}>
-						{catalog.devices.map(device => (
-							<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col md:flex-row md:items-start justify-between gap-8 transition-shadow hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-								<div class="flex-1">
-									<div class="flex items-center gap-3 mb-4">
-										<h3 class="text-xl font-medium text-[#111111]">{device.name}</h3>
-										<span class="text-[10px] uppercase tracking-[0.05em] font-medium text-[#787774] bg-[#EDF3EC] border border-[#EAEAEA] px-2 py-0.5 rounded-full">{device.availability}</span>
+				{
+					salesCatalog.map((catalog, index) => (
+						<div
+							class={`tab-content grid gap-6 ${index === 0 ? "" : "hidden"}`}
+							id={catalog.id}
+						>
+							{catalog.devices.map((device) => (
+								<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col md:flex-row md:items-start justify-between gap-8 transition-shadow hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+									<div class="flex-1">
+										<div class="flex items-center gap-3 mb-4">
+											<h3 class="text-xl font-medium text-[#111111]">
+												{device.name}
+											</h3>
+											<span class="text-[10px] uppercase tracking-[0.05em] font-medium text-[#787774] bg-[#EDF3EC] border border-[#EAEAEA] px-2 py-0.5 rounded-full">
+												{device.availability}
+											</span>
+										</div>
+										<div class="space-y-4 text-sm text-[#787774]">
+											<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
+												<span>Estado / Specs:</span>
+												<span class="font-medium text-[#111111]">
+													{device.specs}
+												</span>
+											</div>
+											<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
+												<span>Color disponible:</span>
+												<span class="font-medium text-[#111111]">
+													{device.color}
+												</span>
+											</div>
+											<div class="flex justify-between pt-1">
+												<span>Precio Especial:</span>
+												<span class="font-bold text-[#111111] font-mono text-base">
+													{device.price}
+												</span>
+											</div>
+										</div>
 									</div>
-									<div class="space-y-4 text-sm text-[#787774]">
-										<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
-											<span>Estado / Specs:</span>
-											<span class="font-medium text-[#111111]">{device.specs}</span>
-										</div>
-										<div class="flex justify-between border-b border-[#EAEAEA] pb-3">
-											<span>Color disponible:</span>
-											<span class="font-medium text-[#111111]">{device.color}</span>
-										</div>
-										<div class="flex justify-between pt-1">
-											<span>Precio Especial:</span>
-											<span class="font-bold text-[#111111] font-mono text-base">{device.price}</span>
-										</div>
+									<div class="w-full md:w-64 shrink-0 flex flex-col gap-3 justify-center">
+										<a
+											href="#"
+											data-msg={`Hola Pixel Fix, me interesa comprar el ${device.name} (${device.specs}) que tienen en $ ${device.price}.`}
+											class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform"
+										>
+											Apartar / Comprar Equipo
+										</a>
 									</div>
 								</div>
-								<div class="w-full md:w-64 shrink-0 flex flex-col gap-3 justify-center">
-									<a href="#" data-msg={`Hola Pixel Fix, me interesa comprar el ${device.name} (${device.specs}) que tienen en $ ${device.price}.`} class="wa-link text-center px-4 py-3 bg-[#111111] text-white text-sm font-medium rounded hover:scale-[0.98] transition-transform">Apartar / Comprar Equipo</a>
-								</div>
-							</div>
-						))}
-					</div>
-				))}
+							))}
+						</div>
+					))
+				}
 			</div>
 		</section>
 
 		<!-- Proceso de Compra -->
-		<section id="proceso" class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal">
+		<section
+			id="proceso"
+			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+		>
 			<div class="mb-16 max-w-xl">
-				<h2 class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4">Proceso de Adquisición.</h2>
-				<p class="text-[#787774] leading-[1.6]">Comprar tu Google Pixel es rápido y seguro. Entregas personales o envíos urgentes a todo México.</p>
+				<h2
+					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
+				>
+					Proceso de Adquisición.
+				</h2>
+				<p class="text-[#787774] leading-[1.6]">
+					Comprar tu Google Pixel es rápido y seguro. Entregas personales o
+					envíos urgentes a todo México.
+				</p>
 			</div>
-			
+
 			<div class="grid md:grid-cols-3 gap-6">
-				<div class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col">
-					<div class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded">01</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">Preguntas por Stock</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">Escríbenos para confirmar disponibilidad y colores del modelo Pixel que deseas.</p>
+				<div
+					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
+				>
+					<div
+						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
+					>
+						01
+					</div>
+					<h3 class="text-base font-medium text-[#111111] mb-2">
+						Preguntas por Stock
+					</h3>
+					<p class="text-[#787774] text-sm leading-[1.6]">
+						Escríbenos para confirmar disponibilidad y colores del modelo Pixel
+						que deseas.
+					</p>
 				</div>
 
-				<div class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col">
-					<div class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded">02</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">Pago y Entrega</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">Coordinamos el pago seguro contra entrega en Monterrey, o te enviamos tu guía express asegurada nacional.</p>
+				<div
+					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
+				>
+					<div
+						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
+					>
+						02
+					</div>
+					<h3 class="text-base font-medium text-[#111111] mb-2">
+						Pago y Entrega
+					</h3>
+					<p class="text-[#787774] text-sm leading-[1.6]">
+						Coordinamos el pago seguro contra entrega en Monterrey, o te
+						enviamos tu guía express asegurada nacional.
+					</p>
 				</div>
 
-				<div class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col">
-					<div class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded">03</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">Usa con Garantía</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">Recibes tu equipo listo para activar y con nuestra póliza de garantía local directa.</p>
+				<div
+					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
+				>
+					<div
+						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
+					>
+						03
+					</div>
+					<h3 class="text-base font-medium text-[#111111] mb-2">
+						Usa con Garantía
+					</h3>
+					<p class="text-[#787774] text-sm leading-[1.6]">
+						Recibes tu equipo listo para activar y con nuestra póliza de
+						garantía local directa.
+					</p>
 				</div>
 			</div>
 		</section>
@@ -166,71 +282,98 @@ const localBusinessSchema = JSON.stringify({
 		<Testimonials />
 
 		<!-- Dudas Frecuentes -->
-		<section id="faq" class="max-w-3xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal">
+		<section
+			id="faq"
+			class="max-w-3xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+		>
 			<div class="mb-12">
-				<h2 class="font-serif-editorial text-3xl tracking-tight text-[#111111] mb-4">Dudas Frecuentes.</h2>
-				<p class="text-[#787774] leading-[1.6]">Todo lo que necesitas saber antes de comprar tu Google Pixel.</p>
+				<h2
+					class="font-serif-editorial text-3xl tracking-tight text-[#111111] mb-4"
+				>
+					Dudas Frecuentes.
+				</h2>
+				<p class="text-[#787774] leading-[1.6]">
+					Todo lo que necesitas saber antes de comprar tu Google Pixel.
+				</p>
 			</div>
 
 			<div class="space-y-6">
-				{faqs.map(faq => (
-					<div class="pb-6 border-b border-[#EAEAEA]">
-						<h3 class="text-lg font-medium text-[#111111] mb-3">{faq.question}</h3>
-						<p class="text-[#787774] text-sm leading-[1.6]">{faq.answer}</p>
-					</div>
-				))}
+				{
+					faqs.map((faq) => (
+						<div class="pb-6 border-b border-[#EAEAEA]">
+							<h3 class="text-lg font-medium text-[#111111] mb-3">
+								{faq.question}
+							</h3>
+							<p class="text-[#787774] text-sm leading-[1.6]">{faq.answer}</p>
+						</div>
+					))
+				}
 			</div>
 		</section>
-		
-
 	</main>
 </Layout>
 
 <script>
 	// Tab Switching Logic
-	const tabs = document.querySelectorAll('.tab-btn');
-	const contents = document.querySelectorAll('.tab-content');
+	const tabs = document.querySelectorAll(".tab-btn");
+	const contents = document.querySelectorAll(".tab-content");
 
-	tabs.forEach(tab => {
-		tab.addEventListener('click', () => {
-			tabs.forEach(t => {
-				t.classList.remove('bg-[#111111]', 'text-white', 'active-tab');
-				t.classList.add('bg-[#FFFFFF]', 'border', 'border-[#EAEAEA]', 'text-[#787774]');
+	tabs.forEach((tab) => {
+		tab.addEventListener("click", () => {
+			tabs.forEach((t) => {
+				t.classList.remove("bg-[#111111]", "text-white", "active-tab");
+				t.classList.add(
+					"bg-[#FFFFFF]",
+					"border",
+					"border-[#EAEAEA]",
+					"text-[#787774]",
+				);
 			});
-			contents.forEach(c => c.classList.add('hidden'));
+			contents.forEach((c) => c.classList.add("hidden"));
 
-			tab.classList.remove('bg-[#FFFFFF]', 'border', 'border-[#EAEAEA]', 'text-[#787774]');
-			tab.classList.add('bg-[#111111]', 'text-white', 'active-tab');
-			const targetId = tab.getAttribute('data-target');
+			tab.classList.remove(
+				"bg-[#FFFFFF]",
+				"border",
+				"border-[#EAEAEA]",
+				"text-[#787774]",
+			);
+			tab.classList.add("bg-[#111111]", "text-white", "active-tab");
+			const targetId = tab.getAttribute("data-target");
 			const targetEl = document.getElementById(targetId);
-			if (targetEl) targetEl.classList.remove('hidden');
+			if (targetEl) targetEl.classList.remove("hidden");
 		});
 	});
 
 	// WhatsApp Links Builder
-	const PHONE_NUMBER = "528111913676"; 
-	const waLinks = document.querySelectorAll('.wa-link');
-	
-	waLinks.forEach(link => {
-		const msg = link.getAttribute('data-msg');
-		if(msg) {
-			link.setAttribute('href', `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`);
-			link.setAttribute('target', '_blank');
-			link.setAttribute('rel', 'noopener noreferrer');
+	const PHONE_NUMBER = "528111913676";
+	const waLinks = document.querySelectorAll(".wa-link");
+
+	waLinks.forEach((link) => {
+		const msg = link.getAttribute("data-msg");
+		if (msg) {
+			link.setAttribute(
+				"href",
+				`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`,
+			);
+			link.setAttribute("target", "_blank");
+			link.setAttribute("rel", "noopener noreferrer");
 		}
 	});
 
 	// Scroll Reveal
-	const observer = new IntersectionObserver((entries, obs) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add('revealed');
-				obs.unobserve(entry.target);
-			}
-		});
-	}, { threshold: 0.1 });
+	const observer = new IntersectionObserver(
+		(entries, obs) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add("revealed");
+					obs.unobserve(entry.target);
+				}
+			});
+		},
+		{ threshold: 0.1 },
+	);
 
-	document.querySelectorAll('.reveal').forEach(el => {
+	document.querySelectorAll(".reveal").forEach((el) => {
 		observer.observe(el);
 	});
 </script>
@@ -239,7 +382,9 @@ const localBusinessSchema = JSON.stringify({
 	.reveal {
 		opacity: 0;
 		transform: translateY(12px);
-		transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+		transition:
+			opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
 	.reveal.revealed {
 		opacity: 1;
