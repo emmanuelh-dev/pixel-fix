@@ -24,7 +24,7 @@ export const repairCatalog = [
     series: "Pixel 9 Series",
     id: "pixel-9",
     parts: [
-      { name: "Pantalla OLED con Huella (Réplica Excelente)", model: "Pixel 9 Pro XL", pricePart: 3850, priceInstall: 4650, ganancia: 400, delivery: "10-12 días hábiles" },
+      { name: "Pantalla OLED Original Nueva", model: "Pixel 9 Pro XL", pricePart: 5900, priceInstall: 6700, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pantalla OLED con Huella (Réplica Excelente)", model: "Pixel 9 Pro", pricePart: 3550, priceInstall: 4350, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pantalla OLED con Huella (Réplica Excelente)", model: "Pixel 9", pricePart: 3300, priceInstall: 4100, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pantalla OLED con Huella (Réplica Excelente)", model: "Pixel 9a", pricePart: 3000, priceInstall: 3800, ganancia: 400, delivery: "10-12 días hábiles" },

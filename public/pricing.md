@@ -52,7 +52,7 @@ Cada dispositivo vendido incluye de regalo:
 - **Pixel 10 Pro XL:** $4,400 MXN *(Instalación: $5,200 MXN)*
 - **Pixel 10 Pro:** $4,300 MXN *(Instalación: $5,100 MXN)*
 - **Pixel 10 / 10a:** $4,200 MXN *(Instalación: $5,000 MXN)*
-- **Pixel 9 Pro XL:** $4,250 MXN *(Instalación: $5,050 MXN)*
+- **Pixel 9 Pro XL (Original Nueva):** $6,300 MXN *(Instalación: $7,100 MXN)*
 - **Pixel 9 Pro:** $3,950 MXN *(Instalación: $4,750 MXN)*
 - **Pixel 9:** $3,700 MXN *(Instalación: $4,500 MXN)*
 - **Pixel 9a:** $3,400 MXN *(Instalación: $4,200 MXN)*
