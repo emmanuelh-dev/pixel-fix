@@ -6,9 +6,16 @@ import Footer from '../components/Footer.astro';
 interface Props {
 	title: string;
 	description: string;
+	image?: string;
+	url?: string;
 }
 
-const { title, description } = Astro.props;
+const { 
+	title, 
+	description, 
+	image = "https://www.pixelfixmexico.com/og-image.jpg", 
+	url = "https://www.pixelfixmexico.com/" 
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -28,17 +35,17 @@ const { title, description } = Astro.props;
 		
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://www.pixelfixmexico.com/" />
+		<meta property="og:url" content={url} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content="https://www.pixelfixmexico.com/og-image.jpg" />
+		<meta property="og:image" content={image} />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content="https://www.pixelfixmexico.com/" />
+		<meta property="twitter:url" content={url} />
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content="https://www.pixelfixmexico.com/og-image.jpg" />
+		<meta property="twitter:image" content={image} />
 		
 		<style is:global>
 			body {
