@@ -1,9 +1,87 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
-    <path d="M50.4 78.5a75.1 75.1 0 0 0-28.5 6.9l24.2-65.7c.7-2 1.9-3.2 3.4-3.2h29c1.5 0 2.7 1.2 3.4 3.2l24.2 65.7s-11.6-7-28.5-7L67 45.5c-.4-1.7-1.6-2.8-2.9-2.8-1.3 0-2.5 1.1-2.9 2.7L50.4 78.5Zm-1.1 28.2Zm-4.2-20.2c-2 6.6-.6 15.8 4.2 20.2a17.5 17.5 0 0 1 .2-.7 5.5 5.5 0 0 1 5.7-4.5c2.8.1 4.3 1.5 4.7 4.7.2 1.1.2 2.3.2 3.5v.4c0 2.7.7 5.2 2.2 7.4a13 13 0 0 0 5.7 4.9v-.3l-.2-.3c-1.8-5.6-.5-9.5 4.4-12.8l1.5-1a73 73 0 0 0 3.2-2.2 16 16 0 0 0 6.8-11.4c.3-2 .1-4-.6-6l-.8.6-1.6 1a37 37 0 0 1-22.4 2.7c-5-.7-9.7-2-13.2-6.2Z" />
-    <style>
-        path { fill: #000; }
-        @media (prefers-color-scheme: dark) {
-            path { fill: #FFF; }
-        }
-    </style>
+  <defs>
+    <!-- Gradiente para el destello principal (Sparkle) -->
+    <linearGradient id="sparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F0FF" />
+      <stop offset="100%" stop-color="#0066FF" />
+    </linearGradient>
+
+    <!-- Gradiente para el destello interior (brillo de alta intensidad) -->
+    <linearGradient id="innerSparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#A3F7FF" />
+    </linearGradient>
+
+    <!-- Gradiente para el cuerpo del teléfono -->
+    <linearGradient id="phoneBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="var(--phone-start, #3A3F47)" />
+      <stop offset="100%" stop-color="var(--phone-end, #15171C)" />
+    </linearGradient>
+
+    <!-- Gradiente para la barra de la cámara -->
+    <linearGradient id="cameraBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="var(--bar-start, #4F5661)" />
+      <stop offset="50%" stop-color="var(--bar-mid, #6B7585)" />
+      <stop offset="100%" stop-color="var(--bar-end, #3D434D)" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    :root {
+      --phone-start: #E1E3E6;
+      --phone-end: #BFC2C7;
+      --phone-border: #8F939C;
+      --bar-start: #9AA0A6;
+      --bar-mid: #BDC1C6;
+      --bar-end: #80868B;
+      --camera-lens: #202124;
+      --flash: #F8F9FA;
+      --sparkle-glow: rgba(0, 240, 255, 0.18);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --phone-start: #2D3139;
+        --phone-end: #12151A;
+        --phone-border: #4A505A;
+        --bar-start: #3C4043;
+        --bar-mid: #5F6368;
+        --bar-end: #202124;
+        --camera-lens: #0D0E10;
+        --flash: #F8F9FA;
+        --sparkle-glow: rgba(0, 240, 255, 0.3);
+      }
+    }
+
+    .phone-border { stroke: var(--phone-border); stroke-width: 4; }
+    .phone-fill { fill: url(#phoneBody); }
+    .bar-fill { fill: url(#cameraBar); }
+    .lens-fill { fill: var(--camera-lens); }
+    .flash-fill { fill: var(--flash); }
+  </style>
+
+  <!-- Resplandor suave detrás del destello -->
+  <circle cx="96" cy="32" r="22" fill="#00F0FF" opacity="0.1" />
+  <circle cx="96" cy="32" r="12" fill="#0066FF" opacity="0.15" />
+
+  <!-- Teléfono principal -->
+  <rect x="36" y="22" width="56" height="84" rx="12" class="phone-fill phone-border" />
+
+  <!-- Barra de cámara icónica del Pixel (sobrepasa ligeramente los bordes) -->
+  <rect x="32" y="34" width="64" height="18" rx="3" class="bar-fill" />
+  
+  <!-- Lentes de la cámara trasera (diseño de píldora negra) -->
+  <rect x="42" y="39" width="22" height="8" rx="4" class="lens-fill" />
+  <!-- Lentes internas sutiles -->
+  <circle cx="47" cy="43" r="1.5" fill="#000000" opacity="0.6" />
+  <circle cx="59" cy="43" r="1.5" fill="#000000" opacity="0.6" />
+
+  <!-- Flash -->
+  <circle cx="82" cy="43" r="2.5" class="flash-fill" />
+
+  <!-- Destello de reparación / Fix (Sparkle) -->
+  <!-- Destello exterior grande -->
+  <path d="M 96 14 Q 96 32 114 32 Q 96 32 96 50 Q 96 32 78 32 Q 96 32 96 14 Z" fill="url(#sparkleGrad)" />
+  <!-- Destello secundario diagonal cruzado más pequeño para dar dinamismo -->
+  <path d="M 96 23 Q 96 32 105 32 Q 96 32 96 41 Q 96 32 87 32 Q 96 32 96 23 Z" fill="url(#innerSparkleGrad)" opacity="0.9" />
 </svg>
