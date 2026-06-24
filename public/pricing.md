@@ -50,8 +50,12 @@ Piezas originales y calidad OEM. Todas las refacciones son importadas y oficiale
   - Con instalación en Monterrey: $2,300 MXN
 
 ---
-**Garantía:**
-Todas nuestras reparaciones y piezas cuentan con garantía directa gestionada localmente en Monterrey, Nuevo León, México.
+**Garantía y Origen de Refacciones:**
+- Todas nuestras refacciones son originales autorizadas por Google, importadas directamente desde **iFixit** y otros distribuidores oficiales de alta calidad en USA (OEM).
+- Ofrecemos soporte técnico oficial y cobertura de garantía real gestionada localmente en Monterrey, Nuevo León, México, sin trámites complejos para el cliente.
+
+**Gestión de Garantía Oficial de Fábrica:**
+- Si tu Google Pixel aún cuenta con garantía vigente directa de fábrica con Google, nosotros gestionamos el diagnóstico y envío de tu equipo al centro de servicio de Google en USA para que mantengas tu cobertura de fábrica sin dolores de cabeza.
 
 **Proceso de envío para clientes fuera de Monterrey:**
-El cliente envía su equipo por paquetería asegurada, nosotros lo reparamos en nuestro laboratorio, y lo devolvemos asegurado. También es posible únicamente comprar la refacción para envío nacional.
+El cliente envía su equipo por paquetería asegurada, nosotros lo reparamos en nuestro laboratorio con refacciones originales y lo devolvemos asegurado. También es posible únicamente comprar la refacción para envío nacional.
