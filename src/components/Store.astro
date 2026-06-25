@@ -1,21 +1,67 @@
 ---
+import fs from "node:fs";
+import path from "node:path";
 import { Icon } from "astro-icon/components";
 import {
-	storeCatalog as catalog,
-	storeAvailableModels as availableModels,
-	storeAvailableSeries as availableSeries,
+	storeCatalog,
+	storeAvailableModels as allAvailableModels,
+	storeAvailableSeries as allAvailableSeries,
 	formatPrice,
 	getSeries,
+	deviceImageFallback,
 } from "../data/catalog";
 import { phoneNumber } from "../data/store";
 
-const fmt = (n: number) => formatPrice(n);
+interface Props {
+	categoryFilter?: "equipo" | "refaccion" | "all";
+}
+
+const { categoryFilter = "all" } = Astro.props;
+
+const catalog = categoryFilter === "all"
+	? storeCatalog
+	: storeCatalog.filter((i) => i.category === categoryFilter);
+
+const availableModels = allAvailableModels.filter((m) =>
+	catalog.some((i) => i.model === m),
+);
+const availableSeries = allAvailableSeries.filter((s) =>
+	catalog.some((i) => i.series === s),
+);
+
+const fmt = (n: number, g: number = 0) => formatPrice(n, g);
+
+const imgDir = path.join(process.cwd(), "public/images/productos");
+const EXTS = ["webp", "jpg", "jpeg", "png"];
+
+function resolveDeviceImage(slug: string): string | null {
+	const candidates = [slug, deviceImageFallback[slug]].filter(Boolean);
+	for (const s of candidates) {
+		for (const ext of EXTS) {
+			if (fs.existsSync(path.join(imgDir, `${s}.${ext}`))) {
+				return `/images/productos/${s}.${ext}`;
+			}
+		}
+	}
+	return null;
+}
+
+const deviceImages = new Map<string, string>();
+for (const item of storeCatalog.filter((i) => i.category === "equipo")) {
+	const img = resolveDeviceImage(item.slug);
+	if (img) deviceImages.set(item.slug, img);
+}
 
 const typeIcon = {
 	screen: "ph:rectangle",
 	battery: "ph:battery-charging-vertical",
 	device: "ph:device-mobile",
 } as const;
+
+const onlyEquipo = categoryFilter === "equipo";
+const searchPlaceholder = onlyEquipo
+	? 'Ej: "Pixel 9 Pro", "Pixel 8a", "Pixel 10"…'
+	: 'Ej: "pantalla pixel 8", "batería pixel 7 pro"…';
 ---
 
 <div>
@@ -25,39 +71,41 @@ const typeIcon = {
 			<input
 				id="search-input"
 				type="search"
-				placeholder='Ej: "pantalla pixel 8", "batería pixel 7 pro"…'
+				placeholder={searchPlaceholder}
 				class="w-full pl-11 pr-4 py-3.5 bg-white border border-border-strong rounded-xl text-ink placeholder-muted-strong focus:outline-none focus:ring-2 focus:ring-ink/10 text-sm shadow-sm"
 			/>
 		</div>
 
-		<div class="mb-4">
-			<p
-				class="text-[10px] font-mono uppercase tracking-wider text-muted-strong mb-2"
-			>
-				Tipo
-			</p>
-			<div id="type-filters" class="flex flex-wrap gap-2">
-				<button
-					data-type="all"
-					class="type-btn chip-active px-3 py-1.5 text-xs font-mono rounded-full border transition-all"
-					>Todo</button
+		{!onlyEquipo && (
+			<div class="mb-4">
+				<p
+					class="text-[10px] font-mono uppercase tracking-wider text-muted-strong mb-2"
 				>
-				{
-					(["Pantalla", "Batería", "Equipo"] as const).map((t) => (
-						<button
-							data-type={t}
-							class="type-btn chip-inactive px-3 py-1.5 text-xs font-mono rounded-full border transition-all flex items-center gap-1.5"
-						>
-							<Icon
-								name={typeIcon[t === "Pantalla" ? "screen" : t === "Batería" ? "battery" : "device"]}
-								class="w-3 h-3"
-							/>
-							{t}
-						</button>
-					))
-				}
+					Tipo
+				</p>
+				<div id="type-filters" class="flex flex-wrap gap-2">
+					<button
+						data-type="all"
+						class="type-btn chip-active px-3 py-1.5 text-xs font-mono rounded-full border transition-all"
+						>Todo</button
+					>
+					{
+						(["Pantalla", "Batería", "Equipo"] as const).map((t) => (
+							<button
+								data-type={t}
+								class="type-btn chip-inactive px-3 py-1.5 text-xs font-mono rounded-full border transition-all flex items-center gap-1.5"
+							>
+								<Icon
+									name={typeIcon[t === "Pantalla" ? "screen" : t === "Batería" ? "battery" : "device"]}
+									class="w-3 h-3"
+								/>
+								{t}
+							</button>
+						))
+					}
+				</div>
 			</div>
-		</div>
+		)}
 
 		<div class="mb-4">
 			<p
@@ -113,8 +161,8 @@ const typeIcon = {
 			</div>
 		</div>
 
-		<p id="results-count" class="text-xs font-mono text-muted-strong mb-4">
-			{catalog.length} productos disponibles
+		<p id="results-count" data-noun={onlyEquipo ? "modelo" : "producto"} class="text-xs font-mono text-muted-strong mb-4">
+			{catalog.length} {onlyEquipo ? "modelos disponibles" : "productos disponibles"}
 		</p>
 
 		<div
@@ -128,77 +176,94 @@ const typeIcon = {
 						? { href: `/productos/${item.slug}` }
 						: {};
 					const whatsappText = encodeURIComponent(
-						`Hola, me interesa comprar el siguiente producto:\n\n*Modelo:* ${item.model}\n*Detalle:* ${item.category === "equipo" ? (item as any).specs : item.name}\n*Precio:* ${fmt(item.pricePart)}`,
+						`Hola, me interesa comprar el siguiente producto:\n\n*Modelo:* ${item.model}\n*Detalle:* ${item.category === "equipo" ? (item as any).specs : item.name}\n*Precio:* ${fmt(item.pricePart, item.ganancia)}`,
 					);
 					const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappText}`;
 
+					const deviceImg = item.category === "equipo" ? deviceImages.get(item.slug) : null;
+
 					return (
 						<div
-							class="catalog-card bg-white border border-border-strong rounded-xl p-5 flex flex-col gap-4 hover:shadow-sm hover:border-ink transition-all"
+							class="catalog-card bg-white border border-border-strong rounded-2xl overflow-hidden flex flex-col hover:shadow-sm hover:border-ink transition-all"
 							data-type={item.type}
 							data-series={item.series}
 							data-model={item.model}
-							data-text={`${item.name} ${item.model} ${item.type} ${item.series} original bateria pantalla pixel ${(item as any).specs || ""}`.toLowerCase()}
+							data-text={`${item.name} ${item.model} ${item.type} ${item.series} original bateria pantalla pixel ${item.specs || ""}`.toLowerCase()}
 						>
-							<CardContainer
-								{...containerProps}
-								class="flex flex-col gap-4 flex-1 block select-none cursor-pointer"
-							>
-								<div class="flex items-start justify-between gap-3">
-									<div class="flex-1 min-w-0">
-										<span class="text-[10px] font-mono uppercase tracking-wider text-muted-strong">
-											{item.type}
-										</span>
-										<p class="font-medium text-ink text-sm leading-snug mt-0.5">
-											{item.model}
-										</p>
-										<p class="text-xs text-muted-strong mt-0.5 line-clamp-1">
-											{item.category === "equipo"
-												? (item as any).specs
-												: item.name}
-										</p>
-									</div>
-									<div class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-muted text-muted-strong border border-border flex-shrink-0">
-										<Icon name={typeIcon[item.iconType]} class="w-4 h-4" />
-									</div>
-								</div>
+							{deviceImg && (
+								<CardContainer {...containerProps} class="block select-none cursor-pointer">
+									<img
+										src={deviceImg}
+										alt={item.model}
+										class="w-full h-44 object-cover"
+										loading="lazy"
+									/>
+								</CardContainer>
+							)}
 
-								<div>
-									<p class="text-lg font-bold text-ink font-mono">
-										{fmt(item.pricePart)}
-									</p>
-									{item.category !== "equipo" && item.priceInstall > 0 && (
-										<p class="text-[11px] text-muted-strong">
-											Con instalación MTY: {fmt(item.priceInstall)}
-										</p>
-									)}
-									<div class="flex items-center gap-1.5 mt-2">
-										<Icon name="ph:truck" class="w-3.5 h-3.5 text-muted-strong" />
-										<p class="text-[11px] text-muted-strong">{item.delivery}</p>
+							<div class="p-5 flex flex-col gap-4 flex-1">
+								<CardContainer
+									{...containerProps}
+									class="flex flex-col gap-4 flex-1 block select-none cursor-pointer"
+								>
+									<div class="flex items-start justify-between gap-3">
+										<div class="flex-1 min-w-0">
+											<span class="text-[10px] font-mono uppercase tracking-wider text-muted-strong">
+												{item.category === "equipo" && item.condition ? item.condition : item.type}
+											</span>
+											<p class="font-medium text-ink text-sm leading-snug mt-0.5">
+												{item.model}
+											</p>
+											<p class="text-xs text-muted-strong mt-0.5 line-clamp-1">
+												{item.category === "equipo"
+													? item.specs
+													: item.name}
+											</p>
+										</div>
+										{!deviceImg && (
+											<div class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-muted text-muted-strong border border-border flex-shrink-0">
+												<Icon name={typeIcon[item.iconType]} class="w-4 h-4" />
+											</div>
+										)}
 									</div>
-								</div>
-							</CardContainer>
 
-							<div class="flex items-center gap-2 mt-auto">
-								<a
-									href={whatsappUrl}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="px-3 py-2 text-[11px] font-mono border border-border-strong rounded-lg text-muted-strong hover:border-ink hover:text-ink hover:bg-surface-muted transition-all whitespace-nowrap"
-								>
-									Comprar
-								</a>
-								<button
-									data-id={item.id}
-									data-name={item.model}
-									data-part={item.name}
-									data-price={item.pricePart}
-									class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-ink text-white text-[11px] font-medium rounded-lg hover:bg-ink-hover transition-colors"
-								>
-									<Icon name="ph:shopping-cart" class="w-3.5 h-3.5 btn-icon-cart" />
-									<Icon name="ph:check" class="w-3.5 h-3.5 btn-icon-check hidden" />
-									<span class="btn-label">Agregar al carrito</span>
-								</button>
+									<div>
+										<p class="text-lg font-bold text-ink font-mono">
+											{fmt(item.pricePart, item.ganancia)}
+										</p>
+										{item.category !== "equipo" && item.priceInstall > 0 && (
+											<p class="text-[11px] text-muted-strong">
+												Con instalación MTY: {fmt(item.priceInstall)}
+											</p>
+										)}
+										<div class="flex items-center gap-1.5 mt-2">
+											<Icon name="ph:truck" class="w-3.5 h-3.5 text-muted-strong" />
+											<p class="text-[11px] text-muted-strong">{item.delivery}</p>
+										</div>
+									</div>
+								</CardContainer>
+
+								<div class="flex items-center gap-2 mt-auto">
+									<a
+										href={whatsappUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="px-3 py-2 text-[11px] font-mono border border-border-strong rounded-lg text-muted-strong hover:border-ink hover:text-ink hover:bg-surface-muted transition-all whitespace-nowrap"
+									>
+										Comprar
+									</a>
+									<button
+										data-id={item.id}
+										data-name={item.model}
+										data-part={item.name}
+										data-price={item.pricePart}
+										class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-ink text-white text-[11px] font-medium rounded-lg hover:bg-ink-hover transition-colors"
+									>
+										<Icon name="ph:shopping-cart" class="w-3.5 h-3.5 btn-icon-cart" />
+										<Icon name="ph:check" class="w-3.5 h-3.5 btn-icon-check hidden" />
+										<span class="btn-label">Agregar al carrito</span>
+									</button>
+								</div>
 							</div>
 						</div>
 					);
@@ -305,7 +370,8 @@ const typeIcon = {
 
 			const countEl = document.getElementById("results-count");
 			if (countEl) {
-				countEl.textContent = `${visible} producto${visible !== 1 ? "s" : ""} disponible${visible !== 1 ? "s" : ""}`;
+				const noun = countEl.dataset.noun ?? "producto";
+				countEl.textContent = `${visible} ${noun}${visible !== 1 ? "s" : ""} disponible${visible !== 1 ? "s" : ""}`;
 			}
 
 			document
@@ -324,7 +390,7 @@ const typeIcon = {
 			});
 		}
 
-		document.getElementById("type-filters")!.addEventListener("click", (e) => {
+		document.getElementById("type-filters")?.addEventListener("click", (e) => {
 			const btn = (e.target as Element).closest(".type-btn") as HTMLElement;
 			if (!btn) return;
 			activeType = btn.dataset.type!;

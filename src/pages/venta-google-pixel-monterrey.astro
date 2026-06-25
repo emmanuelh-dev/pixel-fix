@@ -12,7 +12,7 @@ const faqs = [
 	{
 		question: "¿Los equipos son nuevos o reacondicionados?",
 		answer:
-			"No vendemos dispositivos reacondicionados. Ofrecemos exclusivamente teléfonos **Originales Usados en Excelente Estado (Estética 9)** que se entregan sin caja, y dispositivos en formato **Open Box** (toda la Serie 10) que sí incluyen su caja y accesorios originales completos.",
+			"No vendemos dispositivos reacondicionados. Ofrecemos tres tipos de equipos: **Nuevos y Sellados** (sin abrir, con todos sus accesorios de fábrica), **Open Box** (Serie 10 con caja y accesorios originales completos) y **Usados Estética 9** (series anteriores, en excelente estado, se entregan con su caja).",
 	},
 	{
 		question: "¿Qué garantía tienen los teléfonos y piezas?",
@@ -22,7 +22,7 @@ const faqs = [
 	{
 		question: "¿Hacen envíos a todo México o entregas personales?",
 		answer:
-			"Hacemos entregas personales y envíos locales en Monterrey el mismo día. Para el resto del país, realizamos envíos asegurados express a través de DHL o FedEx.",
+			"Hacemos entregas personales y envíos locales en Monterrey el mismo día. Para el resto del país, realizamos envíos asegurados express a través de DHL.",
 	},
 	{
 		question: "¿Dónde puedo comprar un Google Pixel en México de forma segura?",
@@ -65,7 +65,7 @@ const questionsSchema = faqSchema(faqs);
 				<span
 					class="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-success-soft text-success text-xs font-mono font-medium rounded-full tracking-wide uppercase"
 				>
-					Usados Estética 9 y Open Box Genuinos
+					Nuevos · Open Box · Usados Estética 9
 				</span>
 				<h1
 					class="text-4xl md:text-4xl font-medium tracking-[-0.03em] text-ink leading-[1.15] mb-6"
@@ -75,27 +75,25 @@ const questionsSchema = faqSchema(faqs);
 				<p
 					class="text-base md:text-xl text-muted mb-8 leading-[1.6] max-w-lg font-light"
 				>
-					Equipos originales (Open Box para Serie 10 con accesorios; Usados
-					Estética 9 sin caja para series anteriores). Incluyen **Micas, Cubo
-					Fast Charge y Funda de regalo**. Garantía local directa de 28 días.
+					Equipos originales: Nuevos y Sellados, Open Box (Serie 10, con caja y accesorios) y Usados Estética 9 (series anteriores, con su caja). Incluyen **Micas, Cubo Fast Charge y Funda de regalo**. Garantía local directa de 28 días.
 				</p>
 				<div class="flex flex-wrap gap-4 w-full">
+					<a
+						href="#equipos"
+						data-umami-event="sales_hero_view_models_click"
+						class="group inline-flex items-center justify-center px-8 py-4 bg-ink text-white text-sm font-medium rounded transition-transform hover:scale-[0.98] w-full sm:w-auto"
+					>
+						<span>Ver Modelos Disponibles</span>
+						<Icon name="ph:arrow-right" class="w-4 h-4 ml-3 opacity-70 group-hover:opacity-100 transition-opacity" />
+					</a>
 					<a
 						href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20consultar%20los%20modelos%20de%20Google%20Pixel%20disponibles%20para%20compra.`}
 						target="_blank"
 						rel="noopener noreferrer"
 						data-umami-event="sales_hero_whatsapp_click"
-						class="group inline-flex items-center justify-center px-8 py-4 bg-ink text-white text-sm font-medium rounded transition-transform hover:scale-[0.98] w-full sm:w-auto"
-					>
-						<span>Consultar stock en WhatsApp</span>
-						<Icon name="ph:arrow-right" class="w-4 h-4 ml-3 opacity-70 group-hover:opacity-100 transition-opacity" />
-					</a>
-					<a
-						href="/reparacion-google-pixel-monterrey#cotizador"
-						data-umami-event="sales_hero_view_parts_click"
 						class="inline-flex items-center justify-center px-8 py-4 bg-white border border-border text-ink text-sm font-medium rounded hover:bg-surface-muted transition-all hover:scale-[0.98] w-full sm:w-auto"
 					>
-						<span>Ver Piezas de Repuesto</span>
+						<span>Consultar por WhatsApp</span>
 					</a>
 				</div>
 			</div>
@@ -116,15 +114,15 @@ const questionsSchema = faqSchema(faqs);
 		</section>
 
 		<!-- Catálogo de Equipos -->
-		<section class="max-w-5xl mx-auto px-6 pt-24 pb-6 border-t border-border reveal">
+		<section id="equipos" class="max-w-5xl mx-auto px-6 pt-24 pb-6 border-t border-border reveal">
 			<div class="max-w-2xl">
 				<h2 class="text-3xl md:text-4xl tracking-tight text-ink mb-4">
 					Equipos Disponibles.
 				</h2>
 				<p class="text-muted leading-[1.6] mb-4">
-					Filtra por modelo o serie. Toda compra incluye de regalo: **micas de
+					Filtra por serie o modelo. Toda compra incluye de regalo: **micas de
 					pantalla, cargador rápido (Fast Charge) y funda**. Precios para
-					capacidad base de 128GB (256GB: +$900 MXN / 512GB: +$1,800 MXN).
+					128GB base (256GB: +$900 MXN / 512GB: +$1,800 MXN).
 				</p>
 				<div
 					class="inline-flex items-center px-3 py-1.5 bg-surface-muted border border-border rounded font-mono text-xs text-ink mb-2"
@@ -134,7 +132,7 @@ const questionsSchema = faqSchema(faqs);
 				</div>
 			</div>
 		</section>
-		<Store />
+		<Store categoryFilter="equipo" />
 
 		<!-- Enlace contextual a reparaciones -->
 		<section class="max-w-5xl mx-auto px-6 pb-24 reveal">

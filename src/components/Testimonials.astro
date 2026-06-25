@@ -41,7 +41,7 @@ try {
 				>
 					{testimonialImages.map((img, index) => (
 						<div
-							class={`testimonial-item bg-surface border border-border rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all duration-300 group ${index >= 4 ? "hidden" : ""}`}
+							class={`testimonial-item bg-surface border border-border rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all duration-300 group ${index >= 6 ? "hidden" : index >= 4 ? "hidden md:block" : ""}`}
 						>
 							<div class="p-2 bg-surface-muted border-b border-border flex items-center justify-between text-[9px] sm:text-[10px] text-muted font-mono">
 								<span>Evidencia Real</span>

@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "admin": "bun scripts/admin.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -19,5 +20,9 @@
     "astro": "^7.0.2",
     "astro-icon": "^1.1.5",
     "tailwindcss": "^4.3.1"
+  },
+  "devDependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.2.0"
   }
 }

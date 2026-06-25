@@ -2,13 +2,16 @@
 import { Icon } from 'astro-icon/components';
 import Layout from '../../layouts/Layout.astro';
 import Faq from '../../components/Faq.astro';
-import { repairCatalog, formatPrice } from '../../data/catalog';
+import fs from 'node:fs';
+import path from 'node:path';
+import { repairCatalog, salesCatalog, formatPrice, GANANCIA_PIEZA, GANANCIA_TELEFONO, deviceImageFallback } from '../../data/catalog';
 import { phoneNumber } from '../../data/store';
 import { productSchema, breadcrumbSchema, faqSchema } from '../../lib/seo';
 
 export function getStaticPaths() {
   const paths: { params: { producto: string }; props: any }[] = [];
 
+  // --- Rutas de refacciones (partes) ---
   for (const series of repairCatalog) {
     for (const part of series.parts) {
       const isBateria = part.name.toLowerCase().includes('pila');
@@ -26,7 +29,7 @@ export function getStaticPaths() {
       if (!existing) {
         paths.push({
           params: { producto: slug },
-          props: { slug, isBateria, isOriginal, model: part.model, series: series.series, seriesId: series.id, parts: [part] },
+          props: { isDevice: false, slug, isBateria, isOriginal, model: part.model, series: series.series, seriesId: series.id, parts: [part] },
         });
       } else {
         existing.props.parts.push(part);
@@ -34,61 +37,202 @@ export function getStaticPaths() {
     }
   }
 
+  // --- Rutas de equipos ---
+  const CONDITION_BY_SERIES: Record<string, string> = { "Pixel 10 Series": "Open Box" };
+  for (const series of salesCatalog) {
+    const condition = CONDITION_BY_SERIES[series.series] ?? "Usado Estética 9";
+    for (const device of series.devices) {
+      const model = device.name.replace(/^Google\s+/, "");
+      const slug = `equipo-${model.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`;
+      paths.push({
+        params: { producto: slug },
+        props: {
+          isDevice: true,
+          slug,
+          model,
+          deviceName: device.name,
+          series: series.series,
+          seriesId: series.id,
+          condition,
+          price: device.price,
+          ganancia: device.ganancia,
+          availability: device.availability,
+          color: device.color,
+          specs: device.specs,
+          deviceId: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-equipo`,
+        },
+      });
+    }
+  }
+
   return paths;
 }
 
-const { isBateria, isOriginal, model, series, parts, seriesId } = Astro.props;
+const {
+  isDevice,
+  // part props
+  isBateria, isOriginal, model, series, parts, seriesId,
+  // device props
+  deviceName, condition, price, ganancia, availability, color, specs, deviceId,
+} = Astro.props;
 const { producto } = Astro.params;
 
-const partLabel = isBateria ? 'Batería' : 'Pantalla';
-const qualityLabel = isOriginal ? 'Original' : 'Réplica Excelente';
-const modelDisplay = model.replace(/\//g, 'y');
+// Returns the resolved image path or null if no file exists
+function resolveImage(slug: string): string | null {
+  const imgDir = path.join(process.cwd(), 'public/images/productos');
+  const candidates = [slug, deviceImageFallback[slug]].filter(Boolean);
+  for (const s of candidates) {
+    for (const ext of ['webp', 'jpg', 'jpeg', 'png']) {
+      if (fs.existsSync(path.join(imgDir, `${s}.${ext}`))) {
+        return `/images/productos/${s}.${ext}`;
+      }
+    }
+  }
+  return null;
+}
 
-const title = `${partLabel} Google ${modelDisplay} ${qualityLabel} en México | Pixel Fix — Alternativa iFixit`;
-const description = `Compra la ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} para tu Google ${modelDisplay} en México. Envío nacional en ${parts[0]?.delivery}. Precio desde ${formatPrice(Math.min(...parts.map((p: any) => p.pricePart)))}. iFixit no envía a México — nosotros sí.`;
-
+const productImage = resolveImage(producto);
+const ogImage = productImage ? `https://www.pixelfixmexico.com${productImage}` : undefined;
 const pageUrl = `https://www.pixelfixmexico.com/productos/${producto}/`;
 
-const productImage = `/images/productos/${producto}.webp`;
+// ---- DEVICE ----
+let title = '';
+let description = '';
+let itemSchema: string;
+let crumbSchema: string;
+let questionsSchema: string;
 
-const faqs = [
-  {
-    question: `¿Puedo comprar la ${partLabel.toLowerCase()} del ${model} en México?`,
-    answer: `Sí. En Pixel Fix importamos la ${partLabel.toLowerCase()} directamente desde distribuidores OEM en USA y la enviamos a todo México. El tiempo de entrega es de ${parts[0]?.delivery}.`,
-  },
-  {
-    question: `¿iFixit envía ${partLabel.toLowerCase()}s de Google Pixel a México?`,
-    answer: `iFixit es un referente mundial en refacciones originales de Google Pixel, pero actualmente no tiene envíos directos a México. Pixel Fix importa piezas de la misma cadena de distribución y las entrega en territorio nacional.`,
-  },
-  {
-    question: `¿La ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} funciona igual que la original?`,
-    answer: isBateria
-      ? `Sí. Las baterías originales son idénticas a las de fábrica en capacidad y voltaje. Las réplica excelente tienen rendimiento equivalente al 95% de la original.`
-      : `La pantalla incluye el sensor de huella dactilar integrado y funciona con todas las características del sistema. La calidad ${qualityLabel.toLowerCase()} es la mejor disponible en el mercado para esta pantalla.`,
-  },
-  {
-    question: `¿Cuánto cuesta enviar la ${partLabel.toLowerCase()} a mi ciudad?`,
-    answer: `El envío tiene un costo fijo de $250 MXN a cualquier parte de México, sin importar la cantidad de piezas que pidas en el mismo paquete.`,
-  },
-];
+if (isDevice) {
+  const sellingPrice = price + ganancia;
+  const conditionDesc = condition === "Open Box"
+    ? "con caja y accesorios originales completos"
+    : "en excelente estado, entregado sin caja";
 
-const itemSchema = productSchema({
-  name: `${partLabel} Google ${modelDisplay} ${qualityLabel}`,
-  description,
-  image: `https://www.pixelfixmexico.com${productImage}`,
-  offers: parts.map((p: any) => ({ price: p.pricePart, name: p.model })),
-});
+  title = `${deviceName} en México | ${condition} | Pixel Fix`;
+  description = `Compra el ${deviceName} ${condition} en México. ${sellingPrice.toLocaleString('es-MX')} MXN, 128GB base. Importación segura, garantía directa 28 días, envío a todo México.`;
 
-const crumbSchema = breadcrumbSchema([
-  { name: "Inicio", url: "https://www.pixelfixmexico.com/" },
-  { name: "Tienda", url: "https://www.pixelfixmexico.com/tienda/" },
-  { name: `${partLabel} ${model}`, url: pageUrl },
-]);
+  const faqs = [
+    {
+      question: `¿El ${model} es nuevo o de segunda mano?`,
+      answer: condition === "Open Box"
+        ? `Es Open Box: un equipo sin uso previo que incluye caja sellada y todos los accesorios originales de Google (cable, adaptador, documentación).`
+        : `Es Usado Estética 9: un equipo con uso mínimo en excelente estado cosmético. Funciona a la perfección y se entrega con su caja.`,
+    },
+    {
+      question: `¿Cuánto cuesta el envío del ${model} a mi ciudad?`,
+      answer: `El envío tiene un costo fijo de $250 MXN a cualquier parte de México vía DHL express asegurado. En Monterrey hacemos entrega personal el mismo día.`,
+    },
+    {
+      question: `¿Qué garantía incluye el ${model}?`,
+      answer: `Incluye 28 días de garantía directa local desde la fecha de entrega. Transcurrido ese plazo no se aceptan devoluciones ni cambios.`,
+    },
+    {
+      question: `¿Venden el ${model} en 256GB o 512GB?`,
+      answer: `Sí. La capacidad base es 128GB. Para 256GB suma $900 MXN y para 512GB suma $1,800 MXN al precio base. Consúltanos disponibilidad por WhatsApp.`,
+    },
+  ];
 
-const questionsSchema = faqSchema(faqs);
+  itemSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": deviceName,
+    "description": description,
+    "brand": { "@type": "Brand", "name": "Google" },
+    "offers": {
+      "@type": "Offer",
+      "price": sellingPrice,
+      "priceCurrency": "MXN",
+      "availability": "https://schema.org/InStock",
+      "seller": { "@type": "Organization", "name": "Pixel Fix México" },
+    },
+  });
+
+  crumbSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.pixelfixmexico.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Venta", "item": "https://www.pixelfixmexico.com/venta-google-pixel-monterrey/" },
+      { "@type": "ListItem", "position": 3, "name": model, "item": pageUrl },
+    ],
+  });
+
+  questionsSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+    })),
+  });
+
+} else {
+  // ---- PART ----
+  const partLabel = isBateria ? 'Batería' : 'Pantalla';
+  const qualityLabel = isOriginal ? 'Original' : 'Réplica Excelente';
+  const modelDisplay = model.replace(/\//g, 'y');
+
+  title = `${partLabel} Google ${modelDisplay} ${qualityLabel} en México | Pixel Fix — Alternativa iFixit`;
+  description = `Compra la ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} para tu Google ${modelDisplay} en México. Envío nacional en ${parts[0]?.delivery}. Precio desde ${formatPrice(Math.min(...parts.map((p: any) => p.pricePart)), GANANCIA_PIEZA)}. iFixit no envía a México — nosotros sí.`;
+
+  const faqs = [
+    {
+      question: `¿Puedo comprar la ${partLabel.toLowerCase()} del ${model} en México?`,
+      answer: `Sí. En Pixel Fix importamos la ${partLabel.toLowerCase()} directamente desde distribuidores OEM en USA y la enviamos a todo México. El tiempo de entrega es de ${parts[0]?.delivery}.`,
+    },
+    {
+      question: `¿iFixit envía ${partLabel.toLowerCase()}s de Google Pixel a México?`,
+      answer: `iFixit es un referente mundial en refacciones originales de Google Pixel, pero actualmente no tiene envíos directos a México. Pixel Fix importa piezas de la misma cadena de distribución y las entrega en territorio nacional.`,
+    },
+    {
+      question: `¿La ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} funciona igual que la original?`,
+      answer: isBateria
+        ? `Sí. Las baterías originales son idénticas a las de fábrica en capacidad y voltaje. Las réplica excelente tienen rendimiento equivalente al 95% de la original.`
+        : `La pantalla incluye el sensor de huella dactilar integrado y funciona con todas las características del sistema. La calidad ${qualityLabel.toLowerCase()} es la mejor disponible en el mercado para esta pantalla.`,
+    },
+    {
+      question: `¿Cuánto cuesta enviar la ${partLabel.toLowerCase()} a mi ciudad?`,
+      answer: `El envío tiene un costo fijo de $250 MXN a cualquier parte de México, sin importar la cantidad de piezas que pidas en el mismo paquete.`,
+    },
+  ];
+
+  itemSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": `${partLabel} Google ${modelDisplay} ${qualityLabel}`,
+    "description": description,
+    "offers": parts.map((p: any) => ({
+      "@type": "Offer",
+      "price": p.pricePart + GANANCIA_PIEZA,
+      "priceCurrency": "MXN",
+      "name": p.model,
+    })),
+  });
+
+  crumbSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.pixelfixmexico.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Tienda", "item": "https://www.pixelfixmexico.com/tienda/" },
+      { "@type": "ListItem", "position": 3, "name": `${partLabel} ${model}`, "item": pageUrl },
+    ],
+  });
+
+  questionsSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+    })),
+  });
+}
 ---
 
-<Layout title={title} description={description} url={pageUrl}>
+<Layout title={title} description={description} url={pageUrl} image={ogImage}>
   <script type="application/ld+json" set:html={itemSchema} />
   <script type="application/ld+json" set:html={crumbSchema} />
   <script type="application/ld+json" set:html={questionsSchema} />
@@ -99,150 +243,303 @@ const questionsSchema = faqSchema(faqs);
     <nav class="text-xs font-mono text-muted-strong mb-8 flex items-center gap-2 flex-wrap">
       <a href="/" class="hover:text-ink transition-colors">Inicio</a>
       <span>/</span>
-      <a href="/tienda" class="hover:text-ink transition-colors">Tienda</a>
+      {isDevice
+        ? <a href="/venta-google-pixel-monterrey" class="hover:text-ink transition-colors">Venta</a>
+        : <a href="/tienda" class="hover:text-ink transition-colors">Tienda</a>
+      }
       <span>/</span>
-      <span class="text-ink font-medium">{partLabel} {model}</span>
+      <span class="text-ink font-medium">{isDevice ? model : `${isBateria ? 'Batería' : 'Pantalla'} ${model}`}</span>
     </nav>
 
-    <!-- Grid de contenido adaptado para móviles -->
-    <div class="flex flex-col md:grid md:grid-cols-2 md:gap-12 items-start">
+    {isDevice ? (
+      /* ======================== DEVICE PAGE ======================== */
+      <div class="flex flex-col md:grid md:grid-cols-2 md:gap-12 items-start">
 
-      <!-- Imagen: Siempre arriba en móviles -->
-      <div class="w-full order-1 md:order-none mb-6 md:mb-0">
-        <div class="relative w-full aspect-square bg-surface-muted border border-border-strong rounded-2xl overflow-hidden flex items-center justify-center group">
-          <img 
-            src={productImage} 
-            alt={`${partLabel} Google ${modelDisplay} ${qualityLabel}`}
-            class="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-300"
-            loading="eager"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-          />
-          <div class="hidden absolute inset-0 flex-col items-center justify-center text-muted-strong gap-2 select-none">
-            <Icon name={isBateria ? "ph:battery-charging-vertical" : "ph:rectangle"} class="w-12 h-12" />
-            <span class="text-[10px] font-mono uppercase tracking-wider">Refacción Google Pixel</span>
+        <!-- Imagen -->
+        <div class="w-full order-1 md:order-none mb-6 md:mb-0">
+          <div class="relative w-full overflow-hidden rounded-2xl bg-white group">
+            {productImage ? (
+              <img
+                src={productImage}
+                alt={`${deviceName} ${condition}`}
+                class="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                loading="eager"
+              />
+            ) : (
+              <div class="w-full aspect-square flex flex-col items-center justify-center text-muted-strong gap-2 select-none bg-surface-muted">
+                <Icon name="ph:device-mobile" class="w-12 h-12" />
+                <span class="text-[10px] font-mono uppercase tracking-wider">Google Pixel</span>
+              </div>
+            )}
           </div>
         </div>
-      </div>
 
-      <!-- Info Principal -->
-      <div class="w-full order-2 md:order-none mb-6 md:mb-0">
-        <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
-          {partLabel} · {series}
-        </span>
+        <!-- Info Principal -->
+        <div class="w-full order-2 md:order-none mb-6 md:mb-0">
+          <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
+            {condition} · {series}
+          </span>
 
-        <h1 class="text-2xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-3">
-          {partLabel} Google {modelDisplay}
-          <span class="block text-base md:text-lg font-normal text-muted-strong mt-1">{qualityLabel} — disponible en México</span>
-        </h1>
+          <h1 class="text-2xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-3">
+            {deviceName}
+            <span class="block text-base md:text-lg font-normal text-muted-strong mt-1">
+              {condition === "Open Box"
+                ? "Con caja y accesorios originales completos"
+                : "Excelente estado — con su caja"}
+            </span>
+          </h1>
 
-        <p class="text-sm md:text-base text-muted-strong leading-relaxed mb-6">
-          {isBateria
-            ? `Batería ${qualityLabel.toLowerCase()} para ${model}. Capacidad y voltaje originales de fábrica. Compatible con todas las funciones del sistema, incluyendo indicador de porcentaje preciso.`
-            : `Pantalla ${qualityLabel.toLowerCase()} con sensor de huella dactilar integrado para ${model}. Compatible al 100% con las funciones táctiles y de reconocimiento biométrico del equipo.`
-          }
-        </p>
-      </div>
+          <p class="text-sm md:text-base text-muted-strong leading-relaxed mb-4">
+            {condition === "Open Box"
+              ? `El ${model} en formato Open Box llega con caja sellada, cable y adaptador de carga rápida originales de Google. Sin uso previo.`
+              : `El ${model} Usado Estética 9 ha tenido un uso mínimo y se encuentra en excelente estado cosmético y funcional. Se entrega con su caja.`
+            }
+          </p>
 
-      <!-- Nuevo visual de Precios, Variantes y Botones -->
-      <div id="product-variants-container" class="w-full order-3 md:order-none mb-8 md:mb-0 space-y-6">
-        <h2 class="text-xs font-mono uppercase tracking-wider text-muted-strong border-b border-border pb-2">Precios y opciones de compra</h2>
-        
-        {parts.map((part: any, index: number) => {
-          const qualityTag = isOriginal ? 'original' : 'replica-excelente';
-          const generatedId = `${seriesId}-${part.model.toLowerCase().replace(/\s+/g, '-')}-${isBateria ? 'bat' : 'pan'}-${qualityTag}`;
-          const waMsg = encodeURIComponent(`Hola, quiero comprar la ${part.name} para mi ${part.model} por ${formatPrice(part.pricePart)}. ¿Tienen disponibilidad?`);
+          {color && (
+            <div class="flex items-center gap-2 text-xs font-mono text-muted-strong">
+              <Icon name="ph:palette" class="w-3.5 h-3.5" />
+              <span>Colores disponibles: {color}</span>
+            </div>
+          )}
+        </div>
 
-          return (
-            <div class={`pb-6 ${index !== parts.length - 1 ? 'border-b border-border' : ''}`}>
-              <div class="flex flex-col gap-1 mb-3">
-                <span class="text-xs font-mono text-muted-strong">{part.model}</span>
-                <span class="text-base font-medium text-ink">{part.name}</span>
-              </div>
+        <!-- Precios y Compra -->
+        <div id="product-variants-container" class="w-full order-3 md:order-none mb-8 md:mb-0 space-y-6">
+          <h2 class="text-xs font-mono uppercase tracking-wider text-muted-strong border-b border-border pb-2">Precios y opciones de compra</h2>
 
-              <!-- Desglose de costos limpio -->
-              <div class="space-y-1.5 mb-4 text-sm text-muted-strong">
-                <div class="flex justify-between items-baseline">
-                  <span>Solo pieza:</span>
-                  <span class="font-mono font-bold text-ink text-lg">{formatPrice(part.pricePart)}</span>
+          <div class="space-y-2">
+            {[
+              { label: "128GB", extra: 0 },
+              { label: "256GB", extra: 900 },
+              { label: "512GB", extra: 1800 },
+            ].map(({ label, extra }) => {
+              const displayPrice = price + ganancia + extra;
+              return (
+                <div class="flex justify-between items-baseline py-2 border-b border-border last:border-0">
+                  <span class="text-sm text-muted-strong font-mono">{label}</span>
+                  <span class="font-mono font-bold text-ink">
+                    {new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(displayPrice)} MXN
+                  </span>
                 </div>
-                {part.priceInstall > 0 && (
-                  <div class="flex justify-between items-baseline text-xs text-muted-strong">
-                    <span>Con instalación en MTY:</span>
-                    <span class="font-mono">+{formatPrice(part.priceInstall)}</span>
+              );
+            })}
+          </div>
+
+          <div class="flex items-center gap-1.5 text-[11px] text-muted-strong">
+            <Icon name="ph:truck" class="w-3.5 h-3.5" />
+            <span>{availability}</span>
+          </div>
+
+          <div class="flex items-stretch gap-2">
+            <a
+              href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hola, me interesa el ${deviceName} (${condition}) de 128GB. ¿Tienen disponibilidad?`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-4 py-2.5 text-xs font-mono border border-border-strong text-muted-strong rounded-lg hover:border-ink hover:text-ink transition-all whitespace-nowrap flex items-center justify-center bg-white"
+            >
+              Consultar
+            </a>
+            <button
+              data-id={deviceId}
+              data-name={model}
+              data-part={condition}
+              data-price={price + ganancia}
+              class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2.5 px-4 bg-ink text-white text-xs font-medium rounded-lg hover:bg-ink-hover transition-colors shadow-sm"
+            >
+              <Icon name="ph:shopping-cart" class="w-3.5 h-3.5 btn-icon-cart" />
+              <Icon name="ph:check" class="w-3.5 h-3.5 btn-icon-check hidden" />
+              <span class="btn-label">Agregar al carrito</span>
+            </button>
+          </div>
+
+          <div class="text-[11px] text-muted-strong leading-relaxed p-4 border border-border rounded-xl bg-surface-muted">
+            <strong class="text-ink block mb-0.5">Incluye de regalo</strong>
+            Mica de pantalla, cubo de carga rápida (Fast Charge) y funda protectora. Garantía directa 28 días desde entrega.
+          </div>
+        </div>
+
+        <!-- Por qué Pixel Fix -->
+        <div class="w-full order-4 md:order-none space-y-4 mb-4 md:mb-0">
+          <div class="bg-bg rounded-xl p-5 space-y-3">
+            <p class="text-xs font-mono uppercase tracking-wider text-muted-strong mb-1">¿Por qué Pixel Fix?</p>
+            {[
+              "Importación directa — sin trámites aduanales ni cargos sorpresa",
+              "Entrega personal en Monterrey o envío asegurado DHL",
+              "28 días de garantía directa local",
+              condition === "Open Box" ? "Open Box: incluye caja y accesorios originales de Google" : "Estética 9: revisado y verificado antes de enviar",
+              "Soporte técnico especializado en Google Pixel",
+            ].map(point => (
+              <div class="flex items-start gap-2.5">
+                <Icon name="ph:check-circle" class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                <span class="text-sm text-ink font-medium">{point}</span>
+              </div>
+            ))}
+          </div>
+
+          <a href="/venta-google-pixel-monterrey" class="flex items-center justify-center gap-2 w-full py-3 text-sm text-muted-strong hover:text-ink transition-colors border border-border-strong rounded-xl hover:border-ink bg-white">
+            Ver todos los modelos
+          </a>
+        </div>
+
+      </div>
+    ) : (
+      /* ======================== PART PAGE ======================== */
+      <div class="flex flex-col md:grid md:grid-cols-2 md:gap-12 items-start">
+
+        <!-- Imagen -->
+        <div class="w-full order-1 md:order-none mb-6 md:mb-0">
+          <div class="relative w-full aspect-square bg-surface-muted border border-border-strong rounded-2xl overflow-hidden flex items-center justify-center group">
+            {productImage ? (
+              <img
+                src={productImage}
+                alt={`${isBateria ? 'Batería' : 'Pantalla'} Google ${model.replace(/\//g, 'y')} ${isOriginal ? 'Original' : 'Réplica Excelente'}`}
+                class="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-300"
+                loading="eager"
+              />
+            ) : (
+              <div class="flex flex-col items-center justify-center gap-2 text-muted-strong select-none">
+                <Icon name={isBateria ? "ph:battery-charging-vertical" : "ph:rectangle"} class="w-12 h-12" />
+                <span class="text-[10px] font-mono uppercase tracking-wider">Refacción Google Pixel</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Info Principal -->
+        <div class="w-full order-2 md:order-none mb-6 md:mb-0">
+          <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
+            {isBateria ? 'Batería' : 'Pantalla'} · {series}
+          </span>
+
+          <h1 class="text-2xl md:text-4xl font-semibold tracking-tight text-ink leading-tight mb-3">
+            {isBateria ? 'Batería' : 'Pantalla'} Google {model.replace(/\//g, 'y')}
+            <span class="block text-base md:text-lg font-normal text-muted-strong mt-1">{isOriginal ? 'Original' : 'Réplica Excelente'} — disponible en México</span>
+          </h1>
+
+          <p class="text-sm md:text-base text-muted-strong leading-relaxed mb-6">
+            {isBateria
+              ? `Batería ${isOriginal ? 'original' : 'réplica excelente'} para ${model}. Capacidad y voltaje originales de fábrica. Compatible con todas las funciones del sistema, incluyendo indicador de porcentaje preciso.`
+              : `Pantalla ${isOriginal ? 'original' : 'réplica excelente'} con sensor de huella dactilar integrado para ${model}. Compatible al 100% con las funciones táctiles y de reconocimiento biométrico del equipo.`
+            }
+          </p>
+        </div>
+
+        <!-- Precios y Compra -->
+        <div id="product-variants-container" class="w-full order-3 md:order-none mb-8 md:mb-0 space-y-6">
+          <h2 class="text-xs font-mono uppercase tracking-wider text-muted-strong border-b border-border pb-2">Precios y opciones de compra</h2>
+
+          {parts.map((part: any, index: number) => {
+            const qualityTag = isOriginal ? 'original' : 'replica-excelente';
+            const generatedId = `${seriesId}-${part.model.toLowerCase().replace(/\s+/g, '-')}-${isBateria ? 'bat' : 'pan'}-${qualityTag}`;
+            const sellPrice = part.pricePart + GANANCIA_PIEZA;
+            const waMsg = encodeURIComponent(`Hola, quiero comprar la ${part.name} para mi ${part.model} por ${formatPrice(sellPrice)}. ¿Tienen disponibilidad?`);
+
+            return (
+              <div class={`pb-6 ${index !== parts.length - 1 ? 'border-b border-border' : ''}`}>
+                <div class="flex flex-col gap-1 mb-3">
+                  <span class="text-xs font-mono text-muted-strong">{part.model}</span>
+                  <span class="text-base font-medium text-ink">{part.name}</span>
+                </div>
+
+                <div class="space-y-1.5 mb-4 text-sm text-muted-strong">
+                  <div class="flex justify-between items-baseline">
+                    <span>Solo pieza:</span>
+                    <span class="font-mono font-bold text-ink text-lg">{formatPrice(sellPrice)}</span>
                   </div>
-                )}
-                <div class="flex items-center gap-1.5 text-[11px] text-muted-strong pt-1">
-                  <Icon name="ph:truck" class="w-3.5 h-3.5" />
-                  <span>{part.delivery}</span>
+                  {part.priceInstall > 0 && (
+                    <div class="flex justify-between items-baseline text-xs text-muted-strong">
+                      <span>Con instalación en MTY:</span>
+                      <span class="font-mono">+{formatPrice(part.priceInstall)}</span>
+                    </div>
+                  )}
+                  <div class="flex items-center gap-1.5 text-[11px] text-muted-strong pt-1">
+                    <Icon name="ph:truck" class="w-3.5 h-3.5" />
+                    <span>{part.delivery}</span>
+                  </div>
+                </div>
+
+                <div class="flex items-stretch gap-2">
+                  <a
+                    href={`https://wa.me/${phoneNumber}?text=${waMsg}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="px-4 py-2.5 text-xs font-mono border border-border-strong text-muted-strong rounded-lg hover:border-ink hover:text-ink transition-all whitespace-nowrap flex items-center justify-center bg-white"
+                  >
+                    Comprar
+                  </a>
+                  <button
+                    data-id={generatedId}
+                    data-name={part.model}
+                    data-part={part.name}
+                    data-price={sellPrice}
+                    class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2.5 px-4 bg-ink text-white text-xs font-medium rounded-lg hover:bg-ink-hover transition-colors shadow-sm"
+                  >
+                    <Icon name="ph:shopping-cart" class="w-3.5 h-3.5 btn-icon-cart" />
+                    <Icon name="ph:check" class="w-3.5 h-3.5 btn-icon-check hidden" />
+                    <span class="btn-label">Agregar al carrito</span>
+                  </button>
                 </div>
               </div>
+            );
+          })}
 
-              <!-- Bloque de botones en una sola fila minimalista -->
-              <div class="flex items-stretch gap-2">
-                <a
-                  href={`https://wa.me/${phoneNumber}?text=${waMsg}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="px-4 py-2.5 text-xs font-mono border border-border-strong text-muted-strong rounded-lg hover:border-ink hover:text-ink transition-all whitespace-nowrap flex items-center justify-center bg-white"
-                >
-                  Comprar
-                </a>
-                <button
-                  data-id={generatedId}
-                  data-name={part.model}
-                  data-part={part.name}
-                  data-price={part.pricePart}
-                  class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2.5 px-4 bg-ink text-white text-xs font-medium rounded-lg hover:bg-ink-hover transition-colors shadow-sm"
-                >
-                  <Icon name="ph:shopping-cart" class="w-3.5 h-3.5 btn-icon-cart" />
-                  <Icon name="ph:check" class="w-3.5 h-3.5 btn-icon-check hidden" />
-                  <span class="btn-label">Agregar al carrito</span>
-                </button>
+          <div class="text-[11px] text-muted-strong leading-relaxed p-4 border border-border rounded-xl bg-surface-muted">
+            <strong class="text-ink block mb-0.5">Garantía y devoluciones</strong>
+            28 días de garantía directa en Monterrey. Transcurrido este plazo no se aceptan devoluciones ni cambios bajo ninguna circunstancia.
+          </div>
+        </div>
+
+        <!-- Por qué Pixel Fix -->
+        <div class="w-full order-4 md:order-none space-y-4 mb-4 md:mb-0">
+          <div class="bg-bg rounded-xl p-5 space-y-3">
+            <p class="text-xs font-mono uppercase tracking-wider text-muted-strong mb-1">¿Por qué Pixel Fix?</p>
+            {[
+              `Envío a todo México — iFixit no envía a México`,
+              `Importación directa desde distribuidores OEM en USA`,
+              `Garantía local de 28 días en Monterrey`,
+              `Instalación disponible con técnicos certificados`,
+              isOriginal ? `Pieza de fábrica Google / iFixit compatible` : `Calidad Réplica Excelente con huella activa`,
+            ].map(point => (
+              <div class="flex items-start gap-2.5">
+                <Icon name="ph:check-circle" class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                <span class="text-sm text-ink font-medium">{point}</span>
               </div>
-            </div>
-          );
-        })}
+            ))}
+          </div>
 
-        <div class="text-[11px] text-muted-strong leading-relaxed p-4 border border-border rounded-xl bg-surface-muted">
-          <strong class="text-ink block mb-0.5">Garantía y devoluciones</strong>
-          28 días de garantía directa en Monterrey. Transcurrido este plazo no se aceptan devoluciones ni cambios bajo ninguna circunstancia.
-        </div>
-      </div>
-
-      <!-- Propuesta de Valor -->
-      <div class="w-full order-4 md:order-none space-y-4 mb-4 md:mb-0">
-        <div class="bg-bg rounded-xl p-5 space-y-3">
-          <p class="text-xs font-mono uppercase tracking-wider text-muted-strong mb-1">¿Por qué Pixel Fix?</p>
-          {[
-            `Envío a todo México — iFixit no envía a México`,
-            `Importación directa desde distribuidores OEM en USA`,
-            `Garantía local de 28 días en Monterrey`,
-            `Instalación disponible con técnicos certificados`,
-            isOriginal ? `Pieza de fábrica Google / iFixit compatible` : `Calidad Réplica Excelente con huella activa`,
-          ].map(point => (
-            <div class="flex items-start gap-2.5">
-              <Icon name="ph:check-circle" class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
-              <span class="text-sm text-ink font-medium">{point}</span>
-            </div>
-          ))}
+          <a href="/tienda" class="flex items-center justify-center gap-2 w-full py-3 text-sm text-muted-strong hover:text-ink transition-colors border border-border-strong rounded-xl hover:border-ink bg-white">
+            Ver todo el catálogo
+          </a>
         </div>
 
-        <a href="/tienda" class="flex items-center justify-center gap-2 w-full py-3 text-sm text-muted-strong hover:text-ink transition-colors border border-border-strong rounded-xl hover:border-ink bg-white">
-          Ver todo el catálogo
-        </a>
       </div>
-
-    </div>
+    )}
 
   </main>
 
-  <Faq title="Preguntas frecuentes" items={faqs} />
+  {!isDevice && <Faq title="Preguntas frecuentes" items={(() => {
+    const partLabel = isBateria ? 'Batería' : 'Pantalla';
+    const qualityLabel = isOriginal ? 'Original' : 'Réplica Excelente';
+    return [
+      { question: `¿Puedo comprar la ${partLabel.toLowerCase()} del ${model} en México?`, answer: `Sí. En Pixel Fix importamos la ${partLabel.toLowerCase()} directamente desde distribuidores OEM en USA y la enviamos a todo México. El tiempo de entrega es de ${parts[0]?.delivery}.` },
+      { question: `¿iFixit envía ${partLabel.toLowerCase()}s de Google Pixel a México?`, answer: `iFixit es un referente mundial en refacciones originales de Google Pixel, pero actualmente no tiene envíos directos a México. Pixel Fix importa piezas de la misma cadena de distribución y las entrega en territorio nacional.` },
+      { question: `¿La ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} funciona igual que la original?`, answer: isBateria ? `Sí. Las baterías originales son idénticas a las de fábrica en capacidad y voltaje. Las réplica excelente tienen rendimiento equivalente al 95% de la original.` : `La pantalla incluye el sensor de huella dactilar integrado y funciona con todas las características del sistema. La calidad ${qualityLabel.toLowerCase()} es la mejor disponible en el mercado para esta pantalla.` },
+      { question: `¿Cuánto cuesta enviar la ${partLabel.toLowerCase()} a mi ciudad?`, answer: `El envío tiene un costo fijo de $250 MXN a cualquier parte de México, sin importar la cantidad de piezas que pidas en el mismo paquete.` },
+    ];
+  })()} />}
+
+  {isDevice && <Faq title="Preguntas frecuentes" items={[
+    { question: `¿El ${model} es nuevo o de segunda mano?`, answer: condition === "Open Box" ? `Es Open Box: un equipo sin uso previo que incluye caja sellada y todos los accesorios originales de Google (cable, adaptador, documentación).` : `Es Usado Estética 9: un equipo con uso mínimo en excelente estado cosmético. Funciona a la perfección pero se entrega sin caja original.` },
+    { question: `¿Cuánto cuesta el envío del ${model} a mi ciudad?`, answer: `El envío tiene un costo fijo de $250 MXN a cualquier parte de México vía DHL express asegurado. En Monterrey hacemos entrega personal el mismo día.` },
+    { question: `¿Qué garantía incluye el ${model}?`, answer: `Incluye 28 días de garantía directa local desde la fecha de entrega. Transcurrido ese plazo no se aceptan devoluciones ni cambios.` },
+    { question: `¿Venden el ${model} en 256GB o 512GB?`, answer: `Sí. La capacidad base es 128GB. Para 256GB suma $900 MXN y para 512GB suma $1,800 MXN al precio base. Consúltanos disponibilidad por WhatsApp.` },
+  ]} />}
 
   <script>
     document.getElementById("product-variants-container")?.addEventListener("click", (e) => {
       const btn = (e.target as Element).closest(".add-btn") as HTMLElement;
       if (!btn || !window.pfCart) return;
-      
       window.pfCart.add(
         btn.dataset.id!,
         btn.dataset.name!,
