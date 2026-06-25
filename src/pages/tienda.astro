@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Store from "../components/Store.astro";
+import { Icon } from "astro-icon/components";
+import { phoneNumber } from "../data/store";
+
+const waGarantia = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Hola, me interesa el servicio de garantía con Google. ¿Cómo funciona?")}`;
 ---
 
 <Layout
@@ -25,6 +29,40 @@ import Store from "../components/Store.astro";
 				en 10–12 días hábiles.
 			</p>
 		</div>
+
+		<!-- Banner garantía Google -->
+		<div class="mb-8 rounded-2xl border border-border-strong bg-white overflow-hidden">
+			<div class="px-5 py-4 border-b border-border flex items-center gap-3">
+				<span class="text-base">🛡️</span>
+				<div>
+					<p class="text-sm font-semibold text-ink leading-snug">Manda tu Pixel a garantía con Google</p>
+					<p class="text-xs text-muted-strong">Si tu equipo tiene falla de pantalla, batería u otro defecto cubierto — nosotros gestionamos todo</p>
+				</div>
+				<a
+					href={waGarantia}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="ml-auto whitespace-nowrap px-3 py-2 bg-ink text-white text-[11px] font-mono rounded-lg hover:bg-ink-hover transition-colors flex-shrink-0"
+				>
+					Consultar
+				</a>
+			</div>
+			<div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-border">
+				{[
+					{ model: "Pixel 8", detail: "Pantalla", price: "$2,950" },
+					{ model: "Pixel 9 Pro / 9 XL", detail: "Pantalla", price: "$3,850" },
+					{ model: "Pixel 7a", detail: "Batería", price: "$2,000" },
+					{ model: "Garantía general", detail: "Pixel activo 2025–2026", price: "$2,800" },
+				].map(({ model, detail, price }) => (
+					<div class="px-4 py-3.5 flex flex-col gap-0.5">
+						<span class="text-[10px] font-mono text-muted-strong uppercase tracking-wider">{model}</span>
+						<span class="text-[11px] text-muted">{detail}</span>
+						<span class="text-sm font-bold font-mono text-ink mt-1">{price} <span class="text-[10px] font-normal text-muted-strong">MXN</span></span>
+					</div>
+				))}
+			</div>
+		</div>
+
 		<Store />
 	</main>
 	<style>

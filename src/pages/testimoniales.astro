@@ -1,0 +1,161 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import Layout from "../layouts/Layout.astro";
+import { phoneNumber } from "../data/store";
+
+const testimonialsDir = path.join(process.cwd(), "public/testimonials");
+const images = fs
+  .readdirSync(testimonialsDir)
+  .filter((f) => /\.(png|jpe?g|webp|gif)$/i.test(f))
+  .map((f) => `/testimonials/${f}`);
+---
+
+<Layout
+  title="Testimoniales y Reseñas Clientes | Pixel Fix México"
+  description={`${images.length} testimonios reales de clientes satisfechos con reparaciones y compra de Google Pixel en México. Capturas de WhatsApp y reseñas verificadas.`}
+  url="https://www.pixelfixmexico.com/testimoniales/"
+>
+  <main class="min-h-screen max-w-5xl mx-auto px-4 py-12 md:py-20">
+
+    <nav class="text-xs font-mono text-muted-strong mb-8 flex items-center gap-2">
+      <a href="/" class="hover:text-ink transition-colors">Inicio</a>
+      <span>/</span>
+      <span class="text-ink font-medium">Testimoniales</span>
+    </nav>
+
+    <div class="mb-10">
+      <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
+        Clientes reales · Sin filtros
+      </span>
+      <h1 class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-tight mb-3">
+        Lo que dicen nuestros clientes
+      </h1>
+      <p class="text-muted text-base leading-relaxed max-w-xl">
+        {images.length} testimonios reales — capturas de WhatsApp, reseñas de Google Maps y conversaciones directas con clientes que confiaron en Pixel Fix.
+      </p>
+    </div>
+
+    {images.length > 0 ? (
+      <>
+        <div
+          id="tgrid"
+          class="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4"
+        >
+          {images.map((img, i) => (
+            <div
+              class="break-inside-avoid testimonial-card rounded-xl overflow-hidden border border-border bg-surface shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.07)] transition-all duration-300 group cursor-zoom-in"
+              data-src={img}
+            >
+              <div class="px-2.5 pt-2 pb-1.5 bg-surface-muted border-b border-border flex items-center justify-between">
+                <span class="text-[9px] font-mono text-muted uppercase tracking-wider">Testimonio</span>
+                <span class="text-[9px] font-mono text-muted">#{i + 1}</span>
+              </div>
+              <div class="p-2 bg-bg">
+                <img
+                  src={img}
+                  alt={`Testimonio cliente Pixel Fix #${i + 1}`}
+                  class="w-full h-auto rounded-lg object-cover saturate-[0.9] contrast-[1.03] group-hover:scale-[1.02] transition-transform duration-500"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Lightbox -->
+        <div
+          id="lightbox"
+          class="fixed inset-0 z-[300] bg-black/85 hidden items-center justify-center p-4"
+          onclick="closeLightbox()"
+        >
+          <button
+            class="absolute top-4 right-4 text-white/70 hover:text-white text-2xl leading-none font-light"
+            onclick="closeLightbox()"
+          >✕</button>
+          <button
+            id="lb-prev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-3xl leading-none px-2"
+            onclick="event.stopPropagation();navigateLightbox(-1)"
+          >‹</button>
+          <img
+            id="lb-img"
+            src=""
+            alt="Testimonio ampliado"
+            class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl"
+            onclick="event.stopPropagation()"
+          />
+          <button
+            id="lb-next"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-3xl leading-none px-2"
+            onclick="event.stopPropagation();navigateLightbox(1)"
+          >›</button>
+          <span id="lb-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-xs font-mono"></span>
+        </div>
+      </>
+    ) : (
+      <div class="border border-dashed border-border rounded-xl p-16 text-center text-sm text-muted bg-surface-muted/50">
+        Sin testimoniales cargados aún.
+      </div>
+    )}
+
+    <div class="mt-16 pt-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div>
+        <p class="text-sm font-medium text-ink mb-1">¿Ya eres cliente?</p>
+        <p class="text-xs text-muted">Comparte tu experiencia por WhatsApp y aparecerás aquí.</p>
+      </div>
+      <a
+        href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent("Hola, quiero compartir mi reseña de Pixel Fix.")}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-4 py-2.5 bg-ink text-white text-xs font-mono rounded-lg hover:bg-ink-hover transition-colors whitespace-nowrap"
+      >
+        Compartir reseña
+      </a>
+    </div>
+
+  </main>
+</Layout>
+
+<script>
+  const cards = Array.from(document.querySelectorAll('.testimonial-card')) as HTMLElement[];
+  const lb = document.getElementById('lightbox')!;
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement;
+  const lbCounter = document.getElementById('lb-counter')!;
+  let current = 0;
+
+  function openLightbox(index: number) {
+    current = index;
+    lbImg.src = cards[current].dataset.src!;
+    lbCounter.textContent = `${current + 1} / ${cards.length}`;
+    lb.classList.remove('hidden');
+    lb.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.classList.add('hidden');
+    lb.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  function navigateLightbox(dir: number) {
+    current = (current + dir + cards.length) % cards.length;
+    lbImg.src = cards[current].dataset.src!;
+    lbCounter.textContent = `${current + 1} / ${cards.length}`;
+  }
+
+  cards.forEach((card, i) => card.addEventListener('click', () => openLightbox(i)));
+
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('flex')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') navigateLightbox(1);
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+  });
+
+  // Expose to onclick attributes
+  (window as any).closeLightbox = closeLightbox;
+  (window as any).navigateLightbox = navigateLightbox;
+</script>
