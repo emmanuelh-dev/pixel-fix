@@ -46,10 +46,10 @@ function resolveDeviceImage(slug: string): string | null {
 	return null;
 }
 
-const deviceImages = new Map<string, string>();
-for (const item of storeCatalog.filter((i) => i.category === "equipo")) {
+const productImages = new Map<string, string>();
+for (const item of catalog) {
 	const img = resolveDeviceImage(item.slug);
-	if (img) deviceImages.set(item.slug, img);
+	if (img) productImages.set(item.slug, img);
 }
 
 const typeIcon = {
@@ -180,70 +180,69 @@ const searchPlaceholder = onlyEquipo
 					);
 					const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappText}`;
 
-					const deviceImg = item.category === "equipo" ? deviceImages.get(item.slug) : null;
+					const productImg = productImages.get(item.slug) ?? null;
 
 					return (
 						<div
-							class="catalog-card bg-white border border-border-strong rounded-2xl overflow-hidden flex flex-col hover:shadow-sm hover:border-ink transition-all"
+							class="catalog-card bg-white border border-border-strong rounded-2xl overflow-hidden flex flex-row hover:shadow-sm hover:border-ink transition-all"
 							data-type={item.type}
 							data-series={item.series}
 							data-model={item.model}
 							data-text={`${item.name} ${item.model} ${item.type} ${item.series} original bateria pantalla pixel ${item.specs || ""}`.toLowerCase()}
 						>
-							{deviceImg && (
-								<CardContainer {...containerProps} class="block select-none cursor-pointer">
+							<!-- Imagen: columna izquierda, ancho fijo, alto completo -->
+							<CardContainer {...containerProps} class="w-28 sm:w-32 flex-shrink-0 block select-none cursor-pointer overflow-hidden">
+								{productImg ? (
 									<img
-										src={deviceImg}
+										src={productImg}
 										alt={item.model}
-										class="w-full h-44 object-cover"
+										class="w-full h-full object-cover"
 										loading="lazy"
 									/>
-								</CardContainer>
-							)}
+								) : (
+									<div class="w-full h-full min-h-[160px] bg-surface-muted flex items-center justify-center border-r border-border">
+										<Icon name={typeIcon[item.iconType]} class="w-8 h-8 text-muted" />
+									</div>
+								)}
+							</CardContainer>
 
-							<div class="p-5 flex flex-col gap-4 flex-1">
+							<!-- Contenido: columna derecha -->
+							<div class="flex-1 p-4 flex flex-col gap-3 min-w-0">
 								<CardContainer
 									{...containerProps}
-									class="flex flex-col gap-4 flex-1 block select-none cursor-pointer"
+									class="flex flex-col gap-3 flex-1 select-none cursor-pointer min-w-0"
 								>
-									<div class="flex items-start justify-between gap-3">
-										<div class="flex-1 min-w-0">
-											<span class="text-[10px] font-mono uppercase tracking-wider text-muted-strong">
-												{item.category === "equipo" && item.condition ? item.condition : item.type}
-											</span>
-											<p class="font-medium text-ink text-sm leading-snug mt-0.5">
-												{item.model}
-											</p>
-											<p class="text-xs text-muted-strong mt-0.5 line-clamp-1">
-												{item.category === "equipo"
-													? item.specs
-													: item.name}
-											</p>
-										</div>
-										{!deviceImg && (
-											<div class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-muted text-muted-strong border border-border flex-shrink-0">
-												<Icon name={typeIcon[item.iconType]} class="w-4 h-4" />
-											</div>
-										)}
+									<div class="min-w-0">
+										<span class="text-[10px] font-mono uppercase tracking-wider text-muted-strong">
+											{item.category === "equipo" && item.condition ? item.condition : item.type}
+										</span>
+										<p class="font-medium text-ink text-sm leading-snug mt-0.5 line-clamp-2">
+											{item.model}
+										</p>
+										<p class="text-xs text-muted-strong mt-0.5 line-clamp-1">
+											{item.category === "equipo"
+												? item.specs
+												: item.name}
+										</p>
 									</div>
 
-									<div>
-										<p class="text-lg font-bold text-ink font-mono">
+									<div class="mt-auto">
+										<p class="text-base font-bold text-ink font-mono">
 											{fmt(item.pricePart, item.ganancia)}
 										</p>
 										{item.category !== "equipo" && item.priceInstall > 0 && (
 											<p class="text-[11px] text-muted-strong">
-												Con instalación MTY: {fmt(item.priceInstall)}
+												+{fmt(item.priceInstall)} instalación MTY
 											</p>
 										)}
-										<div class="flex items-center gap-1.5 mt-2">
-											<Icon name="ph:truck" class="w-3.5 h-3.5 text-muted-strong" />
-											<p class="text-[11px] text-muted-strong">{item.delivery}</p>
+										<div class="flex items-center gap-1.5 mt-1.5">
+											<Icon name="ph:truck" class="w-3 h-3 text-muted-strong flex-shrink-0" />
+											<p class="text-[10px] text-muted-strong leading-snug">{item.delivery}</p>
 										</div>
 									</div>
 								</CardContainer>
 
-								<div class="flex items-center gap-2 mt-auto">
+								<div class="flex items-center gap-2">
 									<a
 										href={whatsappUrl}
 										target="_blank"

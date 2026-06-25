@@ -2,6 +2,8 @@
 
 export const GANANCIA_TELEFONO = 1000;
 export const GANANCIA_PIEZA = 400;
+export const PRECIO_INSTALACION = 800;
+export const DELIVERY_DEFAULT = "10-12 días hábiles";
 
 export const formatPrice = (basePrice: number | string, profit: number = 0): string => {
   if (typeof basePrice === "string") return basePrice;
@@ -124,8 +126,8 @@ export const salesCatalog = [
     series: "Pixel 10 Series",
     id: "pixel-10",
     devices: [
-      { name: "Google Pixel 10 Pro Fold", specs: "128GB", price: 16500, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
-      { name: "Google Pixel 10 Pro XL", specs: "128GB", price: 15000, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
+      { name: "Google Pixel 10 Pro Fold", specs: "256GB · Solo eSIM dual", price: 18500, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Preguntar por colores disponibles" },
+      { name: "Google Pixel 10 Pro XL", specs: "256GB · Solo eSIM dual", price: 16000, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Jade / Moonstone / Porcelain / Obsidian" },
       { name: "Google Pixel 10 Pro", specs: "128GB", price: 13500, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Hazel" },
       { name: "Google Pixel 10", specs: "128GB", price: 11000, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Hazel" },
       { name: "Google Pixel 10a", specs: "128GB", price: 9700, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
@@ -135,38 +137,38 @@ export const salesCatalog = [
     series: "Pixel 9 Series",
     id: "pixel-9",
     devices: [
-      { name: "Google Pixel 9 Pro Fold", specs: "128GB", price: 14300, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" },
-      { name: "Google Pixel 9 Pro XL", specs: "128GB", price: 11300, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
-      { name: "Google Pixel 9 Pro", specs: "128GB", price: 10300, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Hazel" },
-      { name: "Google Pixel 9", specs: "128GB", price: 9300, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Wintergreen" },
-      { name: "Google Pixel 9a", specs: "128GB", price: 9000, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
+      { name: "Google Pixel 9 Pro Fold", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 14300, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" },
+      { name: "Google Pixel 9 Pro XL", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 11300, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian / Porcelain" },
+      { name: "Google Pixel 9 Pro", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 10300, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Hazel" },
+      { name: "Google Pixel 9", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 9300, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Wintergreen" },
+      { name: "Google Pixel 9a", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 9000, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
     ]
   },
   {
     series: "Pixel 8 Series",
     id: "pixel-8",
     devices: [
-      { name: "Google Pixel 8 Pro", specs: "128GB", price: 7400, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Bay Blue" },
-      { name: "Google Pixel 8", specs: "128GB", price: 7000, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Rose" },
-      { name: "Google Pixel 8a", specs: "128GB", price: 6700, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
+      { name: "Google Pixel 8 Pro", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 7900, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Bay Blue" },
+      { name: "Google Pixel 8", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 7000, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Rose" },
+      { name: "Google Pixel 8a", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 6700, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
     ]
   },
   {
     series: "Pixel 7 Series",
     id: "pixel-7",
     devices: [
-      { name: "Google Pixel 7 Pro", specs: "128GB", price: 5800, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Hazel" },
-      { name: "Google Pixel 7", specs: "128GB", price: 5100, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Lemongrass" },
-      { name: "Google Pixel 7a", specs: "128GB", price: 4800, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
+      { name: "Google Pixel 7 Pro", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 6400, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Hazel" },
+      { name: "Google Pixel 7", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 5100, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Lemongrass" },
+      { name: "Google Pixel 7a", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 4800, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Obsidian" }
     ]
   },
   {
     series: "Pixel 6 Series",
     id: "pixel-6",
     devices: [
-      { name: "Google Pixel 6 Pro", specs: "128GB", price: 5350, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Stormy Black" },
-      { name: "Google Pixel 6", specs: "128GB", price: 4500, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Sorta Seafoam" },
-      { name: "Google Pixel 6a", specs: "128GB", price: 4400, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Charcoal" }
+      { name: "Google Pixel 6 Pro", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 5350, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Stormy Black" },
+      { name: "Google Pixel 6", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 4500, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Sorta Seafoam" },
+      { name: "Google Pixel 6a", specs: "128GB · Sin caja · Caja disponible a cotizar", price: 4400, ganancia: GANANCIA_TELEFONO, availability: "Importación 10-12 días hábiles", color: "Charcoal" }
     ]
   }
 ];
