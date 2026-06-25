@@ -49,6 +49,7 @@ export const repairCatalog = [
     series: "Pixel 7 Series",
     id: "pixel-7",
     parts: [
+      { name: "Pantalla Original", model: "Pixel 7 Pro", pricePart: 5400, priceInstall: 3650, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pantalla OLED con Huella (Réplica Excelente)", model: "Pixel 7 Pro", pricePart: 2850, priceInstall: 3650, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pantalla OLED con Huella (Réplica Excelente)", model: "Pixel 7 / 7a", pricePart: 2500, priceInstall: 3300, ganancia: 400, delivery: "10-12 días hábiles" },
       { name: "Pila Nueva Original", model: "Pixel 7 Pro", pricePart: 1000, priceInstall: 1800, ganancia: 400, delivery: "10-12 días hábiles" },
