@@ -1,5 +1,4 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import { repairCatalog, salesCatalog, formatPrice } from "../data/catalog";
 import { phoneNumber } from "../data/store";
 
@@ -220,7 +219,7 @@ const fmt = (n: number) => formatPrice(n);
 			</div>
 		</div>
 
-		<div class="mb-6">
+		<div id="model-filters-container" class="mb-6 hidden">
 			<p
 				class="text-[10px] font-mono uppercase tracking-wider text-[#333333] mb-2"
 			>
@@ -435,15 +434,29 @@ const fmt = (n: number) => formatPrice(n);
 			query = "";
 
 		function updateModelChipsVisibility() {
+			const container = document.getElementById("model-filters-container");
+			if (!container) return;
+
+			// Si no hay serie activa, escondemos todo el bloque de modelos
+			if (activeSeries === "all") {
+				container.classList.add("hidden");
+				activeModel = "all";
+				const allModelBtn = document.querySelector(
+					'.model-btn[data-model="all"]',
+				);
+				if (allModelBtn) activateChip("model-btn", allModelBtn);
+				return;
+			}
+
+			// Si hay serie seleccionada, mostramos el contenedor
+			container.classList.remove("hidden");
+
 			const modelButtons = document.querySelectorAll(".model-btn");
 			modelButtons.forEach((btn) => {
 				const el = btn as HTMLElement;
 				if (el.dataset.model === "all") return;
 
-				if (
-					activeSeries !== "all" &&
-					el.dataset.parentSeries !== activeSeries
-				) {
+				if (el.dataset.parentSeries !== activeSeries) {
 					el.style.display = "none";
 					if (activeModel === el.dataset.model) {
 						activeModel = "all";

@@ -33,7 +33,7 @@ export function getStaticPaths() {
   return paths;
 }
 
-const { isBateria, isOriginal, model, series, parts } = Astro.props;
+const { isBateria, isOriginal, model, series, parts, seriesId } = Astro.props;
 const { producto } = Astro.params;
 
 const phoneNumber = "528111913676";
@@ -41,72 +41,148 @@ const partLabel = isBateria ? 'Batería' : 'Pantalla';
 const qualityLabel = isOriginal ? 'Original' : 'Réplica Excelente';
 const modelDisplay = model.replace(/\//g, 'y');
 
-// SEO: apuntar a "pantalla pixel 8 original mexico" y capturar tráfico de iFixit
 const title = `${partLabel} Google ${modelDisplay} ${qualityLabel} en México | Pixel Fix — Alternativa iFixit`;
 const description = `Compra la ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} para tu Google ${modelDisplay} en México. Envío nacional en ${parts[0]?.delivery}. Precio desde ${formatPrice(Math.min(...parts.map((p: any) => p.pricePart)))}. iFixit no envía a México — nosotros sí.`;
 
 const pageUrl = `https://www.pixelfixmexico.com/productos/${producto}/`;
-const minPrice = Math.min(...parts.map((p: any) => p.pricePart));
-const waMsg = encodeURIComponent(`Hola, quiero comprar la ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} para mi Google ${model}. ¿Pueden darme más información y confirmar disponibilidad?`);
 
-const productSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": `${partLabel} Google ${modelDisplay} ${qualityLabel}`,
-  "description": description,
-  "brand": { "@type": "Brand", "name": "Google" },
-  "offers": parts.map((p: any) => ({
-    "@type": "Offer",
-    "priceCurrency": "MXN",
-    "price": p.pricePart,
-    "availability": "https://schema.org/InStock",
-    "shippingDetails": {
-      "@type": "OfferShippingDetails",
-      "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "MX" },
-      "deliveryTime": { "@type": "ShippingDeliveryTime", "businessDays": { "@type": "OpeningHoursSpecification", "description": p.delivery } }
-    },
-    "seller": { "@type": "Organization", "name": "Pixel Fix México", "url": "https://www.pixelfixmexico.com" }
-  }))
-});
+const productImage = `/images/productos/${producto}.webp`;
 ---
 
 <Layout title={title} description={description} url={pageUrl}>
-  <script type="application/ld+json" set:html={productSchema} />
-
   <main class="min-h-screen max-w-4xl mx-auto px-4 py-12 md:py-20">
 
     <!-- Breadcrumb -->
-    <nav class="text-xs font-mono text-[#ADADAD] mb-10 flex items-center gap-2 flex-wrap">
+    <nav class="text-xs font-mono text-[#666666] mb-8 flex items-center gap-2 flex-wrap">
       <a href="/" class="hover:text-[#111111] transition-colors">Inicio</a>
       <span>/</span>
       <a href="/tienda" class="hover:text-[#111111] transition-colors">Tienda</a>
       <span>/</span>
-      <span class="text-[#787774]">{partLabel} {model}</span>
+      <span class="text-[#111111] font-medium">{partLabel} {model}</span>
     </nav>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+    <!-- Grid de contenido adaptado para móviles -->
+    <div class="flex flex-col md:grid md:grid-cols-2 md:gap-12 items-start">
 
-      <!-- Info principal -->
-      <div>
-        <span class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-5">
+      <!-- Imagen: Siempre arriba en móviles -->
+      <div class="w-full order-1 md:order-none mb-6 md:mb-0">
+        <div class="relative w-full aspect-square bg-[#F9F9F9] border border-[#A0A0A0] rounded-2xl overflow-hidden flex items-center justify-center group">
+          <img 
+            src={productImage} 
+            alt={`${partLabel} Google ${modelDisplay} ${qualityLabel}`}
+            class="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-300"
+            loading="eager"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <div class="hidden absolute inset-0 flex-col items-center justify-center text-[#666666] gap-2 select-none">
+            <svg class="w-12 h-12 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="1">
+              {isBateria ? (
+                <rect x="2" y="7" width="16" height="10" rx="2" /><path d="M22 11v2" />
+              ) : (
+                <rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
+              )}
+            </svg>
+            <span class="text-[10px] font-mono uppercase tracking-wider">Refacción Google Pixel</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Principal -->
+      <div class="w-full order-2 md:order-none mb-6 md:mb-0">
+        <span class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
           {partLabel} · {series}
         </span>
 
-        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-[#111111] leading-tight mb-3">
+        <h1 class="text-2xl md:text-4xl font-semibold tracking-tight text-[#111111] leading-tight mb-3">
           {partLabel} Google {modelDisplay}
-          <span class="block text-lg font-normal text-[#787774] mt-1">{qualityLabel} — disponible en México</span>
+          <span class="block text-base md:text-lg font-normal text-[#444444] mt-1">{qualityLabel} — disponible en México</span>
         </h1>
 
-        <p class="text-[#787774] leading-relaxed mb-6">
+        <p class="text-sm md:text-base text-[#444444] leading-relaxed mb-6">
           {isBateria
             ? `Batería ${qualityLabel.toLowerCase()} para ${model}. Capacidad y voltaje originales de fábrica. Compatible con todas las funciones del sistema, incluyendo indicador de porcentaje preciso.`
             : `Pantalla ${qualityLabel.toLowerCase()} con sensor de huella dactilar integrado para ${model}. Compatible al 100% con las funciones táctiles y de reconocimiento biométrico del equipo.`
           }
         </p>
+      </div>
 
-        <!-- Puntos de venta vs iFixit -->
-        <div class="bg-[#F3F3F1] rounded-xl p-5 mb-6 space-y-3">
-          <p class="text-xs font-mono uppercase tracking-wider text-[#787774] mb-3">¿Por qué Pixel Fix?</p>
+      <!-- Nuevo visual de Precios, Variantes y Botones -->
+      <div id="product-variants-container" class="w-full order-3 md:order-none mb-8 md:mb-0 space-y-6">
+        <h2 class="text-xs font-mono uppercase tracking-wider text-[#444444] border-b border-[#EAEAEA] pb-2">Precios y opciones de compra</h2>
+        
+        {parts.map((part: any, index: number) => {
+          const qualityTag = isOriginal ? 'original' : 'replica-excelente';
+          const generatedId = `${seriesId}-${part.model.toLowerCase().replace(/\s+/g, '-')}-${isBateria ? 'bat' : 'pan'}-${qualityTag}`;
+          const waMsg = encodeURIComponent(`Hola, quiero comprar la ${part.name} para mi ${part.model} por ${formatPrice(part.pricePart)}. ¿Tienen disponibilidad?`);
+
+          return (
+            <div class={`pb-6 ${index !== parts.length - 1 ? 'border-b border-[#EAEAEA]' : ''}`}>
+              <div class="flex flex-col gap-1 mb-3">
+                <span class="text-xs font-mono text-[#666666]">{part.model}</span>
+                <span class="text-base font-medium text-[#111111]">{part.name}</span>
+              </div>
+
+              <!-- Desglose de costos limpio -->
+              <div class="space-y-1.5 mb-4 text-sm text-[#444444]">
+                <div class="flex justify-between items-baseline">
+                  <span>Solo pieza:</span>
+                  <span class="font-mono font-bold text-[#111111] text-lg">{formatPrice(part.pricePart)}</span>
+                </div>
+                {part.priceInstall > 0 && (
+                  <div class="flex justify-between items-baseline text-xs text-[#666666]">
+                    <span>Con instalación en MTY:</span>
+                    <span class="font-mono">+{formatPrice(part.priceInstall)}</span>
+                  </div>
+                )}
+                <div class="flex items-center gap-1.5 text-[11px] text-[#666666] pt-1">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="1" y="3" width="15" height="13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="5.5" cy="18.5" r="2.5" stroke-width="1.5"/><circle cx="18.5" cy="18.5" r="2.5" stroke-width="1.5"/>
+                  </svg>
+                  <span>{part.delivery}</span>
+                </div>
+              </div>
+
+              <!-- Bloque de botones en una sola fila minimalista -->
+              <div class="flex items-stretch gap-2">
+                <a
+                  href={`https://wa.me/${phoneNumber}?text=${waMsg}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="px-4 py-2.5 text-xs font-mono border border-[#888888] text-[#333333] rounded-lg hover:border-[#111111] hover:text-[#111111] transition-all whitespace-nowrap flex items-center justify-center bg-white"
+                >
+                  Comprar
+                </a>
+                <button
+                  data-id={generatedId}
+                  data-name={part.model}
+                  data-part={part.name}
+                  data-price={part.pricePart}
+                  class="variant-add-btn flex-1 flex items-center justify-center gap-1.5 py-2.5 px-4 bg-[#111111] text-white text-xs font-medium rounded-lg hover:bg-[#222222] transition-colors shadow-sm"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <path d="M16 10a4 4 0 01-8 0" />
+                  </svg>
+                  <span>Agregar al carrito</span>
+                </button>
+              </div>
+            </div>
+          );
+        })}
+
+        <div class="text-[11px] text-[#666666] leading-relaxed p-4 border border-[#EAEAEA] rounded-xl bg-[#FBFBFB]">
+          <strong class="text-[#111111] block mb-0.5">Garantía y devoluciones</strong>
+          28 días de garantía directa en Monterrey. Transcurrido este plazo no se aceptan devoluciones ni cambios bajo ninguna circunstancia.
+        </div>
+      </div>
+
+      <!-- Propuesta de Valor -->
+      <div class="w-full order-4 md:order-none space-y-4 mb-4 md:mb-0">
+        <div class="bg-[#F3F3F1] rounded-xl p-5 space-y-3">
+          <p class="text-xs font-mono uppercase tracking-wider text-[#444444] mb-1">¿Por qué Pixel Fix?</p>
           {[
             `Envío a todo México — iFixit no envía a México`,
             `Importación directa desde distribuidores OEM en USA`,
@@ -118,77 +194,20 @@ const productSchema = JSON.stringify({
               <svg class="w-4 h-4 text-[#1F6C9F] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <polyline points="20 6 9 17 4 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <span class="text-sm text-[#111111]">{point}</span>
+              <span class="text-sm text-[#111111] font-medium">{point}</span>
             </div>
           ))}
         </div>
 
-        <!-- CTA -->
-        <a
-          href={`https://wa.me/${phoneNumber}?text=${waMsg}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center justify-center gap-2 w-full py-4 bg-[#25D366] text-white rounded-xl font-semibold hover:bg-[#1ebe5d] transition-colors mb-3"
-        >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Pedir por WhatsApp
-        </a>
-        <a href="/tienda" class="flex items-center justify-center gap-2 w-full py-3 text-sm text-[#787774] hover:text-[#111111] transition-colors border border-[#EAEAEA] rounded-xl hover:border-[#111111]">
+        <a href="/tienda" class="flex items-center justify-center gap-2 w-full py-3 text-sm text-[#444444] hover:text-[#111111] transition-colors border border-[#888888] rounded-xl hover:border-[#111111] bg-white">
           Ver todo el catálogo
         </a>
       </div>
 
-      <!-- Tabla de precios -->
-      <div class="space-y-4">
-        <h2 class="text-sm font-mono uppercase tracking-wider text-[#787774]">Precios y variantes</h2>
-        {parts.map((part: any) => (
-          <div class="bg-white border border-[#EAEAEA] rounded-xl p-5">
-            <p class="text-xs font-mono text-[#ADADAD] mb-2">{part.model}</p>
-            <p class="text-sm font-medium text-[#111111] mb-4">{part.name}</p>
-
-            <div class="space-y-2 mb-4">
-              <div class="flex justify-between items-center py-2 border-b border-[#F3F3F1]">
-                <span class="text-sm text-[#787774]">Solo refacción</span>
-                <span class="font-bold text-[#111111]">{formatPrice(part.pricePart)}</span>
-              </div>
-              {part.priceInstall > 0 && (
-                <div class="flex justify-between items-center py-2">
-                  <span class="text-sm text-[#787774]">Con instalación en MTY</span>
-                  <span class="font-bold text-[#111111]">{formatPrice(part.priceInstall)}</span>
-                </div>
-              )}
-            </div>
-
-            <div class="flex items-center gap-2 text-[11px] text-[#ADADAD]">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <rect x="1" y="3" width="15" height="13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="5.5" cy="18.5" r="2.5" stroke-width="1.5"/><circle cx="18.5" cy="18.5" r="2.5" stroke-width="1.5"/>
-              </svg>
-              {part.delivery}
-            </div>
-
-            <a
-              href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hola, quiero la ${part.name} para mi ${part.model}. ¿Pueden confirmar disponibilidad?`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-4 flex items-center justify-center gap-1.5 w-full py-2.5 bg-[#111111] text-white text-xs font-medium rounded-lg hover:bg-[#333] transition-colors"
-            >
-              Pedir esta variante
-            </a>
-          </div>
-        ))}
-
-        <!-- Nota garantía -->
-        <div class="text-xs text-[#ADADAD] leading-relaxed p-4 border border-[#EAEAEA] rounded-xl">
-          <strong class="text-[#787774] block mb-1">Garantía y devoluciones</strong>
-          28 días de garantía directa en Monterrey. Transcurrido este plazo no se aceptan devoluciones ni cambios bajo ninguna circunstancia.
-        </div>
-      </div>
     </div>
 
     <!-- FAQ SEO -->
-    <div class="mt-16 border-t border-[#EAEAEA] pt-12">
+    <div class="w-full order-5 md:order-none mt-16 border-t border-[#A0A0A0] pt-12">
       <h2 class="text-xl font-semibold text-[#111111] mb-6">Preguntas frecuentes</h2>
       <div class="space-y-6 max-w-2xl">
         {[
@@ -212,12 +231,26 @@ const productSchema = JSON.stringify({
           },
         ].map(faq => (
           <div>
-            <p class="font-medium text-[#111111] mb-1.5">{faq.q}</p>
-            <p class="text-sm text-[#787774] leading-relaxed">{faq.a}</p>
+            <p class="font-semibold text-[#111111] mb-1.5">{faq.q}</p>
+            <p class="text-sm text-[#444444] leading-relaxed">{faq.a}</p>
           </div>
         ))}
       </div>
     </div>
 
   </main>
+
+  <script>
+    document.getElementById("product-variants-container")?.addEventListener("click", (e) => {
+      const btn = (e.target as Element).closest(".variant-add-btn") as HTMLElement;
+      if (!btn || !window.pfCart) return;
+      
+      window.pfCart.toggle(
+        btn.dataset.id!,
+        btn.dataset.name!,
+        btn.dataset.part!,
+        Number(btn.dataset.price),
+      );
+    });
+  </script>
 </Layout>
