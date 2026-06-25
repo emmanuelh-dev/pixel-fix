@@ -1,219 +1,206 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { repairCatalog, salesCatalog, formatPrice } from '../data/catalog';
+import Layout from "../layouts/Layout.astro";
+import { repairCatalog, salesCatalog, formatPrice } from "../data/catalog";
+import Store from "../components/Store.astro";
 
 function splitModels(raw: string): string[] {
-  if (!raw.includes('/')) return [raw.trim()];
-  return raw.split('/').map(m => { m = m.trim(); return m.startsWith('Pixel') ? m : `Pixel ${m}`; });
+	if (!raw.includes("/")) return [raw.trim()];
+	return raw.split("/").map((m) => {
+		m = m.trim();
+		return m.startsWith("Pixel") ? m : `Pixel ${m}`;
+	});
 }
 
 const MODEL_ORDER = [
-  'Pixel 10 Pro XL','Pixel 10 Pro','Pixel 10','Pixel 10a',
-  'Pixel 9 Pro XL','Pixel 9 Pro','Pixel 9','Pixel 9a',
-  'Pixel 8 Pro','Pixel 8','Pixel 8a',
-  'Pixel 7 Pro','Pixel 7','Pixel 7a',
-  'Pixel 6 Pro','Pixel 6','Pixel 6a',
-  'Pixel 5','Pixel 5a',
+	"Pixel 10 Pro XL",
+	"Pixel 10 Pro",
+	"Pixel 10",
+	"Pixel 10a",
+	"Pixel 9 Pro XL",
+	"Pixel 9 Pro",
+	"Pixel 9",
+	"Pixel 9a",
+	"Pixel 8 Pro",
+	"Pixel 8",
+	"Pixel 8a",
+	"Pixel 7 Pro",
+	"Pixel 7",
+	"Pixel 7a",
+	"Pixel 6 Pro",
+	"Pixel 6",
+	"Pixel 6a",
+	"Pixel 5",
+	"Pixel 5a",
 ];
 
-const allParts = repairCatalog.flatMap(series =>
-  series.parts.flatMap(p => {
-    const isBateria = p.name.toLowerCase().includes('pila');
-    const isOriginal = p.name.toLowerCase().includes('original');
-    const qualityTag = isOriginal ? 'original' : 'replica-excelente';
-    const rawSlug = p.model.toLowerCase().replace(/\s*\/\s*/g, '-').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    return splitModels(p.model).map(model => ({
-      id: `${series.id}-${model.toLowerCase().replace(/\s+/g, '-')}-${isBateria ? 'bat' : 'pan'}-${qualityTag}`,
-      slug: `${isBateria ? 'bateria' : 'pantalla'}-${rawSlug}-${qualityTag}`,
-      type: isBateria ? 'Batería' : 'Pantalla',
-      iconType: isBateria ? 'battery' : 'screen',
-      name: p.name, model, series: series.series,
-      pricePart: p.pricePart, priceInstall: p.priceInstall,
-      delivery: p.delivery, category: 'refaccion' as const,
-    }));
-  })
+const allParts = repairCatalog.flatMap((series) =>
+	series.parts.flatMap((p) => {
+		const isBateria = p.name.toLowerCase().includes("pila");
+		const isOriginal = p.name.toLowerCase().includes("original");
+		const qualityTag = isOriginal ? "original" : "replica-excelente";
+		const rawSlug = p.model
+			.toLowerCase()
+			.replace(/\s*\/\s*/g, "-")
+			.replace(/\s+/g, "-")
+			.replace(/[^a-z0-9-]/g, "");
+		return splitModels(p.model).map((model) => ({
+			id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-${isBateria ? "bat" : "pan"}-${qualityTag}`,
+			slug: `${isBateria ? "bateria" : "pantalla"}-${rawSlug}-${qualityTag}`,
+			type: isBateria ? "Batería" : "Pantalla",
+			iconType: isBateria ? "battery" : "screen",
+			name: p.name,
+			model,
+			series: series.series,
+			pricePart: p.pricePart,
+			priceInstall: p.priceInstall,
+			delivery: p.delivery,
+			category: "refaccion" as const,
+		}));
+	}),
 );
 
-const allDevices = salesCatalog.flatMap(series =>
-  series.devices.map(d => {
-    const model = d.name.replace(/^Google\s+/, '');
-    return {
-      id: `${series.id}-${model.toLowerCase().replace(/\s+/g, '-')}-equipo`,
-      slug: '', type: 'Equipo' as const, iconType: 'device',
-      name: d.name, model, series: series.series,
-      pricePart: d.price, priceInstall: 0,
-      delivery: d.availability, specs: (d as any).specs,
-      category: 'equipo' as const,
-    };
-  })
+const allDevices = salesCatalog.flatMap((series) =>
+	series.devices.map((d) => {
+		const model = d.name.replace(/^Google\s+/, "");
+		return {
+			id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-equipo`,
+			slug: "",
+			type: "Equipo" as const,
+			iconType: "device",
+			name: d.name,
+			model,
+			series: series.series,
+			pricePart: d.price,
+			priceInstall: 0,
+			delivery: d.availability,
+			specs: (d as any).specs,
+			category: "equipo" as const,
+		};
+	}),
 );
 
 const catalog = [...allParts, ...allDevices];
-const availableModels = MODEL_ORDER.filter(m => catalog.some(i => i.model === m));
+const availableModels = MODEL_ORDER.filter((m) =>
+	catalog.some((i) => i.model === m),
+);
 const fmt = (n: number) => formatPrice(n);
 ---
 
 <Layout
-  title="Tienda Refacciones Google Pixel México | Pantallas y Baterías Originales — Pixel Fix"
-  description="Compra pantallas y baterías originales para Google Pixel en México. Alternativa a iFixit con envío nacional. Pixel 7, 8, 9, 10."
-  url="https://www.pixelfixmexico.com/tienda/"
+	title="Tienda Refacciones Google Pixel México | Pantallas y Baterías Originales — Pixel Fix"
+	description="Compra pantallas y baterías originales para Google Pixel en México. Alternativa a iFixit con envío nacional. Pixel 7, 8, 9, 10."
+	url="https://www.pixelfixmexico.com/tienda/"
 >
+	<main class="min-h-screen max-w-5xl mx-auto px-4 py-12 md:py-20">
+		<div class="mb-8">
+			<span
+				class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4"
+			>
+				Tienda · Refacciones y Equipos
+			</span>
+			<h1
+				class="text-4xl md:text-5xl font-medium tracking-tight text-[#111111] leading-tight mb-2"
+			>
+				Busca tu pieza o equipo Pixel
+			</h1>
+			<p class="text-[#787774]">
+				Pantallas y baterías originales para Google Pixel. Envío a todo México
+				en 10–12 días hábiles.
+			</p>
+		</div>
+		<Store />
+	</main>
+	<style>
+		.chip-active {
+			background: #111111;
+			color: white;
+			border-color: #111111;
+		}
+		.chip-inactive {
+			background: transparent;
+			color: #787774;
+			border-color: #eaeaea;
+		}
+		.chip-inactive:hover {
+			border-color: #111111;
+			color: #111111;
+		}
+	</style>
 
-<main class="min-h-screen max-w-5xl mx-auto px-4 py-12 md:py-20">
+	<script>
+		let activeType = "all",
+			activeModel = "all",
+			query = "";
 
-  <div class="mb-8">
-    <span class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
-      Tienda · Refacciones y Equipos
-    </span>
-    <h1 class="text-4xl md:text-5xl font-medium tracking-tight text-[#111111] leading-tight mb-2">
-      Busca tu pieza o equipo Pixel
-    </h1>
-    <p class="text-[#787774]">Pantallas y baterías originales para Google Pixel. Envío a todo México en 10–12 días hábiles.</p>
-  </div>
+		function applyFilter() {
+			const cards = document.querySelectorAll(".catalog-card");
+			let visible = 0;
+			cards.forEach((card) => {
+				const matchType =
+					activeType === "all" ||
+					(card as HTMLElement).dataset.type === activeType;
+				const matchModel =
+					activeModel === "all" ||
+					(card as HTMLElement).dataset.model === activeModel;
+				const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+				const matchQuery =
+					!words.length ||
+					words.every((w) =>
+						((card as HTMLElement).dataset.text || "").includes(w),
+					);
+				const show = matchType && matchModel && matchQuery;
+				(card as HTMLElement).style.display = show ? "" : "none";
+				if (show) visible++;
+			});
+			document.getElementById("results-count")!.textContent =
+				`${visible} producto${visible !== 1 ? "s" : ""}`;
+			document
+				.getElementById("no-results")!
+				.classList.toggle("hidden", visible > 0);
+			document
+				.getElementById("catalog-grid")!
+				.classList.toggle("hidden", visible === 0);
+		}
 
-  <div class="relative mb-5">
-    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#ADADAD] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-    </svg>
-    <input id="search-input" type="search" placeholder='Ej: "pantalla pixel 8", "batería pixel 7 pro"…'
-      class="w-full pl-11 pr-4 py-3.5 bg-white border border-[#EAEAEA] rounded-xl text-[#111111] placeholder-[#ADADAD] focus:outline-none focus:ring-2 focus:ring-[#111111]/10 text-sm shadow-sm"/>
-  </div>
+		function activateChip(cls: string, selected: Element) {
+			document.querySelectorAll(`.${cls}`).forEach((b) => {
+				b.className =
+					b.className.replace(/chip-\w+/g, "").trim() +
+					(b === selected ? " chip-active" : " chip-inactive");
+			});
+		}
 
-  <div class="mb-2">
-    <p class="text-[10px] font-mono uppercase tracking-wider text-[#ADADAD] mb-2">Tipo</p>
-    <div id="type-filters" class="flex flex-wrap gap-2">
-      <button data-type="all" class="type-btn chip-active px-3 py-1.5 text-xs font-mono rounded-full border transition-all">Todo</button>
-      {(['Pantalla','Batería','Equipo'] as const).map(t => (
-        <button data-type={t} class="type-btn chip-inactive px-3 py-1.5 text-xs font-mono rounded-full border transition-all flex items-center gap-1.5">
-          {t === 'Pantalla' && <svg class="w-3 h-3"><use href="#icon-screen"/></svg>}
-          {t === 'Batería'  && <svg class="w-3 h-3"><use href="#icon-battery"/></svg>}
-          {t === 'Equipo'   && <svg class="w-3 h-3"><use href="#icon-device"/></svg>}
-          {t}
-        </button>
-      ))}
-    </div>
-  </div>
+		document.getElementById("type-filters")!.addEventListener("click", (e) => {
+			const btn = (e.target as Element).closest(".type-btn") as HTMLElement;
+			if (!btn) return;
+			activeType = btn.dataset.type!;
+			activateChip("type-btn", btn);
+			applyFilter();
+		});
 
-  <div class="mb-6">
-    <p class="text-[10px] font-mono uppercase tracking-wider text-[#ADADAD] mb-2">Modelo</p>
-    <div id="model-filters" class="flex flex-wrap gap-2">
-      <button data-model="all" class="model-btn chip-active px-3 py-1.5 text-xs font-mono rounded-full border transition-all">Todos</button>
-      {availableModels.map(m => (
-        <button data-model={m} class="model-btn chip-inactive px-3 py-1.5 text-xs font-mono rounded-full border transition-all">{m}</button>
-      ))}
-    </div>
-  </div>
+		document.getElementById("model-filters")!.addEventListener("click", (e) => {
+			const btn = (e.target as Element).closest(".model-btn") as HTMLElement;
+			if (!btn) return;
+			activeModel = btn.dataset.model!;
+			activateChip("model-btn", btn);
+			applyFilter();
+		});
 
-  <p id="results-count" class="text-xs font-mono text-[#ADADAD] mb-4">{catalog.length} productos</p>
+		document.getElementById("search-input")!.addEventListener("input", (e) => {
+			query = (e.target as HTMLInputElement).value;
+			applyFilter();
+		});
 
-  <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-24">
-    {catalog.map((item) => (
-      <div class="catalog-card bg-white border border-[#EAEAEA] rounded-xl p-5 flex flex-col gap-4 hover:shadow-md transition-shadow"
-        data-type={item.type} data-model={item.model}
-        data-text={`${item.name} ${item.model} ${item.type} ${item.series} original bateria pantalla pixel`.toLowerCase()}>
-        <div class="flex items-start justify-between gap-3">
-          <div class="flex-1 min-w-0">
-            <span class="text-[10px] font-mono uppercase tracking-wider text-[#787774]">{item.type}</span>
-            <p class="font-semibold text-[#111111] text-sm leading-snug mt-0.5">{item.model}</p>
-            <p class="text-xs text-[#ADADAD] mt-0.5 line-clamp-1">
-              {item.category === 'equipo' ? (item as any).specs : item.name}
-            </p>
-          </div>
-          <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#F3F3F1] text-[#787774] flex-shrink-0">
-            <svg class="w-4 h-4"><use href={`#icon-${item.iconType}`}/></svg>
-          </div>
-        </div>
-        <div>
-          <p class="text-lg font-bold text-[#111111]">{fmt(item.pricePart)}</p>
-          {item.category !== 'equipo' && item.priceInstall > 0 && (
-            <p class="text-[11px] text-[#787774]">Con instalación: {fmt(item.priceInstall)}</p>
-          )}
-          <div class="flex items-center gap-1.5 mt-1">
-            <svg class="w-3 h-3 text-[#ADADAD]"><use href="#icon-truck"/></svg>
-            <p class="text-[10px] text-[#ADADAD]">{item.delivery}</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 mt-auto">
-          {item.slug && (
-            <a href={`/productos/${item.slug}`}
-              class="px-3 py-2 text-[11px] font-mono border border-[#EAEAEA] rounded-lg text-[#787774] hover:border-[#111111] hover:text-[#111111] transition-all whitespace-nowrap">
-              Ver más
-            </a>
-          )}
-          <button data-id={item.id} data-name={item.model} data-part={item.name} data-price={item.pricePart}
-            class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-[#111111] text-white text-[11px] font-medium rounded-lg hover:bg-[#333] transition-colors">
-            <svg class="w-3.5 h-3.5 btn-icon-cart"><use href="#icon-cart"/></svg>
-            <svg class="w-3.5 h-3.5 btn-icon-check hidden"><use href="#icon-check"/></svg>
-            <span class="btn-label">Agregar al carrito</span>
-          </button>
-        </div>
-      </div>
-    ))}
-  </div>
-
-  <div id="no-results" class="hidden py-16 text-center text-[#ADADAD] text-sm">
-    Sin resultados. Intenta con "pixel 8", "pantalla" o "batería".
-  </div>
-
-</main>
-
-<style>
-  .chip-active   { background: #111111; color: white; border-color: #111111; }
-  .chip-inactive { background: transparent; color: #787774; border-color: #EAEAEA; }
-  .chip-inactive:hover { border-color: #111111; color: #111111; }
-</style>
-
-<script>
-  let activeType = 'all', activeModel = 'all', query = '';
-
-  function applyFilter() {
-    const cards = document.querySelectorAll('.catalog-card');
-    let visible = 0;
-    cards.forEach(card => {
-      const matchType  = activeType  === 'all' || (card as HTMLElement).dataset.type  === activeType;
-      const matchModel = activeModel === 'all' || (card as HTMLElement).dataset.model === activeModel;
-      const words = query.toLowerCase().split(/\s+/).filter(Boolean);
-      const matchQuery = !words.length || words.every(w => ((card as HTMLElement).dataset.text || '').includes(w));
-      const show = matchType && matchModel && matchQuery;
-      (card as HTMLElement).style.display = show ? '' : 'none';
-      if (show) visible++;
-    });
-    document.getElementById('results-count')!.textContent = `${visible} producto${visible !== 1 ? 's' : ''}`;
-    document.getElementById('no-results')!.classList.toggle('hidden', visible > 0);
-    document.getElementById('catalog-grid')!.classList.toggle('hidden', visible === 0);
-  }
-
-  function activateChip(cls: string, selected: Element) {
-    document.querySelectorAll(`.${cls}`).forEach(b => {
-      b.className = b.className.replace(/chip-\w+/g, '').trim() + (b === selected ? ' chip-active' : ' chip-inactive');
-    });
-  }
-
-  document.getElementById('type-filters')!.addEventListener('click', e => {
-    const btn = (e.target as Element).closest('.type-btn') as HTMLElement;
-    if (!btn) return;
-    activeType = btn.dataset.type!;
-    activateChip('type-btn', btn); applyFilter();
-  });
-
-  document.getElementById('model-filters')!.addEventListener('click', e => {
-    const btn = (e.target as Element).closest('.model-btn') as HTMLElement;
-    if (!btn) return;
-    activeModel = btn.dataset.model!;
-    activateChip('model-btn', btn); applyFilter();
-  });
-
-  document.getElementById('search-input')!.addEventListener('input', e => {
-    query = (e.target as HTMLInputElement).value;
-    applyFilter();
-  });
-
-  // Delegar al carrito global
-  document.getElementById('catalog-grid')!.addEventListener('click', e => {
-    const btn = (e.target as Element).closest('.add-btn') as HTMLElement;
-    if (!btn || !window.pfCart) return;
-    window.pfCart.toggle(btn.dataset.id!, btn.dataset.name!, btn.dataset.part!, Number(btn.dataset.price));
-  });
-</script>
-
+		// Delegar al carrito global
+		document.getElementById("catalog-grid")!.addEventListener("click", (e) => {
+			const btn = (e.target as Element).closest(".add-btn") as HTMLElement;
+			if (!btn || !window.pfCart) return;
+			window.pfCart.toggle(
+				btn.dataset.id!,
+				btn.dataset.name!,
+				btn.dataset.part!,
+				Number(btn.dataset.price),
+			);
+		});
+	</script>
 </Layout>
