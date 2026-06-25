@@ -106,4 +106,4 @@ Cada dispositivo vendido incluye de regalo:
 ## 4. Políticas de Garantía del Taller y Devoluciones
 - **Póliza de Garantía:** Toda venta de piezas sueltas o teléfonos cuenta con únicamente **28 días de garantía**.
 - **Devoluciones:** Transcurridos los 28 días desde la compra o entrega, **no se aceptan devoluciones ni cambios** bajo ninguna circunstancia.
-- **Logística para Clientes Foráneos:** Para clientes fuera de Monterrey, el cliente cubre los costos de envío. Las refacciones y equipos se envían asegurados por paquetería express.
+- **Envío Nacional:** $250 MXN tarifa fija a cualquier parte de México, sin importar la cantidad de piezas en el mismo pedido. Las refacciones y equipos se envían asegurados por paquetería express.

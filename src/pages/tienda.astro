@@ -1,89 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { repairCatalog, salesCatalog, formatPrice } from "../data/catalog";
 import Store from "../components/Store.astro";
-
-function splitModels(raw: string): string[] {
-	if (!raw.includes("/")) return [raw.trim()];
-	return raw.split("/").map((m) => {
-		m = m.trim();
-		return m.startsWith("Pixel") ? m : `Pixel ${m}`;
-	});
-}
-
-const MODEL_ORDER = [
-	"Pixel 10 Pro XL",
-	"Pixel 10 Pro",
-	"Pixel 10",
-	"Pixel 10a",
-	"Pixel 9 Pro XL",
-	"Pixel 9 Pro",
-	"Pixel 9",
-	"Pixel 9a",
-	"Pixel 8 Pro",
-	"Pixel 8",
-	"Pixel 8a",
-	"Pixel 7 Pro",
-	"Pixel 7",
-	"Pixel 7a",
-	"Pixel 6 Pro",
-	"Pixel 6",
-	"Pixel 6a",
-	"Pixel 5",
-	"Pixel 5a",
-];
-
-const allParts = repairCatalog.flatMap((series) =>
-	series.parts.flatMap((p) => {
-		const isBateria = p.name.toLowerCase().includes("pila");
-		const isOriginal = p.name.toLowerCase().includes("original");
-		const qualityTag = isOriginal ? "original" : "replica-excelente";
-		const rawSlug = p.model
-			.toLowerCase()
-			.replace(/\s*\/\s*/g, "-")
-			.replace(/\s+/g, "-")
-			.replace(/[^a-z0-9-]/g, "");
-		return splitModels(p.model).map((model) => ({
-			id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-${isBateria ? "bat" : "pan"}-${qualityTag}`,
-			slug: `${isBateria ? "bateria" : "pantalla"}-${rawSlug}-${qualityTag}`,
-			type: isBateria ? "Batería" : "Pantalla",
-			iconType: isBateria ? "battery" : "screen",
-			name: p.name,
-			model,
-			series: series.series,
-			pricePart: p.pricePart,
-			priceInstall: p.priceInstall,
-			delivery: p.delivery,
-			category: "refaccion" as const,
-		}));
-	}),
-);
-
-const allDevices = salesCatalog.flatMap((series) =>
-	series.devices.map((d) => {
-		const model = d.name.replace(/^Google\s+/, "");
-		return {
-			id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-equipo`,
-			slug: "",
-			type: "Equipo" as const,
-			iconType: "device",
-			name: d.name,
-			model,
-			series: series.series,
-			pricePart: d.price,
-			priceInstall: 0,
-			delivery: d.availability,
-			specs: (d as any).specs,
-			category: "equipo" as const,
-		};
-	}),
-);
-
-const catalog = [...allParts, ...allDevices];
-const availableModels = MODEL_ORDER.filter((m) =>
-	catalog.some((i) => i.model === m),
-);
-const fmt = (n: number) => formatPrice(n);
 ---
 
 <Layout
@@ -94,16 +11,16 @@ const fmt = (n: number) => formatPrice(n);
 	<main class="min-h-screen max-w-5xl mx-auto px-4 py-12 md:py-20">
 		<div class="mb-8">
 			<span
-				class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4"
+				class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4"
 			>
 				Tienda · Refacciones y Equipos
 			</span>
 			<h1
-				class="text-4xl md:text-5xl font-medium tracking-tight text-[#111111] leading-tight mb-2"
+				class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-tight mb-2"
 			>
 				Busca tu pieza o equipo Pixel
 			</h1>
-			<p class="text-[#787774]">
+			<p class="text-muted">
 				Pantallas y baterías originales para Google Pixel. Envío a todo México
 				en 10–12 días hábiles.
 			</p>
@@ -112,18 +29,18 @@ const fmt = (n: number) => formatPrice(n);
 	</main>
 	<style>
 		.chip-active {
-			background: #111111;
+			background: var(--color-ink);
 			color: white;
-			border-color: #111111;
+			border-color: var(--color-ink);
 		}
 		.chip-inactive {
 			background: transparent;
-			color: #787774;
-			border-color: #eaeaea;
+			color: var(--color-muted);
+			border-color: var(--color-border);
 		}
 		.chip-inactive:hover {
-			border-color: #111111;
-			color: #111111;
+			border-color: var(--color-ink);
+			color: var(--color-ink);
 		}
 	</style>
 </Layout>

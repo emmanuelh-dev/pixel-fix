@@ -1,66 +1,13 @@
 ---
+import { Icon } from "astro-icon/components";
 import Layout from "../layouts/Layout.astro";
 import Testimonials from "../components/Testimonials.astro";
-import { repairCatalog, formatPrice } from "../data/catalog";
+import Faq from "../components/Faq.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import WarrantySupport from "../components/WarrantySupport.astro";
+import { phoneNumber } from "../data/store";
+import { localBusinessSchema, faqSchema } from "../lib/seo";
 import Store from "../components/Store.astro";
-
-function splitModels(raw: string): string[] {
-	if (!raw.includes("/")) return [raw.trim()];
-	return raw.split("/").map((m) => {
-		m = m.trim();
-		return m.startsWith("Pixel") ? m : `Pixel ${m}`;
-	});
-}
-
-const MODEL_ORDER = [
-	"Pixel 10 Pro XL",
-	"Pixel 10 Pro",
-	"Pixel 10",
-	"Pixel 10a",
-	"Pixel 9 Pro XL",
-	"Pixel 9 Pro",
-	"Pixel 9",
-	"Pixel 9a",
-	"Pixel 8 Pro",
-	"Pixel 8",
-	"Pixel 8a",
-	"Pixel 7 Pro",
-	"Pixel 7",
-	"Pixel 7a",
-	"Pixel 6 Pro",
-	"Pixel 6",
-	"Pixel 6a",
-	"Pixel 5",
-	"Pixel 5a",
-];
-
-// Normalizar catálogo de reparación (una tarjeta por modelo individual)
-const repairParts = repairCatalog.flatMap((series) =>
-	series.parts.flatMap((p) => {
-		const isBateria = p.name.toLowerCase().includes("pila");
-		const isOriginal = p.name.toLowerCase().includes("original");
-		const qualityTag = isOriginal ? "original" : "replica-excelente";
-		const rawSlug = p.model
-			.toLowerCase()
-			.replace(/\s*\/\s*/g, "-")
-			.replace(/\s+/g, "-")
-			.replace(/[^a-z0-9-]/g, "");
-		return splitModels(p.model).map((model) => ({
-			id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-${isBateria ? "bat" : "pan"}-${qualityTag}`,
-			type: isBateria ? "Batería" : "Pantalla",
-			model,
-			name: p.name,
-			pricePart: p.pricePart,
-			priceInstall: p.priceInstall,
-			delivery: p.delivery,
-			wa: `Hola Pixel Fix, quiero solicitar reparación de ${p.name} para mi ${model} en Monterrey.`,
-		}));
-	}),
-);
-
-const availableModels = MODEL_ORDER.filter((m) =>
-	repairParts.some((p) => p.model === m),
-);
 
 const faqs = [
 	{
@@ -92,38 +39,14 @@ const faqs = [
 	},
 ];
 
-const phoneNumber = "528111913676";
-
-// Generar LD+JSON Scripts estáticos para Astro
-const localBusinessSchema = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "LocalBusiness",
+const businessSchema = localBusinessSchema({
 	name: "Pixel Fix México",
-	image: "https://www.pixelfixmexico.com/logo.png",
 	description:
 		"Especialistas en Reparación de Google Pixel en Monterrey. Pantallas, tapas y baterías originales.",
-	address: {
-		"@type": "PostalAddress",
-		addressLocality: "Monterrey",
-		addressRegion: "NL",
-		addressCountry: "MX",
-	},
 	priceRange: "$$",
-	telephone: `+${phoneNumber}`,
 });
 
-const faqSchema = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "FAQPage",
-	mainEntity: faqs.map((faq) => ({
-		"@type": "Question",
-		name: faq.question,
-		acceptedAnswer: {
-			"@type": "Answer",
-			text: faq.answer,
-		},
-	})),
-});
+const questionsSchema = faqSchema(faqs);
 ---
 
 <Layout
@@ -132,8 +55,8 @@ const faqSchema = JSON.stringify({
 	image="https://www.pixelfixmexico.com/og-image-reparaciones.jpg"
 	url="https://www.pixelfixmexico.com/reparacion-google-pixel-monterrey/"
 >
-	<script type="application/ld+json" set:html={localBusinessSchema} />
-	<script type="application/ld+json" set:html={faqSchema} />
+	<script type="application/ld+json" set:html={businessSchema} />
+	<script type="application/ld+json" set:html={questionsSchema} />
 
 	<main class="min-h-screen">
 		<!-- Hero compacto: copy + trust pills, sin imagen que robe viewport -->
@@ -143,16 +66,16 @@ const faqSchema = JSON.stringify({
 			>
 				<div class="max-w-xl">
 					<span
-						class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4"
+						class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4"
 					>
 						Especialistas Google Pixel · Monterrey
 					</span>
 					<h1
-						class="text-4xl md:text-5xl font-medium tracking-tight text-[#111111] leading-[1.05] mb-3"
+						class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-[1.05] mb-3"
 					>
 						Reparación Google Pixel<br />en Monterrey.
 					</h1>
-					<p class="text-base text-[#787774] leading-relaxed max-w-md">
+					<p class="text-base text-muted leading-relaxed max-w-md">
 						Pantallas, baterías y tapas originales. Garantía local directa.
 						Envío a todo México.
 					</p>
@@ -160,16 +83,16 @@ const faqSchema = JSON.stringify({
 				<!-- Trust pills verticales en desktop -->
 				<div class="flex flex-row md:flex-col gap-2 flex-wrap">
 					<div
-						class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EDF3EC] border border-[#C3E0C5] rounded-lg text-xs text-[#346538] font-mono"
+						class="inline-flex items-center gap-2 px-3 py-1.5 bg-success-soft border border-success-border rounded-lg text-xs text-success font-mono"
 					>
-						<span class="w-1.5 h-1.5 rounded-full bg-[#346538] flex-shrink-0"
+						<span class="w-1.5 h-1.5 rounded-full bg-success flex-shrink-0"
 						></span>
 						Instalación $800 MXN
 					</div>
 					<div
-						class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F9F9F8] border border-[#EAEAEA] rounded-lg text-xs text-[#787774] font-mono"
+						class="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-muted border border-border rounded-lg text-xs text-muted font-mono"
 					>
-						<span class="w-1.5 h-1.5 rounded-full bg-[#111111] flex-shrink-0"
+						<span class="w-1.5 h-1.5 rounded-full bg-ink flex-shrink-0"
 						></span>
 						28 días garantía · Envío $250 MXN
 					</div>
@@ -178,13 +101,9 @@ const faqSchema = JSON.stringify({
 						target="_blank"
 						rel="noopener noreferrer"
 						data-umami-event="repairs_hero_whatsapp_click"
-						class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#25D366] text-white text-xs font-medium rounded-lg hover:bg-[#1ebe5d] transition-colors whitespace-nowrap"
+						class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-whatsapp text-white text-xs font-medium rounded-lg hover:bg-whatsapp-hover transition-colors whitespace-nowrap"
 					>
-						<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"
-							><path
-								d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-							></path></svg
-						>
+						<Icon name="simple-icons:whatsapp" class="w-4 h-4" />
 						Cotizar por WhatsApp
 					</a>
 				</div>
@@ -194,18 +113,18 @@ const faqSchema = JSON.stringify({
 		<!-- Enlace contextual a ventas -->
 		<section class="max-w-5xl mx-auto px-6 pb-24 reveal">
 			<div
-				class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow"
+				class="bg-surface p-8 border border-border rounded-xl flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow"
 			>
 				<div class="max-w-xl">
-					<h3 class="text-lg font-medium text-[#111111] mb-2">
+					<h3 class="text-lg font-medium text-ink mb-2">
 						¿Prefieres renovar tu dispositivo?
 					</h3>
-					<p class="text-sm text-[#787774] leading-[1.6]">
+					<p class="text-sm text-muted leading-[1.6]">
 						Si la reparación no es viable o prefieres actualizar tu teléfono,
 						contamos con un catálogo curado de <a
 							href="/venta-google-pixel-monterrey"
 							data-umami-event="repairs_contextual_sales_link_click"
-							class="text-[#111111] underline hover:text-[#1F6C9F] transition-colors"
+							class="text-ink underline hover:text-accent transition-colors"
 							>celulares Google Pixel Usados Estética 9 y Open Box</a
 						> con garantía local directa.
 					</p>
@@ -213,235 +132,31 @@ const faqSchema = JSON.stringify({
 				<a
 					href="/venta-google-pixel-monterrey"
 					data-umami-event="repairs_go_to_sales_click"
-					class="px-6 py-3.5 bg-[#111111] text-white text-xs font-mono font-medium rounded hover:scale-[0.98] transition-all shrink-0"
+					class="px-6 py-3.5 bg-ink text-white text-xs font-mono font-medium rounded hover:scale-[0.98] transition-all shrink-0"
 				>
 					Ver Equipos en Venta
 				</a>
 			</div>
 		</section>
 
-		<!-- El Proceso de Confianza & Logística -->
-		<section
-			id="proceso"
-			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
-		>
-			<div class="mb-16 max-w-xl">
-				<h2
-					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
-				>
-					Proceso de Servicio.
-				</h2>
-				<p class="text-[#787774] leading-[1.6]">
-					Repara tu dispositivo de manera transparente y con técnicos
-					capacitados.
-				</p>
-			</div>
+		<ProcessSteps
+			title="Proceso de Servicio."
+			description="Repara tu dispositivo de manera transparente y con técnicos capacitados."
+			steps={[
+				{ title: "Envías o Agendas", description: "Nos contactas por WhatsApp para agendar tu cita física en Monterrey o coordinar envío por paquetería." },
+				{ title: "Diagnóstico y Reparación", description: "Instalamos las refacciones originales o calidad OEM seleccionadas bajo estrictos controles técnicos." },
+				{ title: "Garantía Directa", description: "Te devolvemos tu Google Pixel reparado con sello de garantía local en Monterrey." },
+			]}
+		/>
 
-			<div class="grid md:grid-cols-3 gap-6">
-				<div
-					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
-				>
-					<div
-						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
-					>
-						01
-					</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">
-						Envías o Agendas
-					</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">
-						Nos contactas por WhatsApp para agendar tu cita física en Monterrey
-						o coordinar envío por paquetería.
-					</p>
-				</div>
-
-				<div
-					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
-				>
-					<div
-						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
-					>
-						02
-					</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">
-						Diagnóstico y Reparación
-					</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">
-						Instalamos las refacciones originales o calidad OEM seleccionadas
-						bajo estrictos controles técnicos.
-					</p>
-				</div>
-
-				<div
-					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
-				>
-					<div
-						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
-					>
-						03
-					</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">
-						Garantía Directa
-					</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">
-						Te devolvemos tu Google Pixel reparado con sello de garantía local
-						en Monterrey.
-					</p>
-				</div>
-			</div>
-		</section>
-
-		<!-- Garantía de Origen y Soporte de Google -->
-		<section
-			id="garantia-soporte"
-			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
-		>
-			<div class="mb-16 max-w-2xl">
-				<h2
-					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
-				>
-					Piezas Genuinas y Garantía Oficial de Fábrica.
-				</h2>
-				<p class="text-[#787774] leading-[1.6]">
-					Nos aseguramos de que tu Google Pixel mantenga su integridad técnica y
-					la cobertura de fábrica.
-				</p>
-			</div>
-
-			<div class="grid md:grid-cols-2 gap-8 mb-12">
-				<div
-					class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col justify-between hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow"
-				>
-					<div>
-						<div
-							class="inline-flex items-center gap-2 px-3 py-1 bg-[#E8F5E9] text-[#2E7D32] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-6"
-						>
-							Refacciones 100% Originales
-						</div>
-						<h3 class="text-xl font-medium text-[#111111] mb-4">
-							iFixit y Distribuidores OEM en USA
-						</h3>
-						<p class="text-sm text-[#787774] leading-[1.7] mb-6">
-							Todas nuestras refacciones son originales autorizadas por Google,
-							importadas directamente desde **iFixit** y otros distribuidores de
-							alta calidad en EE. UU. (OEM). Esto nos permite ofrecer soporte
-							técnico oficial con el estándar de calidad del fabricante,
-							garantizando la perfecta calibración de pantalla y biometría en tu
-							Google Pixel.
-						</p>
-					</div>
-					<div class="text-xs font-mono text-[#787774]">
-						Soporte Técnico Especializado • Componentes Genuinos
-					</div>
-				</div>
-
-				<div
-					class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col justify-between hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow"
-				>
-					<div>
-						<div
-							class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-6"
-						>
-							Garantía Directa de Google
-						</div>
-						<h3 class="text-xl font-medium text-[#111111] mb-4">
-							Gestión de Garantía con el Fabricante
-						</h3>
-						<p class="text-sm text-[#787774] leading-[1.7] mb-6">
-							¿Tu dispositivo aún tiene garantía vigente directa con Google y
-							prefieres repararlo con ellos? Nosotros nos encargamos de todo.
-							Realizamos el diagnóstico y **gestionamos el envío de tu equipo a
-							garantía directo con Google en USA**, facilitándote todo el
-							proceso logístico internacional y de aduanas.
-						</p>
-					</div>
-					<div class="text-xs font-mono text-[#787774]">
-						Trámite Logístico Seguro • Cobertura Google USA
-					</div>
-				</div>
-			</div>
-
-			<!-- Flujo detallado del trámite de garantía -->
-			<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl">
-				<h3 class="text-lg font-medium text-[#111111] mb-6">
-					¿Cómo gestionamos tu garantía con Google desde México?
-				</h3>
-				<div class="grid sm:grid-cols-3 gap-8">
-					<div>
-						<span class="text-xs font-mono text-[#1F6C9F] block mb-2"
-							>Paso 01</span
-						>
-						<h4 class="text-sm font-medium text-[#111111] mb-2">
-							Diagnóstico de Calificación
-						</h4>
-						<p class="text-xs text-[#787774] leading-[1.6]">
-							Evaluamos físicamente tu Pixel para descartar daños accidentales
-							(pantallas rotas, humedad o golpes) que anulen la garantía de
-							Google. Si califica, procedemos con el trámite.
-						</p>
-					</div>
-					<div>
-						<span class="text-xs font-mono text-[#1F6C9F] block mb-2"
-							>Paso 02</span
-						>
-						<h4 class="text-sm font-medium text-[#111111] mb-2">
-							Logística Fronteriza y Envío
-						</h4>
-						<p class="text-xs text-[#787774] leading-[1.6]">
-							Trasladamos de forma segura tu equipo a nuestras oficinas de
-							importación en EE. UU., activamos la orden de soporte con Google y
-							lo enviamos directamente a su centro de servicio técnico oficial.
-						</p>
-					</div>
-					<div>
-						<span class="text-xs font-mono text-[#1F6C9F] block mb-2"
-							>Paso 03</span
-						>
-						<h4 class="text-sm font-medium text-[#111111] mb-2">
-							Importación y Entrega
-						</h4>
-						<p class="text-xs text-[#787774] leading-[1.6]">
-							Una vez que Google repara o reemplaza el dispositivo bajo
-							garantía, lo recibimos en USA, gestionamos la aduana y logística
-							de retorno a México, y te lo entregamos en Monterrey o lo enviamos
-							a tu domicilio.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
+		<WarrantySupport />
 
 		<!-- Testimoniales (Abstraído) -->
 		<Testimonials />
 
-		<!-- Dudas Frecuentes -->
-		<section
-			id="faq"
-			class="max-w-3xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
-		>
-			<div class="mb-12">
-				<h2
-					class="font-serif-editorial text-3xl tracking-tight text-[#111111] mb-4"
-				>
-					Dudas Frecuentes.
-				</h2>
-				<p class="text-[#787774] leading-[1.6]">
-					Respuestas sobre el servicio técnico y garantía local.
-				</p>
-			</div>
-
-			<div class="space-y-6">
-				{
-					faqs.map((faq) => (
-						<div class="pb-6 border-b border-[#EAEAEA]">
-							<h3 class="text-lg font-medium text-[#111111] mb-3">
-								{faq.question}
-							</h3>
-							<p class="text-[#787774] text-sm leading-[1.6]">{faq.answer}</p>
-						</div>
-					))
-				}
-			</div>
-		</section>
+		<Faq
+			description="Respuestas sobre el servicio técnico y garantía local."
+			items={faqs}
+		/>
 	</main>
 </Layout>

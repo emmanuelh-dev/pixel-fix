@@ -18,15 +18,15 @@ try {
 
 <section
 	id="testimoniales"
-	class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+	class="max-w-5xl mx-auto px-6 py-24 border-t border-border reveal"
 >
 	<div class="mb-12 max-w-2xl">
 		<h2
-			class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
+			class="text-3xl md:text-4xl tracking-tight text-ink mb-4"
 		>
 			Lo Que Dicen Nuestros Clientes.
 		</h2>
-		<p class="text-[#787774] leading-[1.6]">
+		<p class="text-muted leading-[1.6]">
 			Opiniones reales y capturas de conversaciones con clientes satisfechos que
 			confiaron en Pixel Fix.
 		</p>
@@ -41,24 +41,24 @@ try {
 				>
 					{testimonialImages.map((img, index) => (
 						<div
-							class={`testimonial-item bg-[#FFFFFF] border border-[#EAEAEA] rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all duration-300 group ${index >= 4 ? "hidden" : ""}`}
+							class={`testimonial-item bg-surface border border-border rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all duration-300 group ${index >= 4 ? "hidden" : ""}`}
 						>
-							<div class="p-2 bg-[#F9F9F8] border-b border-[#EAEAEA] flex items-center justify-between text-[9px] sm:text-[10px] text-[#787774] font-mono">
+							<div class="p-2 bg-surface-muted border-b border-border flex items-center justify-between text-[9px] sm:text-[10px] text-muted font-mono">
 								<span>Evidencia Real</span>
 								<a
 									href={img}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="hover:text-[#111111] transition-colors underline"
+									class="hover:text-ink transition-colors underline"
 								>
 									Ampliar
 								</a>
 							</div>
-							<div class="relative overflow-hidden bg-[#F3F3F1] flex items-center justify-center p-2 sm:p-4">
+							<div class="relative overflow-hidden bg-bg flex items-center justify-center p-2 sm:p-4">
 								<img
 									src={img}
 									alt="Captura de testimonio de Google Pixel"
-									class="w-full h-auto max-h-[300px] sm:max-h-[400px] object-cover rounded-lg border border-[#EAEAEA]/50 opacity-95 saturate-[0.85] contrast-[1.05] group-hover:scale-[1.01] transition-transform duration-500"
+									class="w-full h-auto max-h-[300px] sm:max-h-[400px] object-cover rounded-lg border border-border/50 opacity-95 saturate-[0.85] contrast-[1.05] group-hover:scale-[1.01] transition-transform duration-500"
 									loading="lazy"
 								/>
 							</div>
@@ -69,7 +69,7 @@ try {
 					<div class="mt-8 flex justify-center">
 						<button
 							id="btn-show-more"
-							class="px-6 py-3 border border-[#EAEAEA] bg-white text-xs font-mono font-medium rounded hover:bg-[#F9F9F8] transition-colors active:scale-[0.98]"
+							class="px-6 py-3 border border-border bg-white text-xs font-mono font-medium rounded hover:bg-surface-muted transition-colors active:scale-[0.98]"
 						>
 							Ver más testimoniales
 						</button>
@@ -77,13 +77,13 @@ try {
 				)}
 			</div>
 		) : (
-			<div class="border border-dashed border-[#EAEAEA] rounded-xl p-12 text-center text-sm text-[#787774] bg-[#F9F9F8]/50">
+			<div class="border border-dashed border-border rounded-xl p-12 text-center text-sm text-muted bg-surface-muted/50">
 				<p class="mb-2 font-mono">
 					No hay capturas de testimoniales cargadas aún.
 				</p>
-				<p class="text-xs text-[#787774]">
+				<p class="text-xs text-muted">
 					Coloca capturas de WhatsApp o Google Maps en la carpeta{" "}
-					<code class="bg-[#F7F6F3] px-1 py-0.5 rounded border border-[#EAEAEA] text-xs font-mono">
+					<code class="bg-surface-muted px-1 py-0.5 rounded border border-border text-xs font-mono">
 						public/testimonials/
 					</code>{" "}
 					y aparecerán aquí automáticamente.

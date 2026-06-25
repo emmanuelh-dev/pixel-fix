@@ -1,43 +1,15 @@
 ---
 // ponytail: carrito global via localStorage + window.pfCart API
-const phoneNumber = "528111913676";
+import { Icon } from "astro-icon/components";
+import { phoneNumber, shippingCost } from "../data/store";
 ---
-
-<!-- SVG sprite global -->
-<svg class="hidden" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="icon-screen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
-  </symbol>
-  <symbol id="icon-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><line x1="6" y1="12" x2="12" y2="12"/>
-  </symbol>
-  <symbol id="icon-device" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1"/>
-  </symbol>
-  <symbol id="icon-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
-  </symbol>
-  <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="20 6 9 17 4 12"/>
-  </symbol>
-  <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-    <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-  </symbol>
-  <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-  </symbol>
-  <symbol id="icon-wa" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </symbol>
-</svg>
 
 <!-- Carrito flotante -->
 <div id="cart-bubble" class="fixed bottom-6 right-6 z-50 hidden">
-  <button id="cart-toggle" class="flex items-center gap-2.5 pl-4 pr-5 py-3 bg-[#111111] text-white rounded-full shadow-2xl font-medium text-sm hover:bg-[#222] transition-colors">
+  <button id="cart-toggle" class="flex items-center gap-2.5 pl-4 pr-5 py-3 bg-ink text-white rounded-full shadow-2xl font-medium text-sm hover:bg-ink-hover transition-colors">
     <div class="relative">
-      <svg class="w-4 h-4"><use href="#icon-cart"/></svg>
-      <span id="cart-badge" class="absolute -top-2 -right-2 w-4 h-4 bg-[#1F6C9F] text-white text-[9px] font-bold rounded-full flex items-center justify-center">0</span>
+      <Icon name="ph:shopping-cart" class="w-4 h-4" />
+      <span id="cart-badge" class="absolute -top-2 -right-2 w-4 h-4 bg-accent text-white text-[9px] font-bold rounded-full flex items-center justify-center">0</span>
     </div>
     Carrito · <span id="cart-total-bubble">$0</span>
   </button>
@@ -45,38 +17,47 @@ const phoneNumber = "528111913676";
 
 <!-- Panel carrito -->
 <div id="cart-panel" class="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-white shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
-  <div class="flex items-center justify-between px-6 py-4 border-b border-[#EAEAEA]">
+  <div class="flex items-center justify-between px-6 py-4 border-b border-border">
     <div class="flex items-center gap-2">
-      <svg class="w-5 h-5 text-[#111111]"><use href="#icon-cart"/></svg>
-      <h2 class="font-semibold text-[#111111]">Carrito</h2>
-      <span id="cart-count" class="px-2 py-0.5 bg-[#F3F3F1] text-[#787774] text-xs font-mono rounded-full">0</span>
+      <Icon name="ph:shopping-cart" class="w-5 h-5 text-ink" />
+      <h2 class="font-semibold text-ink">Carrito</h2>
+      <span id="cart-count" class="px-2 py-0.5 bg-bg text-muted text-xs font-mono rounded-full">0</span>
     </div>
-    <button id="cart-close" class="p-1.5 text-[#787774] hover:text-[#111111] hover:bg-[#F3F3F1] rounded-lg transition-all">
-      <svg class="w-4 h-4"><use href="#icon-close"/></svg>
+    <button id="cart-close" class="p-1.5 text-muted hover:text-ink hover:bg-bg rounded-lg transition-all">
+      <Icon name="ph:x" class="w-4 h-4" />
     </button>
   </div>
   <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-4 space-y-3"></div>
-  <div class="px-6 py-5 border-t border-[#EAEAEA] space-y-3">
-    <div class="flex justify-between items-center">
-      <span class="text-sm text-[#787774]">Total estimado</span>
-      <span id="cart-total" class="font-bold text-[#111111]">$0 MXN</span>
+  <div class="px-6 py-5 border-t border-border space-y-3">
+    <div class="flex justify-between items-center text-sm text-muted">
+      <span>Subtotal piezas</span>
+      <span id="cart-subtotal" class="font-mono">$0 MXN</span>
     </div>
-    <div class="flex items-center gap-1.5 text-[11px] text-[#ADADAD]">
-      <svg class="w-3 h-3"><use href="#icon-truck"/></svg>
-      Envío incluido · 10–12 días hábiles
+    <div class="flex justify-between items-center text-sm text-muted">
+      <span>Envío a todo México</span>
+      <span id="cart-shipping" class="font-mono">$0 MXN</span>
+    </div>
+    <div class="flex justify-between items-center pt-1 border-t border-border">
+      <span class="text-sm text-muted">Total estimado</span>
+      <span id="cart-total" class="font-bold text-ink">$0 MXN</span>
+    </div>
+    <div class="flex items-center gap-1.5 text-[11px] text-faint">
+      <Icon name="ph:truck" class="w-3 h-3" />
+      10–12 días hábiles
     </div>
     <a id="cart-wa-link" href="#" target="_blank" rel="noopener noreferrer"
-      class="flex items-center justify-center gap-2 w-full py-3.5 bg-[#25D366] text-white rounded-xl font-semibold hover:bg-[#1ebe5d] transition-colors text-sm">
-      <svg class="w-4 h-4"><use href="#icon-wa"/></svg>
+      class="flex items-center justify-center gap-2 w-full py-3.5 bg-whatsapp text-white rounded-xl font-semibold hover:bg-whatsapp-hover transition-colors text-sm">
+      <Icon name="simple-icons:whatsapp" class="w-4 h-4" />
       Pedir por WhatsApp
     </a>
-    <button id="cart-clear" class="w-full py-2 text-[11px] text-[#ADADAD] hover:text-red-500 transition-colors">Vaciar carrito</button>
+    <button id="cart-clear" class="w-full py-2 text-[11px] text-faint hover:text-red-500 transition-colors">Vaciar carrito</button>
   </div>
 </div>
 <div id="cart-overlay" class="fixed inset-0 bg-black/40 z-[99] hidden backdrop-blur-sm"></div>
 
-<script define:vars={{ phoneNumber }}>
+<script define:vars={{ phoneNumber, shippingCost }}>
   const WA  = phoneNumber;
+  const SHIPPING = shippingCost;
   const fmt  = n => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(n) + ' MXN';
   const fmtS = n => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(n);
 
@@ -84,47 +65,65 @@ const phoneNumber = "528111913676";
   const save = () => localStorage.setItem('pf-cart', JSON.stringify(cart));
 
   function syncUI() {
-    const count = cart.length;
-    const total = cart.reduce((s, i) => s + i.price, 0);
-    document.getElementById('cart-count').textContent   = count;
-    document.getElementById('cart-badge').textContent   = count;
+    const units = cart.reduce((s, i) => s + i.qty, 0);
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const shipping = units > 0 ? SHIPPING : 0;
+    const total = subtotal + shipping;
+    document.getElementById('cart-count').textContent   = units;
+    document.getElementById('cart-badge').textContent   = units;
+    document.getElementById('cart-subtotal').textContent = fmt(subtotal);
+    document.getElementById('cart-shipping').textContent = fmt(shipping);
     document.getElementById('cart-total').textContent   = fmt(total);
     document.getElementById('cart-total-bubble').textContent = fmtS(total);
-    document.getElementById('cart-bubble').classList.toggle('hidden', count === 0);
+    document.getElementById('cart-bubble').classList.toggle('hidden', units === 0);
 
     document.getElementById('cart-items').innerHTML = cart.length
       ? cart.map(item => `
-          <div class="flex items-start gap-3 py-3 border-b border-[#F3F3F1] last:border-0">
+          <div class="flex items-start gap-3 py-3 border-b border-bg last:border-0">
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-semibold text-[#111111] truncate">${item.name}</p>
-              <p class="text-xs text-[#787774] mt-0.5">${item.part}</p>
-              <p class="text-sm font-bold text-[#111111] mt-1">${fmt(item.price)}</p>
+              <p class="text-sm font-semibold text-ink truncate">${item.name}</p>
+              <p class="text-xs text-muted mt-0.5">${item.part}</p>
+              <div class="flex items-center gap-3 mt-1.5">
+                <div class="flex items-center gap-2 border border-border rounded-lg px-1">
+                  <button data-decr="${item.id}" class="qty-btn w-5 h-5 flex items-center justify-center text-muted hover:text-ink">−</button>
+                  <span class="text-xs font-mono w-4 text-center">${item.qty}</span>
+                  <button data-incr="${item.id}" class="qty-btn w-5 h-5 flex items-center justify-center text-muted hover:text-ink">+</button>
+                </div>
+                <p class="text-sm font-bold text-ink">${fmt(item.price * item.qty)}</p>
+              </div>
             </div>
-            <button data-remove="${item.id}" class="remove-btn p-1.5 text-[#ADADAD] hover:text-red-500 hover:bg-red-50 rounded-lg transition-all">
+            <button data-remove="${item.id}" class="remove-btn p-1.5 text-faint hover:text-red-500 hover:bg-red-50 rounded-lg transition-all">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
               </svg>
             </button>
           </div>`).join('')
       : `<div class="flex flex-col items-center justify-center py-12 text-center gap-3">
-           <svg class="w-10 h-10 text-[#EAEAEA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+           <svg class="w-10 h-10 text-border" fill="none" stroke="currentColor" viewBox="0 0 24 24">
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
              <line x1="3" y1="6" x2="21" y2="6" stroke-width="1.5"/>
              <path d="M16 10a4 4 0 01-8 0" stroke-width="1.5"/>
            </svg>
-           <p class="text-sm text-[#ADADAD]">Carrito vacío</p>
+           <p class="text-sm text-faint">Carrito vacío</p>
          </div>`;
 
     document.querySelectorAll('.remove-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        window.pfCart.updateBtn(btn.dataset.remove, false);
-        cart = cart.filter(c => c.id !== btn.dataset.remove);
-        save(); syncUI();
-      });
+      btn.addEventListener('click', () => window.pfCart.remove(btn.dataset.remove));
+    });
+    document.querySelectorAll('[data-incr]').forEach(btn => {
+      btn.addEventListener('click', () => window.pfCart.setQty(btn.dataset.incr, (cart.find(c => c.id === btn.dataset.incr)?.qty || 0) + 1));
+    });
+    document.querySelectorAll('[data-decr]').forEach(btn => {
+      btn.addEventListener('click', () => window.pfCart.setQty(btn.dataset.decr, (cart.find(c => c.id === btn.dataset.decr)?.qty || 0) - 1));
     });
 
     const msg = cart.length
-      ? encodeURIComponent('Hola! Me interesan estas piezas:\n\n' + cart.map(i => `• ${i.name} — ${i.part}\n  Precio: ${fmt(i.price)}`).join('\n') + '\n\n¿Pueden confirmar disponibilidad y forma de pago?')
+      ? encodeURIComponent(
+          'Hola! Me interesan estas piezas:\n\n' +
+          cart.map(i => `• ${i.name} — ${i.part} x${i.qty}\n  Precio: ${fmt(i.price * i.qty)}`).join('\n') +
+          `\n\nEnvío a todo México: ${fmt(shipping)}\nTotal estimado: ${fmt(total)}` +
+          '\n\n¿Pueden confirmar disponibilidad y forma de pago?'
+        )
       : '';
     document.getElementById('cart-wa-link').href = `https://wa.me/${WA}?text=${msg}`;
   }
@@ -138,29 +137,44 @@ const phoneNumber = "528111913676";
   document.getElementById('cart-close').addEventListener('click',  closeCart);
   overlay.addEventListener('click', closeCart);
   document.getElementById('cart-clear').addEventListener('click', () => {
-    cart.forEach(i => window.pfCart.updateBtn(i.id, false));
+    cart.forEach(i => window.pfCart.updateBtn(i.id, 0));
     cart = []; save(); syncUI(); closeCart();
   });
 
   // API global que cualquier página puede usar
   window.pfCart = {
-    toggle(id, name, part, price) {
-      const idx = cart.findIndex(c => c.id === id);
-      if (idx > -1) { cart.splice(idx, 1); this.updateBtn(id, false); }
-      else          { cart.push({ id, name, part, price: Number(price) }); this.updateBtn(id, true); }
+    // Agrega una unidad mas (o crea la linea con qty 1)
+    add(id, name, part, price) {
+      const item = cart.find(c => c.id === id);
+      if (item) item.qty += 1;
+      else cart.push({ id, name, part, price: Number(price), qty: 1 });
+      this.updateBtn(id, cart.find(c => c.id === id).qty);
+      save(); syncUI();
+    },
+    setQty(id, qty) {
+      if (qty <= 0) return this.remove(id);
+      const item = cart.find(c => c.id === id);
+      if (item) item.qty = qty;
+      this.updateBtn(id, qty);
+      save(); syncUI();
+    },
+    remove(id) {
+      cart = cart.filter(c => c.id !== id);
+      this.updateBtn(id, 0);
       save(); syncUI();
     },
     // Pinta el botón .add-btn[data-id=id] donde sea que esté en el DOM
-    updateBtn(id, inCart) {
+    updateBtn(id, qty) {
+      const inCart = qty > 0;
       document.querySelectorAll(`.add-btn[data-id="${id}"]`).forEach(btn => {
         const label = btn.querySelector('.btn-label');
         const iconCart  = btn.querySelector('.btn-icon-cart');
         const iconCheck = btn.querySelector('.btn-icon-check');
-        if (label)     label.textContent = inCart ? 'En el carrito' : 'Agregar al carrito';
+        if (label)     label.textContent = inCart ? `En el carrito (${qty})` : 'Agregar al carrito';
         if (iconCart)  iconCart.classList.toggle('hidden',  inCart);
         if (iconCheck) iconCheck.classList.toggle('hidden', !inCart);
-        btn.classList.toggle('bg-[#E1F3FE]', inCart);  btn.classList.toggle('text-[#1F6C9F]', inCart);
-        btn.classList.toggle('bg-[#111111]',  !inCart); btn.classList.toggle('text-white',     !inCart);
+        btn.classList.toggle('bg-accent-soft', inCart);  btn.classList.toggle('text-accent', inCart);
+        btn.classList.toggle('bg-ink',  !inCart); btn.classList.toggle('text-white',     !inCart);
       });
     },
     isInCart(id) { return cart.some(c => c.id === id); },
@@ -168,6 +182,6 @@ const phoneNumber = "528111913676";
   };
 
   // Restaurar estado de todos los botones de la página actual
-  cart.forEach(item => window.pfCart.updateBtn(item.id, true));
+  cart.forEach(item => window.pfCart.updateBtn(item.id, item.qty));
   syncUI();
 </script>

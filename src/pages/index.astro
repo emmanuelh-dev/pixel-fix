@@ -1,7 +1,13 @@
 ---
+import { Icon } from "astro-icon/components";
 import Layout from "../layouts/Layout.astro";
 import Testimonials from "../components/Testimonials.astro";
+import Faq from "../components/Faq.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import WarrantySupport from "../components/WarrantySupport.astro";
 import { repairCatalog, formatPrice } from "../data/catalog";
+import { phoneNumber } from "../data/store";
+import { localBusinessSchema, faqSchema } from "../lib/seo";
 
 const faqs = [
 	{
@@ -33,38 +39,14 @@ const faqs = [
 	},
 ];
 
-const phoneNumber = "528111913676";
-
-// Generar LD+JSON Scripts estáticos para Astro
-const localBusinessSchema = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "LocalBusiness",
+const businessSchema = localBusinessSchema({
 	name: "Pixel Fix México",
-	image: "https://www.pixelfixmexico.com/logo.png",
 	description:
 		"Especialistas en Reparación y Refacciones Google Pixel en México. Pantallas, tapas y baterías originales.",
-	address: {
-		"@type": "PostalAddress",
-		addressLocality: "Monterrey",
-		addressRegion: "NL",
-		addressCountry: "MX",
-	},
 	priceRange: "$$",
-	telephone: `+${phoneNumber}`,
 });
 
-const faqSchema = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "FAQPage",
-	mainEntity: faqs.map((faq) => ({
-		"@type": "Question",
-		name: faq.question,
-		acceptedAnswer: {
-			"@type": "Answer",
-			text: faq.answer,
-		},
-	})),
-});
+const questionsSchema = faqSchema(faqs);
 
 // Generar una lista de productos para el catalog schema
 const productsSchema = JSON.stringify({
@@ -99,8 +81,8 @@ const productsSchema = JSON.stringify({
 	description="Reparación y venta de refacciones originales para Google Pixel. Pantallas, baterías y carcasas. Envíos nacionales y garantía en Monterrey."
 	url="https://www.pixelfixmexico.com/"
 >
-	<script type="application/ld+json" set:html={localBusinessSchema} />
-	<script type="application/ld+json" set:html={faqSchema} />
+	<script type="application/ld+json" set:html={businessSchema} />
+	<script type="application/ld+json" set:html={questionsSchema} />
 	<script type="application/ld+json" set:html={productsSchema} />
 
 	<main class="min-h-screen">
@@ -110,12 +92,12 @@ const productsSchema = JSON.stringify({
 		>
 			<div class="flex-1 flex flex-col items-start text-left">
 				<h1
-					class="font-serif-editorial text-5xl md:text-[5rem] font-medium tracking-[-0.03em] text-[#111111] leading-[1.05] mb-8"
+					class="text-5xl md:text-[5rem] font-medium tracking-[-0.03em] text-ink leading-[1.05] mb-8"
 				>
 					Especialistas en Google Pixel.
 				</h1>
 				<p
-					class="text-lg md:text-xl text-[#787774] mb-10 leading-[1.6] max-w-lg font-light"
+					class="text-lg md:text-xl text-muted mb-10 leading-[1.6] max-w-lg font-light"
 				>
 					Reparación especializada y venta de equipos Google Pixel en México.
 					Refacciones originales con garantía local y envíos a todo el país.
@@ -126,33 +108,22 @@ const productsSchema = JSON.stringify({
 						target="_blank"
 						rel="noopener noreferrer"
 						data-umami-event="hero_whatsapp_click"
-						class="group inline-flex items-center justify-center px-6 py-3.5 bg-[#111111] text-white text-xs font-mono font-medium rounded transition-transform hover:scale-[0.98] w-full sm:w-auto"
+						class="group inline-flex items-center justify-center px-6 py-3.5 bg-ink text-white text-xs font-mono font-medium rounded transition-transform hover:scale-[0.98] w-full sm:w-auto"
 					>
 						<span>WhatsApp de Contacto</span>
-						<svg
-							class="w-3.5 h-3.5 ml-2 opacity-70 group-hover:opacity-100 transition-opacity"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-						</svg>
+						<Icon name="ph:arrow-right" class="w-3.5 h-3.5 ml-2 opacity-70 group-hover:opacity-100 transition-opacity" />
 					</a>
 					<a
 						href="/reparacion-google-pixel-monterrey"
 						data-umami-event="hero_reparacion_click"
-						class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-[#EAEAEA] text-[#111111] text-xs font-mono font-medium rounded hover:bg-[#F9F9F8] transition-all hover:scale-[0.98] w-full sm:w-auto"
+						class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-border text-ink text-xs font-mono font-medium rounded hover:bg-surface-muted transition-all hover:scale-[0.98] w-full sm:w-auto"
 					>
 						<span>Reparación y Piezas</span>
 					</a>
 					<a
 						href="/venta-google-pixel-monterrey"
 						data-umami-event="hero_venta_click"
-						class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-[#EAEAEA] text-[#111111] text-xs font-mono font-medium rounded hover:bg-[#F9F9F8] transition-all hover:scale-[0.98] w-full sm:w-auto"
+						class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-border text-ink text-xs font-mono font-medium rounded hover:bg-surface-muted transition-all hover:scale-[0.98] w-full sm:w-auto"
 					>
 						<span>Comprar Equipos</span>
 					</a>
@@ -161,7 +132,7 @@ const productsSchema = JSON.stringify({
 			<div class="flex-1 w-full relative h-[400px] md:h-[500px]">
 				<!-- Taste-skill standard: highly desaturated image with subtle grain/overlay -->
 				<div
-					class="absolute inset-0 bg-[#F9F9F8] border border-[#EAEAEA] rounded-xl overflow-hidden"
+					class="absolute inset-0 bg-surface-muted border border-border rounded-xl overflow-hidden"
 				>
 					<img
 						src="/hero-repair.jpg"
@@ -170,7 +141,7 @@ const productsSchema = JSON.stringify({
 						loading="eager"
 						class="w-full h-full object-cover opacity-90 saturate-50 contrast-125 mix-blend-multiply"
 					/>
-					<div class="absolute inset-0 bg-[#111111] opacity-[0.02]"></div>
+					<div class="absolute inset-0 bg-ink opacity-[0.02]"></div>
 				</div>
 			</div>
 		</section>
@@ -178,15 +149,15 @@ const productsSchema = JSON.stringify({
 		<!-- Selector de Modelos y Precios -->
 		<section
 			id="cotizador"
-			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+			class="max-w-5xl mx-auto px-6 py-24 border-t border-border reveal"
 		>
 			<div class="mb-12 max-w-2xl">
 				<h2
-					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
+					class="text-3xl md:text-4xl tracking-tight text-ink mb-4"
 				>
 					Catálogo y Cotizador.
 				</h2>
-				<p class="text-[#787774] leading-[1.6] mb-4">
+				<p class="text-muted leading-[1.6] mb-4">
 					Refacciones OEM y mano de obra experta para tu Google Pixel.
 					Importamos piezas directamente desde EE. UU., y **estamos trabajando
 					activamente para tener en stock local inmediato las refacciones más
@@ -194,16 +165,16 @@ const productsSchema = JSON.stringify({
 				</p>
 				<div class="flex flex-wrap gap-2">
 					<div
-						class="inline-flex items-center px-3 py-1.5 bg-[#F9F9F8] border border-[#EAEAEA] rounded font-mono text-xs text-[#111111]"
+						class="inline-flex items-center px-3 py-1.5 bg-surface-muted border border-border rounded font-mono text-xs text-ink"
 					>
-						<span class="w-1.5 h-1.5 rounded-full bg-[#111111] mr-2"></span>
+						<span class="w-1.5 h-1.5 rounded-full bg-ink mr-2"></span>
 						Piezas originales y calidad OEM. Todas las refacciones son importadas
 						y oficiales.
 					</div>
 					<div
-						class="inline-flex items-center px-3 py-1.5 bg-[#EDF3EC] border border-[#C3E0C5] rounded font-mono text-xs text-[#346538]"
+						class="inline-flex items-center px-3 py-1.5 bg-success-soft border border-success-border rounded font-mono text-xs text-success"
 					>
-						<span class="w-1.5 h-1.5 rounded-full bg-[#346538] mr-2"></span>
+						<span class="w-1.5 h-1.5 rounded-full bg-success mr-2"></span>
 						<span
 							><strong>¡Promoción Combo!</strong> Pantalla + Pila juntas en el mismo
 							equipo: instalación a <strong>$800 MXN</strong> total (ahorras $800).</span
@@ -218,7 +189,7 @@ const productsSchema = JSON.stringify({
 					<select
 						id="model-select"
 						data-umami-event="cotizador_select_changed"
-						class="w-full bg-white border border-[#EAEAEA] rounded-lg px-4 py-3 text-sm font-medium text-[#111111] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
+						class="w-full bg-white border border-border rounded-lg px-4 py-3 text-sm font-medium text-ink appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-ink focus:border-ink transition-all shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
 					>
 						{
 							repairCatalog.map((catalog, index) => (
@@ -229,17 +200,9 @@ const productsSchema = JSON.stringify({
 						}
 					</select>
 					<div
-						class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#787774]"
+						class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-muted"
 					>
-						<svg
-							class="fill-current h-4 w-4"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-						>
-							<path
-								d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-							></path>
-						</svg>
+						<Icon name="ph:caret-down" class="h-4 w-4" />
 					</div>
 				</div>
 			</div>
@@ -253,30 +216,30 @@ const productsSchema = JSON.stringify({
 							id={catalog.id}
 						>
 							{catalog.parts.map((part) => (
-								<div class="bg-[#FFFFFF] p-6 border border-[#EAEAEA] rounded-xl flex flex-col justify-between transition-all hover:shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:border-[#CCCCCC]">
+								<div class="bg-surface p-6 border border-border rounded-xl flex flex-col justify-between transition-all hover:shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:border-border-strong">
 									<div>
-										<div class="flex items-center justify-between gap-2 mb-4 border-b border-[#F3F3F1] pb-3">
-											<span class="text-xs font-mono font-medium text-[#111111] bg-[#F9F9F8] border border-[#EAEAEA] px-2 py-0.5 rounded-full">
+										<div class="flex items-center justify-between gap-2 mb-4 border-b border-bg pb-3">
+											<span class="text-xs font-mono font-medium text-ink bg-surface-muted border border-border px-2 py-0.5 rounded-full">
 												{part.model}
 											</span>
-											<span class="text-xs font-mono text-[#956400] bg-[#FBF3DB] px-2 py-0.5 rounded">
+											<span class="text-xs font-mono text-warning bg-warning-soft px-2 py-0.5 rounded">
 												{part.delivery}
 											</span>
 										</div>
-										<h3 class="text-lg font-semibold text-[#111111] leading-snug mb-4">
+										<h3 class="text-lg font-semibold text-ink leading-snug mb-4">
 											{part.name}
 										</h3>
 
-										<div class="space-y-3 text-sm text-[#787774] mb-6">
-											<div class="flex justify-between border-b border-[#F3F3F1]/50 pb-2">
+										<div class="space-y-3 text-sm text-muted mb-6">
+											<div class="flex justify-between border-b border-bg/50 pb-2">
 												<span>Refacción sola:</span>
-												<span class="font-medium text-[#111111] font-mono">
+												<span class="font-medium text-ink font-mono">
 													{formatPrice(part.pricePart, part.ganancia)}
 												</span>
 											</div>
 											<div class="flex justify-between pb-1">
 												<span>Con instalación en MTY:</span>
-												<span class="font-medium text-[#111111] font-mono">
+												<span class="font-medium text-ink font-mono">
 													{formatPrice(part.priceInstall, part.ganancia)}
 												</span>
 											</div>
@@ -289,7 +252,7 @@ const productsSchema = JSON.stringify({
 										data-umami-event="cotizar_reparacion_click"
 										data-umami-event-model={part.model}
 										data-umami-event-part={part.name}
-										class="wa-link block w-full text-center py-3 bg-[#111111] hover:bg-[#222222] text-white text-xs font-mono font-medium rounded transition-transform hover:scale-[0.98]"
+										class="wa-link block w-full text-center py-3 bg-ink hover:bg-ink-hover text-white text-xs font-mono font-medium rounded transition-transform hover:scale-[0.98]"
 									>
 										Cotizar Servicio
 									</a>
@@ -301,228 +264,34 @@ const productsSchema = JSON.stringify({
 			</div>
 		</section>
 
-		<!-- El Proceso de Confianza & Logística -->
-		<section
-			id="proceso"
-			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
-		>
-			<div class="mb-16 max-w-xl">
-				<h2
-					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
-				>
-					El Proceso de Confianza.
-				</h2>
-				<p class="text-[#787774] leading-[1.6]">
-					Hacer reparar tu Pixel no tiene que ser un dolor de cabeza. Todo fluye
-					de forma simple y transparente.
-				</p>
-			</div>
+		<ProcessSteps
+			title="El Proceso de Confianza."
+			description="Hacer reparar tu Pixel no tiene que ser un dolor de cabeza. Todo fluye de forma simple y transparente."
+			steps={[
+				{ title: "Cotizas por WhatsApp", description: "Selecciona la pieza que necesitas y te enviamos un resumen de tu orden sin compromisos." },
+				{ title: "Envío o Instalación", description: "Nos envías tu equipo, compras la refacción para envío nacional, o agendas cita en MTY." },
+				{ title: "Reparado y Garantizado", description: "Te devolvemos el equipo reparado con garantía directa en Monterrey." },
+			]}
+		/>
 
-			<div class="grid md:grid-cols-3 gap-6">
-				<div
-					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
-				>
-					<div
-						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
-					>
-						01
-					</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">
-						Cotizas por WhatsApp
-					</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">
-						Selecciona la pieza que necesitas y te enviamos un resumen de tu
-						orden sin compromisos.
-					</p>
-				</div>
-
-				<div
-					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
-				>
-					<div
-						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
-					>
-						02
-					</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">
-						Envío o Instalación
-					</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">
-						Nos envías tu equipo, compras la refacción para envío nacional, o
-						agendas cita en MTY.
-					</p>
-				</div>
-
-				<div
-					class="bg-[#F9F9F8] border border-[#EAEAEA] p-8 rounded-xl flex flex-col"
-				>
-					<div
-						class="text-[#787774] font-mono text-xs mb-4 border border-[#EAEAEA] bg-white w-8 h-8 flex items-center justify-center rounded"
-					>
-						03
-					</div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">
-						Reparado y Garantizado
-					</h3>
-					<p class="text-[#787774] text-sm leading-[1.6]">
-						Te devolvemos el equipo reparado con garantía directa en Monterrey.
-					</p>
-				</div>
-			</div>
-
-			<!-- Cláusula de Confianza Logística -->
-			<div
-				class="mt-12 bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col md:flex-row items-start gap-6"
-			>
-				<div
-					class="bg-[#FDEBEC] text-[#9F2F2D] p-3 rounded shrink-0 border border-[#FDEBEC]"
-				>
-					<svg
-						class="w-5 h-5"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-						></path></svg
-					>
+		<!-- Cláusula de Confianza Logística -->
+		<div class="max-w-5xl mx-auto px-6 -mt-12 mb-24 reveal">
+			<div class="bg-surface p-8 border border-border rounded-xl flex flex-col md:flex-row items-start gap-6">
+				<div class="bg-danger-soft text-danger p-3 rounded shrink-0 border border-danger-soft">
+					<Icon name="ph:lock-simple" class="w-5 h-5" />
 				</div>
 				<div>
-					<h3 class="text-base font-medium text-[#111111] mb-2">
-						Garantía Real Local
-					</h3>
-					<p class="text-sm text-[#787774] leading-[1.6]">
-						¿No estás en Monterrey? Nos mandas tu equipo por paquetería
-						asegurada. Todas nuestras reparaciones y piezas cuentan con garantía
-						directa gestionada localmente, sin que tengas que pelear con
-						proveedores extranjeros.
+					<h3 class="text-base font-medium text-ink mb-2">Garantía Real Local</h3>
+					<p class="text-sm text-muted leading-[1.6]">
+						¿No estás en Monterrey? Nos mandas tu equipo por paquetería asegurada. Todas nuestras
+						reparaciones y piezas cuentan con garantía directa gestionada localmente, sin que tengas
+						que pelear con proveedores extranjeros.
 					</p>
 				</div>
 			</div>
-		</section>
+		</div>
 
-		<!-- Garantía de Origen y Soporte de Google -->
-		<section
-			id="garantia-soporte"
-			class="max-w-5xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
-		>
-			<div class="mb-16 max-w-2xl">
-				<h2
-					class="font-serif-editorial text-3xl md:text-4xl tracking-tight text-[#111111] mb-4"
-				>
-					Piezas Genuinas y Garantía Oficial de Fábrica.
-				</h2>
-				<p class="text-[#787774] leading-[1.6]">
-					Nos aseguramos de que tu Google Pixel mantenga su integridad técnica y
-					la cobertura de fábrica.
-				</p>
-			</div>
-
-			<div class="grid md:grid-cols-2 gap-8 mb-12">
-				<div
-					class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col justify-between hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow"
-				>
-					<div>
-						<div
-							class="inline-flex items-center gap-2 px-3 py-1 bg-[#E8F5E9] text-[#2E7D32] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-6"
-						>
-							Refacciones 100% Originales
-						</div>
-						<h3 class="text-xl font-medium text-[#111111] mb-4">
-							iFixit y Distribuidores OEM en USA
-						</h3>
-						<p class="text-sm text-[#787774] leading-[1.7] mb-6">
-							Todas nuestras refacciones son originales autorizadas por Google,
-							importadas directamente desde **iFixit** y otros distribuidores de
-							alta calidad en EE. UU. (OEM). Esto nos permite ofrecer soporte
-							técnico oficial con el estándar de calidad del fabricante,
-							garantizando la perfecta calibración de pantalla y biometría en tu
-							Google Pixel.
-						</p>
-					</div>
-					<div class="text-xs font-mono text-[#787774]">
-						Soporte Técnico Especializado • Componentes Genuinos
-					</div>
-				</div>
-
-				<div
-					class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl flex flex-col justify-between hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow"
-				>
-					<div>
-						<div
-							class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-6"
-						>
-							Garantía Directa de Google
-						</div>
-						<h3 class="text-xl font-medium text-[#111111] mb-4">
-							Gestión de Garantía con el Fabricante
-						</h3>
-						<p class="text-sm text-[#787774] leading-[1.7] mb-6">
-							¿Tu dispositivo aún tiene garantía vigente directa con Google y
-							prefieres repararlo con ellos? Nosotros nos encargamos de todo.
-							Realizamos el diagnóstico y **gestionamos el envío de tu equipo a
-							garantía directo con Google en USA**, facilitándote todo el
-							proceso logístico internacional y de aduanas.
-						</p>
-					</div>
-					<div class="text-xs font-mono text-[#787774]">
-						Trámite Logístico Seguro • Cobertura Google USA
-					</div>
-				</div>
-			</div>
-
-			<!-- Flujo detallado del trámite de garantía -->
-			<div class="bg-[#FFFFFF] p-8 border border-[#EAEAEA] rounded-xl">
-				<h3 class="text-lg font-medium text-[#111111] mb-6">
-					¿Cómo gestionamos tu garantía con Google desde México?
-				</h3>
-				<div class="grid sm:grid-cols-3 gap-8">
-					<div>
-						<span class="text-xs font-mono text-[#1F6C9F] block mb-2"
-							>Paso 01</span
-						>
-						<h4 class="text-sm font-medium text-[#111111] mb-2">
-							Diagnóstico de Calificación
-						</h4>
-						<p class="text-xs text-[#787774] leading-[1.6]">
-							Evaluamos físicamente tu Pixel para descartar daños accidentales
-							(pantallas rotas, humedad o golpes) que anulen la garantía de
-							Google. Si califica, procedemos con el trámite.
-						</p>
-					</div>
-					<div>
-						<span class="text-xs font-mono text-[#1F6C9F] block mb-2"
-							>Paso 02</span
-						>
-						<h4 class="text-sm font-medium text-[#111111] mb-2">
-							Logística Fronteriza y Envío
-						</h4>
-						<p class="text-xs text-[#787774] leading-[1.6]">
-							Trasladamos de forma segura tu equipo a nuestras oficinas de
-							importación en EE. UU., activamos la orden de soporte con Google y
-							lo enviamos directamente a su centro de servicio técnico oficial.
-						</p>
-					</div>
-					<div>
-						<span class="text-xs font-mono text-[#1F6C9F] block mb-2"
-							>Paso 03</span
-						>
-						<h4 class="text-sm font-medium text-[#111111] mb-2">
-							Importación y Entrega
-						</h4>
-						<p class="text-xs text-[#787774] leading-[1.6]">
-							Una vez que Google repara o reemplaza el dispositivo bajo
-							garantía, lo recibimos en USA, gestionamos la aduana y logística
-							de retorno a México, y te lo entregamos en Monterrey o lo enviamos
-							a tu domicilio.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
+		<WarrantySupport />
 
 		<!-- Testimoniales -->
 		<Testimonials />
@@ -530,15 +299,15 @@ const productsSchema = JSON.stringify({
 		<!-- Direct Answer FAQ Block (Extractable Content for AI) -->
 		<section
 			id="faq"
-			class="max-w-3xl mx-auto px-6 py-24 border-t border-[#EAEAEA] reveal"
+			class="max-w-3xl mx-auto px-6 py-24 border-t border-border reveal"
 		>
 			<div class="mb-12">
 				<h2
-					class="font-serif-editorial text-3xl tracking-tight text-[#111111] mb-4"
+					class="text-3xl tracking-tight text-ink mb-4"
 				>
 					Dudas Frecuentes.
 				</h2>
-				<p class="text-[#787774] leading-[1.6]">
+				<p class="text-muted leading-[1.6]">
 					Respuestas directas sobre nuestro servicio de reparación Pixel.
 				</p>
 			</div>
@@ -546,11 +315,11 @@ const productsSchema = JSON.stringify({
 			<div class="space-y-6">
 				{
 					faqs.map((faq) => (
-						<div class="pb-6 border-b border-[#EAEAEA]">
-							<h3 class="text-lg font-medium text-[#111111] mb-3">
+						<div class="pb-6 border-b border-border">
+							<h3 class="text-lg font-medium text-ink mb-3">
 								{faq.question}
 							</h3>
-							<p class="text-[#787774] text-sm leading-[1.6]">{faq.answer}</p>
+							<p class="text-muted text-sm leading-[1.6]">{faq.answer}</p>
 						</div>
 					))
 				}
@@ -560,6 +329,8 @@ const productsSchema = JSON.stringify({
 </Layout>
 
 <script>
+	import { phoneNumber as PHONE_NUMBER } from "../data/store";
+
 	// Model Selector Logic
 	const modelSelect = document.getElementById("model-select");
 	const contents = document.querySelectorAll(".tab-content");
@@ -574,7 +345,6 @@ const productsSchema = JSON.stringify({
 	}
 
 	// WhatsApp Links Builder
-	const PHONE_NUMBER = "528111913676";
 	const waLinks = document.querySelectorAll(".wa-link");
 
 	waLinks.forEach((link) => {
@@ -589,38 +359,4 @@ const productsSchema = JSON.stringify({
 		}
 	});
 
-	// Scroll Reveal Animations using IntersectionObserver
-	const observerOptions = {
-		root: null,
-		rootMargin: "0px",
-		threshold: 0.1,
-	};
-
-	const observer = new IntersectionObserver((entries, observer) => {
-		entries.forEach((entry) => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add("revealed");
-				observer.unobserve(entry.target);
-			}
-		});
-	}, observerOptions);
-
-	document.querySelectorAll(".reveal").forEach((el) => {
-		observer.observe(el);
-	});
 </script>
-
-<style>
-	/* Reveal animations */
-	.reveal {
-		opacity: 0;
-		transform: translateY(12px);
-		transition:
-			opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-			transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-	}
-	.reveal.revealed {
-		opacity: 1;
-		transform: translateY(0);
-	}
-</style>

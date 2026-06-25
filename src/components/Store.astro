@@ -1,141 +1,38 @@
 ---
-import { repairCatalog, salesCatalog, formatPrice } from "../data/catalog";
+import { Icon } from "astro-icon/components";
+import {
+	storeCatalog as catalog,
+	storeAvailableModels as availableModels,
+	storeAvailableSeries as availableSeries,
+	formatPrice,
+	getSeries,
+} from "../data/catalog";
 import { phoneNumber } from "../data/store";
 
-function splitModels(raw: string): string[] {
-	if (!raw.includes("/")) return [raw.trim()];
-	return raw.split("/").map((m) => {
-		m = m.trim();
-		return m.startsWith("Pixel") ? m : `Pixel ${m}`;
-	});
-}
-
-const MODEL_ORDER = [
-	"Pixel 10 Pro XL",
-	"Pixel 10 Pro",
-	"Pixel 10",
-	"Pixel 10a",
-	"Pixel 9 Pro XL",
-	"Pixel 9 Pro",
-	"Pixel 9",
-	"Pixel 9a",
-	"Pixel 8 Pro",
-	"Pixel 8",
-	"Pixel 8a",
-	"Pixel 7 Pro",
-	"Pixel 7",
-	"Pixel 7a",
-	"Pixel 6 Pro",
-	"Pixel 6",
-	"Pixel 6a",
-	"Pixel 5",
-	"Pixel 5a",
-];
-
-function getSeries(model: string): string {
-	if (model.includes("10")) return "Pixel 10 Series";
-	if (model.includes("9")) return "Pixel 9 Series";
-	if (model.includes("8")) return "Pixel 8 Series";
-	if (model.includes("7")) return "Pixel 7 Series";
-	if (model.includes("6")) return "Pixel 6 Series";
-	if (model.includes("5")) return "Pixel 5 Series";
-	return "Otros";
-}
-
-const allParts = repairCatalog.flatMap((series) =>
-	series.parts.flatMap((p) => {
-		const isBateria = p.name.toLowerCase().includes("pila");
-		const isOriginal = p.name.toLowerCase().includes("original");
-		const qualityTag = isOriginal ? "original" : "replica-excelente";
-		const rawSlug = p.model
-			.toLowerCase()
-			.replace(/\s*\/\s*/g, "-")
-			.replace(/\s+/g, "-")
-			.replace(/[^a-z0-9-]/g, "");
-
-		return splitModels(p.model).map((model) => {
-			const seriesName = getSeries(model);
-			return {
-				id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-${isBateria ? "bat" : "pan"}-${qualityTag}`,
-				slug: `${isBateria ? "bateria" : "pantalla"}-${rawSlug}-${qualityTag}`,
-				type: isBateria ? "Batería" : "Pantalla",
-				iconType: isBateria ? "battery" : "screen",
-				name: p.name,
-				model,
-				series: seriesName,
-				pricePart: p.pricePart,
-				priceInstall: p.priceInstall,
-				delivery: p.delivery,
-				category: "refaccion" as const,
-			};
-		});
-	}),
-);
-
-const allDevices = salesCatalog.flatMap((series) =>
-	series.devices.map((d) => {
-		const model = d.name.replace(/^Google\s+/, "");
-		const seriesName = getSeries(model);
-		return {
-			id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-equipo`,
-			slug: "",
-			type: "Equipo" as const,
-			iconType: "device",
-			name: d.name,
-			model,
-			series: seriesName,
-			pricePart: d.price,
-			priceInstall: 0,
-			delivery: d.availability,
-			specs: (d as any).specs,
-			category: "equipo" as const,
-		};
-	}),
-);
-
-const catalog = [...allParts, ...allDevices];
-const availableModels = MODEL_ORDER.filter((m) =>
-	catalog.some((i) => i.model === m),
-);
-
-const availableSeries = [
-	"Pixel 10 Series",
-	"Pixel 9 Series",
-	"Pixel 8 Series",
-	"Pixel 7 Series",
-	"Pixel 6 Series",
-	"Pixel 5 Series",
-].filter((s) => catalog.some((item) => item.series === s));
-
 const fmt = (n: number) => formatPrice(n);
+
+const typeIcon = {
+	screen: "ph:rectangle",
+	battery: "ph:battery-charging-vertical",
+	device: "ph:device-mobile",
+} as const;
 ---
 
 <div>
 	<main class="min-h-screen max-w-5xl mx-auto px-4 py-12 md:py-20">
 		<div class="relative mb-6">
-			<svg
-				class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#333333] pointer-events-none"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-			</svg>
+			<Icon name="ph:magnifying-glass" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-strong pointer-events-none" />
 			<input
 				id="search-input"
 				type="search"
 				placeholder='Ej: "pantalla pixel 8", "batería pixel 7 pro"…'
-				class="w-full pl-11 pr-4 py-3.5 bg-white border border-[#888888] rounded-xl text-[#111111] placeholder-[#555555] focus:outline-none focus:ring-2 focus:ring-[#111111]/10 text-sm shadow-sm"
+				class="w-full pl-11 pr-4 py-3.5 bg-white border border-border-strong rounded-xl text-ink placeholder-muted-strong focus:outline-none focus:ring-2 focus:ring-ink/10 text-sm shadow-sm"
 			/>
 		</div>
 
 		<div class="mb-4">
 			<p
-				class="text-[10px] font-mono uppercase tracking-wider text-[#333333] mb-2"
+				class="text-[10px] font-mono uppercase tracking-wider text-muted-strong mb-2"
 			>
 				Tipo
 			</p>
@@ -151,42 +48,10 @@ const fmt = (n: number) => formatPrice(n);
 							data-type={t}
 							class="type-btn chip-inactive px-3 py-1.5 text-xs font-mono rounded-full border transition-all flex items-center gap-1.5"
 						>
-							{t === "Pantalla" && (
-								<svg
-									class="w-3 h-3"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-								>
-									<rect x="5" y="2" width="14" height="20" rx="2" />
-									<line x1="12" y1="18" x2="12.01" y2="18" />
-								</svg>
-							)}
-							{t === "Batería" && (
-								<svg
-									class="w-3 h-3"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-								>
-									<rect x="2" y="7" width="16" height="10" rx="2" />
-									<path d="M22 11v2" />
-								</svg>
-							)}
-							{t === "Equipo" && (
-								<svg
-									class="w-3 h-3"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-								>
-									<rect x="4" y="2" width="16" height="20" rx="2" />
-									<path d="M12 18h.01" />
-								</svg>
-							)}
+							<Icon
+								name={typeIcon[t === "Pantalla" ? "screen" : t === "Batería" ? "battery" : "device"]}
+								class="w-3 h-3"
+							/>
 							{t}
 						</button>
 					))
@@ -196,7 +61,7 @@ const fmt = (n: number) => formatPrice(n);
 
 		<div class="mb-4">
 			<p
-				class="text-[10px] font-mono uppercase tracking-wider text-[#333333] mb-2"
+				class="text-[10px] font-mono uppercase tracking-wider text-muted-strong mb-2"
 			>
 				Serie
 			</p>
@@ -221,7 +86,7 @@ const fmt = (n: number) => formatPrice(n);
 
 		<div id="model-filters-container" class="mb-6 hidden">
 			<p
-				class="text-[10px] font-mono uppercase tracking-wider text-[#333333] mb-2"
+				class="text-[10px] font-mono uppercase tracking-wider text-muted-strong mb-2"
 			>
 				Modelo Específico
 			</p>
@@ -248,7 +113,7 @@ const fmt = (n: number) => formatPrice(n);
 			</div>
 		</div>
 
-		<p id="results-count" class="text-xs font-mono text-[#333333] mb-4">
+		<p id="results-count" class="text-xs font-mono text-muted-strong mb-4">
 			{catalog.length} productos disponibles
 		</p>
 
@@ -269,7 +134,7 @@ const fmt = (n: number) => formatPrice(n);
 
 					return (
 						<div
-							class="catalog-card bg-white border border-[#A0A0A0] rounded-xl p-5 flex flex-col gap-4 hover:shadow-sm hover:border-[#111111] transition-all"
+							class="catalog-card bg-white border border-border-strong rounded-xl p-5 flex flex-col gap-4 hover:shadow-sm hover:border-ink transition-all"
 							data-type={item.type}
 							data-series={item.series}
 							data-model={item.model}
@@ -281,82 +146,35 @@ const fmt = (n: number) => formatPrice(n);
 							>
 								<div class="flex items-start justify-between gap-3">
 									<div class="flex-1 min-w-0">
-										<span class="text-[10px] font-mono uppercase tracking-wider text-[#333333]">
+										<span class="text-[10px] font-mono uppercase tracking-wider text-muted-strong">
 											{item.type}
 										</span>
-										<p class="font-medium text-[#111111] text-sm leading-snug mt-0.5">
+										<p class="font-medium text-ink text-sm leading-snug mt-0.5">
 											{item.model}
 										</p>
-										<p class="text-xs text-[#555555] mt-0.5 line-clamp-1">
+										<p class="text-xs text-muted-strong mt-0.5 line-clamp-1">
 											{item.category === "equipo"
 												? (item as any).specs
 												: item.name}
 										</p>
 									</div>
-									<div class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#F9F9F9] text-[#333333] border border-[#EAEAEA] flex-shrink-0">
-										{item.iconType === "screen" && (
-											<svg
-												class="w-4 h-4"
-												fill="none"
-												stroke="currentColor"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-											>
-												<rect x="5" y="2" width="14" height="20" rx="2" />
-												<line x1="12" y1="18" x2="12.01" y2="18" />
-											</svg>
-										)}
-										{item.iconType === "battery" && (
-											<svg
-												class="w-4 h-4"
-												fill="none"
-												stroke="currentColor"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-											>
-												<rect x="2" y="7" width="16" height="10" rx="2" />
-												<path d="M22 11v2" />
-											</svg>
-										)}
-										{item.iconType === "device" && (
-											<svg
-												class="w-4 h-4"
-												fill="none"
-												stroke="currentColor"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-											>
-												<rect x="4" y="2" width="16" height="20" rx="2" />
-												<path d="M12 18h.01" />
-											</svg>
-										)}
+									<div class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-muted text-muted-strong border border-border flex-shrink-0">
+										<Icon name={typeIcon[item.iconType]} class="w-4 h-4" />
 									</div>
 								</div>
 
 								<div>
-									<p class="text-lg font-bold text-[#111111] font-mono">
+									<p class="text-lg font-bold text-ink font-mono">
 										{fmt(item.pricePart)}
 									</p>
 									{item.category !== "equipo" && item.priceInstall > 0 && (
-										<p class="text-[11px] text-[#333333]">
+										<p class="text-[11px] text-muted-strong">
 											Con instalación MTY: {fmt(item.priceInstall)}
 										</p>
 									)}
 									<div class="flex items-center gap-1.5 mt-2">
-										<svg
-											class="w-3.5 h-3.5 text-[#555555]"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24"
-											stroke-width="1.5"
-										>
-											<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.129-1.125V11.25c0-.446-.26-.846-.662-1.012l-4.185-1.724a1.056 1.056 0 0 0-.965.06l-2.45c-.394.246-.632.678-.632 1.144V18.75m-6 0h6M16.5 18.75V11.25m0 0H9m7.5 0h2.25m-11.25 0H4.5m0 0v-3.75c0-.621.504-1.125 1.125-1.125h9.75c.621 0 1.125.504 1.125 1.125V11.25M4.5 11.25H9"
-											/>
-										</svg>
-										<p class="text-[11px] text-[#555555]">{item.delivery}</p>
+										<Icon name="ph:truck" class="w-3.5 h-3.5 text-muted-strong" />
+										<p class="text-[11px] text-muted-strong">{item.delivery}</p>
 									</div>
 								</div>
 							</CardContainer>
@@ -366,7 +184,7 @@ const fmt = (n: number) => formatPrice(n);
 									href={whatsappUrl}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="px-3 py-2 text-[11px] font-mono border border-[#888888] rounded-lg text-[#333333] hover:border-[#111111] hover:text-[#111111] hover:bg-[#F9F9F9] transition-all whitespace-nowrap"
+									class="px-3 py-2 text-[11px] font-mono border border-border-strong rounded-lg text-muted-strong hover:border-ink hover:text-ink hover:bg-surface-muted transition-all whitespace-nowrap"
 								>
 									Comprar
 								</a>
@@ -375,21 +193,10 @@ const fmt = (n: number) => formatPrice(n);
 									data-name={item.model}
 									data-part={item.name}
 									data-price={item.pricePart}
-									class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-[#111111] text-white text-[11px] font-medium rounded-lg hover:bg-[#222222] transition-colors"
+									class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-ink text-white text-[11px] font-medium rounded-lg hover:bg-ink-hover transition-colors"
 								>
-									<svg
-										class="w-3.5 h-3.5 btn-icon-cart"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-										stroke-width="1.5"
-									>
-										<>
-											<path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-											<line x1="3" y1="6" x2="21" y2="6" />
-											<path d="M16 10a4 4 0 01-8 0" />
-										</>
-									</svg>
+									<Icon name="ph:shopping-cart" class="w-3.5 h-3.5 btn-icon-cart" />
+									<Icon name="ph:check" class="w-3.5 h-3.5 btn-icon-check hidden" />
 									<span class="btn-label">Agregar al carrito</span>
 								</button>
 							</div>
@@ -401,7 +208,7 @@ const fmt = (n: number) => formatPrice(n);
 
 		<div
 			id="no-results"
-			class="hidden py-16 text-center text-[#333333] text-sm"
+			class="hidden py-16 text-center text-muted-strong text-sm"
 		>
 			Sin resultados. Intenta con "pixel 8", "pantalla" o "batería".
 		</div>
@@ -409,21 +216,21 @@ const fmt = (n: number) => formatPrice(n);
 
 	<style>
 		.chip-active {
-			background: #111111;
-			color: #ffffff;
-			border-color: #111111;
+			background: var(--color-ink);
+			color: var(--color-surface);
+			border-color: var(--color-ink);
 			font-weight: 500;
 		}
 		.chip-inactive {
 			background: transparent;
-			color: #333333;
-			border-color: #888888;
+			color: var(--color-muted-strong);
+			border-color: var(--color-border-strong);
 			font-weight: 400;
 		}
 		.chip-inactive:hover {
-			border-color: #111111;
-			color: #000000;
-			background: #f5f5f5;
+			border-color: var(--color-ink);
+			color: var(--color-ink);
+			background: var(--color-surface-muted);
 		}
 	</style>
 
@@ -551,7 +358,7 @@ const fmt = (n: number) => formatPrice(n);
 		document.getElementById("catalog-grid")!.addEventListener("click", (e) => {
 			const btn = (e.target as Element).closest(".add-btn") as HTMLElement;
 			if (!btn || !window.pfCart) return;
-			window.pfCart.toggle(
+			window.pfCart.add(
 				btn.dataset.id!,
 				btn.dataset.name!,
 				btn.dataset.part!,

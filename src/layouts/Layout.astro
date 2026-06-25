@@ -58,25 +58,28 @@ const {
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={image} />
-		
-		<style is:global>
-			body {
-				font-family: 'Geist', 'Helvetica Neue', sans-serif;
-			}
-			.font-serif-editorial {
-				font-family: 'Geist', 'Helvetica Neue', sans-serif;
-			}
-			/* Aumentar contraste y profundidad de las tarjetas blancas */
-			.bg-\[\#FFFFFF\] {
-				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 8px 24px rgba(0, 0, 0, 0.02);
-				border-color: #E2E2E0 !important;
-			}
-		</style>
 	</head>
-	<body class="bg-[#F3F3F1] text-[#111111] antialiased selection:bg-[#E1F3FE] selection:text-[#1F6C9F]">
+	<body class="bg-bg text-ink antialiased selection:bg-accent-soft selection:text-accent">
 		<Header />
 		<slot />
 		<Footer />
 		<CartDrawer />
 	</body>
 </html>
+
+<script>
+	// Scroll-reveal global: cualquier elemento con clase "reveal" en cualquier página
+	const observer = new IntersectionObserver(
+		(entries, obs) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add("revealed");
+					obs.unobserve(entry.target);
+				}
+			});
+		},
+		{ threshold: 0.1 },
+	);
+
+	document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+</script>

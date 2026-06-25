@@ -73,6 +73,46 @@ export const repairCatalog = [
   }
 ];
 
+// ponytail: estructura unificada de catálogo para Store.astro (única fuente de la verdad)
+export type StoreItem = {
+  id: string;
+  slug: string;
+  type: "Pantalla" | "Batería" | "Equipo";
+  iconType: "screen" | "battery" | "device";
+  name: string;
+  model: string;
+  series: string;
+  pricePart: number;
+  priceInstall: number;
+  delivery: string;
+  specs?: string;
+  category: "refaccion" | "equipo";
+};
+
+function splitModels(raw: string): string[] {
+  if (!raw.includes("/")) return [raw.trim()];
+  return raw.split("/").map((m) => {
+    m = m.trim();
+    return m.startsWith("Pixel") ? m : `Pixel ${m}`;
+  });
+}
+
+export const MODEL_ORDER = [
+  "Pixel 10 Pro XL", "Pixel 10 Pro", "Pixel 10", "Pixel 10a",
+  "Pixel 9 Pro XL", "Pixel 9 Pro", "Pixel 9", "Pixel 9a",
+  "Pixel 8 Pro", "Pixel 8", "Pixel 8a",
+  "Pixel 7 Pro", "Pixel 7", "Pixel 7a",
+  "Pixel 6 Pro", "Pixel 6", "Pixel 6a",
+  "Pixel 5", "Pixel 5a",
+];
+
+export function getSeries(model: string): string {
+  for (const n of [10, 9, 8, 7, 6, 5]) {
+    if (model.includes(String(n))) return `Pixel ${n} Series`;
+  }
+  return "Otros";
+}
+
 export const salesCatalog = [
   {
     series: "Pixel 10 Series",
@@ -124,3 +164,55 @@ export const salesCatalog = [
     ]
   }
 ];
+
+const storeParts: StoreItem[] = repairCatalog.flatMap((series) =>
+  series.parts.flatMap((p) => {
+    const isBateria = p.name.toLowerCase().includes("pila");
+    const isOriginal = p.name.toLowerCase().includes("original");
+    const qualityTag = isOriginal ? "original" : "replica-excelente";
+    const rawSlug = p.model.toLowerCase().replace(/\s*\/\s*/g, "-").replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+    return splitModels(p.model).map((model) => ({
+      id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-${isBateria ? "bat" : "pan"}-${qualityTag}`,
+      slug: `${isBateria ? "bateria" : "pantalla"}-${rawSlug}-${qualityTag}`,
+      type: (isBateria ? "Batería" : "Pantalla") as StoreItem["type"],
+      iconType: (isBateria ? "battery" : "screen") as StoreItem["iconType"],
+      name: p.name,
+      model,
+      series: getSeries(model),
+      pricePart: p.pricePart,
+      priceInstall: p.priceInstall,
+      delivery: p.delivery,
+      category: "refaccion" as const,
+    }));
+  }),
+);
+
+const storeDevices: StoreItem[] = salesCatalog.flatMap((series) =>
+  series.devices.map((d) => {
+    const model = d.name.replace(/^Google\s+/, "");
+    return {
+      id: `${series.id}-${model.toLowerCase().replace(/\s+/g, "-")}-equipo`,
+      slug: "",
+      type: "Equipo" as const,
+      iconType: "device" as const,
+      name: d.name,
+      model,
+      series: getSeries(model),
+      pricePart: d.price,
+      priceInstall: 0,
+      delivery: d.availability,
+      specs: d.specs,
+      category: "equipo" as const,
+    };
+  }),
+);
+
+export const storeCatalog: StoreItem[] = [...storeParts, ...storeDevices];
+
+export const storeAvailableModels = MODEL_ORDER.filter((m) =>
+  storeCatalog.some((i) => i.model === m),
+);
+
+export const storeAvailableSeries = ["10", "9", "8", "7", "6", "5"]
+  .map((n) => `Pixel ${n} Series`)
+  .filter((s) => storeCatalog.some((item) => item.series === s));

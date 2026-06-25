@@ -13,8 +13,11 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
+    "@iconify-json/ph": "^1.2.2",
+    "@iconify-json/simple-icons": "^1.2.87",
     "@tailwindcss/vite": "^4.3.1",
     "astro": "^7.0.2",
+    "astro-icon": "^1.1.5",
     "tailwindcss": "^4.3.1"
   }
 }
