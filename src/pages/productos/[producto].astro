@@ -95,6 +95,85 @@ const productImage = resolveImage(producto);
 const ogImage = productImage ? `https://www.pixelfixmexico.com${productImage}` : undefined;
 const pageUrl = `https://www.pixelfixmexico.com/productos/${producto}/`;
 
+// ─── Related products ──────────────────────────────────────────────────────
+type RelatedItem = { slug: string; name: string; label: string; price: number; image: string | null };
+
+function partSlug(partName: string, partModel: string) {
+  const isBat = partName.toLowerCase().includes('pila');
+  const isOrig = partName.toLowerCase().includes('original');
+  const modelSlug = partModel.toLowerCase().replace(/\s*\/\s*/g, '-').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return `${isBat ? 'bateria' : 'pantalla'}-${modelSlug}-${isOrig ? 'original' : 'replica-excelente'}`;
+}
+
+function modelsOverlap(partModel: string, deviceModel: string) {
+  const d = deviceModel.toLowerCase().trim();
+  return partModel.split('/').map(m => m.toLowerCase().trim()).some(pm =>
+    pm === d || d.startsWith(pm + ' ') || pm.startsWith(d + ' ')
+  );
+}
+
+const rawRelated: RelatedItem[] = [];
+
+if (isDevice) {
+  // Parts for this device model
+  for (const s of repairCatalog) {
+    for (const part of s.parts) {
+      if (!modelsOverlap(part.model, model)) continue;
+      const isBat = part.name.toLowerCase().includes('pila');
+      const isOrig = part.name.toLowerCase().includes('original');
+      const slug = partSlug(part.name, part.model);
+      rawRelated.push({
+        slug,
+        name: `${isBat ? 'Batería' : 'Pantalla'} ${part.model} ${isOrig ? 'Original' : 'Réplica Excelente'}`,
+        label: isBat ? 'Batería' : 'Pantalla',
+        price: part.pricePart + GANANCIA_PIEZA,
+        image: resolveImage(slug),
+      });
+    }
+  }
+  // Other devices same series
+  for (const s of salesCatalog) {
+    if (s.series !== series) continue;
+    for (const dev of s.devices) {
+      if (dev.name === deviceName) continue;
+      const dModel = dev.name.replace(/^Google\s+/, '');
+      const dSlug = `equipo-${dModel.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+      rawRelated.push({ slug: dSlug, name: dev.name, label: 'Equipo', price: dev.price + dev.ganancia, image: resolveImage(dSlug) });
+    }
+  }
+} else {
+  // Same model, different type or quality — highest priority
+  for (const s of repairCatalog) {
+    if (s.series !== series) continue;
+    for (const part of s.parts) {
+      const slug = partSlug(part.name, part.model);
+      if (slug === producto) continue;
+      const isBat = part.name.toLowerCase().includes('pila');
+      const isOrig = part.name.toLowerCase().includes('original');
+      const sameModel = part.model === model;
+      rawRelated[sameModel ? 'unshift' : 'push']({
+        slug,
+        name: `${isBat ? 'Batería' : 'Pantalla'} ${part.model} ${isOrig ? 'Original' : 'Réplica Excelente'}`,
+        label: isBat ? 'Batería' : 'Pantalla',
+        price: part.pricePart + GANANCIA_PIEZA,
+        image: resolveImage(slug),
+      });
+    }
+  }
+  // Devices same series (max 2)
+  for (const s of salesCatalog) {
+    if (s.series !== series) continue;
+    for (const dev of s.devices.slice(0, 2)) {
+      const dModel = dev.name.replace(/^Google\s+/, '');
+      const dSlug = `equipo-${dModel.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+      rawRelated.push({ slug: dSlug, name: dev.name, label: 'Equipo', price: dev.price + dev.ganancia, image: resolveImage(dSlug) });
+    }
+  }
+}
+
+const seen = new Set<string>([producto]);
+const related = rawRelated.filter(r => { if (seen.has(r.slug)) return false; seen.add(r.slug); return true; }).slice(0, 6);
+
 // ---- DEVICE ----
 let title = '';
 let description = '';
@@ -389,7 +468,7 @@ if (isDevice) {
 
         <!-- Imagen -->
         <div class="w-full order-1 md:order-none mb-6 md:mb-0">
-          <div class="relative w-full aspect-square bg-surface-muted border border-border-strong rounded-2xl overflow-hidden flex items-center justify-center group">
+          <div class={`relative w-full aspect-square rounded-2xl overflow-hidden flex items-center justify-center group ${productImage ? '' : 'bg-surface-muted border border-border-strong'}`}>
             {productImage ? (
               <img
                 src={productImage}
@@ -495,7 +574,7 @@ if (isDevice) {
           <div class="bg-bg rounded-xl p-5 space-y-3">
             <p class="text-xs font-mono uppercase tracking-wider text-muted-strong mb-1">¿Por qué Pixel Fix?</p>
             {[
-              `Envío a todo México — iFixit no envía a México`,
+              `Envío a todo México`,
               `Importación directa desde distribuidores OEM en USA`,
               `Garantía local de 28 días en Monterrey`,
               `Instalación disponible con técnicos certificados`,

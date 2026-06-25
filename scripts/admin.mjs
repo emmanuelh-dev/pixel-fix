@@ -9,6 +9,7 @@ import multer from "multer";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { execSync } from "node:child_process";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -267,6 +268,19 @@ app.get("/images/productos/:file", (req, res) => {
   res.sendFile(path.join(IMAGES_DIR, path.basename(req.params.file)));
 });
 
+app.post("/api/commit", (req, res) => {
+  const msg = (req.body.message || "").trim() || "chore: update catalog and product images";
+  try {
+    execSync("git add src/data/catalog.ts public/images/productos/", { cwd: ROOT });
+    const result = execSync(`git commit -m "${msg.replace(/"/g, "'")}"`, { cwd: ROOT }).toString();
+    res.json({ ok: true, output: result.trim() });
+  } catch (e) {
+    const out = (e.stdout?.toString() || "") + (e.stderr?.toString() || "") + e.message;
+    if (out.includes("nothing to commit")) return res.json({ ok: true, output: "Nada que commitear — sin cambios." });
+    res.status(500).json({ error: out.trim() });
+  }
+});
+
 app.get("/", (req, res) => res.send(HTML));
 
 const PORT = 3333;
@@ -358,6 +372,9 @@ input:focus,select:focus{border-color:var(--accent)}
 <header>
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
   <h1>Pixel Fix Admin</h1>
+  <div style="margin-left:auto">
+    <button class="btn btn-primary btn-sm" onclick="openCommitModal()">↑ Commit</button>
+  </div>
 </header>
 
 <div class="tabs">
@@ -533,6 +550,23 @@ input:focus,select:focus{border-color:var(--accent)}
     <div style="display:flex;gap:8px">
       <button class="btn btn-primary" id="p-submit-btn" onclick="submitPart()">Agregar pieza</button>
       <button class="btn btn-ghost" onclick="closePartModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ MODAL COMMIT ════ -->
+<div id="commit-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeCommitModal()">
+  <div class="modal" style="width:min(480px,95vw)">
+    <h3>↑ Hacer commit</h3>
+    <p class="subtitle">Se guardarán <code>catalog.ts</code> y las imágenes de productos.</p>
+    <div class="field" style="margin-bottom:16px">
+      <label>Mensaje del commit</label>
+      <input id="commit-msg" type="text" placeholder="chore: update catalog and product images" style="font-family:monospace;font-size:12px">
+    </div>
+    <div id="commit-output" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:var(--muted);white-space:pre-wrap;margin-bottom:12px;max-height:120px;overflow-y:auto"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary" id="commit-btn" onclick="doCommit()">Confirmar</button>
+      <button class="btn btn-ghost" onclick="closeCommitModal()">Cancelar</button>
     </div>
   </div>
 </div>
@@ -955,6 +989,46 @@ function editDeviceFromBtn(btn) { editDevice(JSON.parse(decodeURIComponent(btn.d
 function deleteDeviceFromBtn(btn) { deleteDeviceRow(decodeURIComponent(btn.dataset.name)); }
 function editPartFromBtn(btn) { editPart(JSON.parse(decodeURIComponent(btn.dataset.p))); }
 function deletePartFromBtn(btn) { deletePartRow(decodeURIComponent(btn.dataset.name), decodeURIComponent(btn.dataset.model)); }
+
+// ─── Modal entrega inmediata ──────────────────────────────────────────────────
+
+// ─── Commit ───────────────────────────────────────────────────────────────────
+
+function openCommitModal() {
+  document.getElementById('commit-msg').value = '';
+  document.getElementById('commit-output').style.display = 'none';
+  document.getElementById('commit-output').textContent = '';
+  document.getElementById('commit-btn').disabled = false;
+  document.getElementById('commit-btn').textContent = 'Confirmar';
+  document.getElementById('commit-modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('commit-msg').focus(), 50);
+}
+
+function closeCommitModal() {
+  document.getElementById('commit-modal').style.display = 'none';
+}
+
+async function doCommit() {
+  const msg = document.getElementById('commit-msg').value.trim() || 'chore: update catalog and product images';
+  const btn = document.getElementById('commit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Guardando…';
+  const r = await fetch('/api/commit', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ message: msg }) });
+  const j = await r.json();
+  const out = document.getElementById('commit-output');
+  out.style.display = '';
+  if (!r.ok) {
+    out.textContent = j.error;
+    out.style.color = 'var(--danger)';
+    btn.disabled = false;
+    btn.textContent = 'Reintentar';
+  } else {
+    out.textContent = j.output;
+    out.style.color = 'var(--muted)';
+    btn.textContent = '✓ Listo';
+    setTimeout(closeCommitModal, 1800);
+  }
+}
 
 // ─── Modal entrega inmediata ──────────────────────────────────────────────────
 
