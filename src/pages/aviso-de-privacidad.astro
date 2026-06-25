@@ -1,0 +1,125 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { phoneNumber } from "../data/store";
+
+const lastUpdated = "25 de junio de 2026";
+---
+
+<Layout
+	title="Aviso de Privacidad | Pixel Fix México"
+	description="Aviso de Privacidad de Pixel Fix México: qué datos personales recabamos, para qué los usamos y cómo ejercer tus derechos ARCO."
+	url="https://www.pixelfixmexico.com/aviso-de-privacidad/"
+>
+	<main class="min-h-screen max-w-3xl mx-auto px-6 py-16 md:py-24">
+		<nav class="text-xs font-mono text-muted-strong mb-8 flex items-center gap-2">
+			<a href="/" class="hover:text-ink transition-colors">Inicio</a>
+			<span>/</span>
+			<span class="text-ink font-medium">Aviso de Privacidad</span>
+		</nav>
+
+		<h1 class="text-3xl md:text-4xl font-medium tracking-tight text-ink mb-3">
+			Aviso de Privacidad
+		</h1>
+		<p class="text-sm text-muted-strong mb-12">Última actualización: {lastUpdated}</p>
+
+		<div class="space-y-10 text-sm text-muted leading-relaxed">
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">1. Responsable del tratamiento</h2>
+				<p>
+					Pixel Fix México ("Pixel Fix", "nosotros") es responsable del tratamiento de tus
+					datos personales conforme a la Ley Federal de Protección de Datos Personales en
+					Posesión de los Particulares. Operamos en Monterrey y San Nicolás de los Garza,
+					Nuevo León, México, y damos servicio a todo el país.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">2. Datos que recabamos</h2>
+				<p class="mb-3">
+					No tenemos formularios de registro ni procesamos pagos directamente en este sitio.
+					La mayoría de tus datos los recibimos cuando nos escribes por WhatsApp para cotizar,
+					comprar o dar seguimiento a una reparación. Según el servicio que solicites, podemos
+					recabar:
+				</p>
+				<ul class="list-disc pl-5 space-y-1.5">
+					<li>Nombre y número de WhatsApp.</li>
+					<li>Dirección de envío, cuando compras una refacción o equipo con entrega a domicilio.</li>
+					<li>
+						IMEI del dispositivo, únicamente cuando gestionamos un trámite de garantía directa
+						con Google USA.
+					</li>
+					<li>
+						Datos de uso del sitio (páginas visitadas, origen del tráfico) de forma agregada y
+						anónima a través de Umami Analytics, alojado por Bysmax. Este servicio no usa
+						cookies de rastreo individual ni vende datos a terceros.
+					</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">3. Para qué usamos tus datos</h2>
+				<p class="mb-3"><strong class="text-ink">Finalidades primarias</strong> (necesarias para el servicio):</p>
+				<ul class="list-disc pl-5 space-y-1.5 mb-3">
+					<li>Cotizar y confirmar la compra de refacciones, equipos o servicios de reparación.</li>
+					<li>Coordinar el envío de tu pedido o la recepción de tu equipo en Monterrey.</li>
+					<li>
+						Gestionar trámites de garantía de fábrica con Google USA cuando contratas ese
+						servicio, lo cual implica compartir tu IMEI con Google para verificación.
+					</li>
+					<li>Dar seguimiento a la garantía local de 28 días sobre tu compra o reparación.</li>
+				</ul>
+				<p>
+					No usamos tus datos para fines de mercadotecnia de terceros ni los vendemos. Si en el
+					futuro quisiéramos usarlos con fines secundarios (por ejemplo, enviarte promociones),
+					te lo informaremos por WhatsApp y podrás rechazarlo en cualquier momento.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">4. Con quién compartimos tus datos</h2>
+				<ul class="list-disc pl-5 space-y-1.5">
+					<li>
+						Paqueterías (DHL, FedEx o equivalente) para realizar el envío de tu pedido a
+						domicilio.
+					</li>
+					<li>
+						Google USA, únicamente cuando solicitas el servicio de gestión de garantía de
+						fábrica y con tu autorización previa, para verificar el IMEI y procesar el caso.
+					</li>
+					<li>
+						WhatsApp / Meta, como plataforma de mensajería a través de la cual se realiza la
+						mayoría de la comunicación. El tratamiento que WhatsApp hace de tus mensajes está
+						sujeto a su propia política de privacidad.
+					</li>
+				</ul>
+				<p class="mt-3">No compartimos tus datos con nadie más fuera de lo descrito arriba.</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">5. Derechos ARCO</h2>
+				<p>
+					Tienes derecho a Acceder, Rectificar, Cancelar u Oponerte (ARCO) al tratamiento de tus
+					datos personales, así como a revocar tu consentimiento en cualquier momento. Para
+					ejercer estos derechos, escríbenos por <a href={`https://wa.me/${phoneNumber}`} target="_blank" rel="noopener noreferrer" class="text-ink underline hover:text-accent transition-colors">WhatsApp</a>
+					indicando tu solicitud; te confirmaremos la atención de tu caso en un plazo razonable.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">6. Cambios a este aviso</h2>
+				<p>
+					Podemos actualizar este Aviso de Privacidad para reflejar cambios en nuestros
+					servicios o en la legislación aplicable. La fecha de la última actualización siempre
+					aparece al inicio de este documento.
+				</p>
+			</section>
+		</div>
+
+		<a
+			href="/"
+			class="inline-flex items-center gap-2 mt-12 text-sm text-muted-strong hover:text-ink transition-colors"
+		>
+			Volver al inicio
+		</a>
+	</main>
+</Layout>

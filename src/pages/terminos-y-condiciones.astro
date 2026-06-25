@@ -1,0 +1,152 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { phoneNumber, shippingCost } from "../data/store";
+import { formatPrice } from "../data/catalog";
+
+const lastUpdated = "25 de junio de 2026";
+---
+
+<Layout
+	title="Términos y Condiciones | Pixel Fix México"
+	description="Términos y condiciones de compra, envío y garantía de Pixel Fix México para refacciones, equipos y servicios de reparación Google Pixel."
+	url="https://www.pixelfixmexico.com/terminos-y-condiciones/"
+>
+	<main class="min-h-screen max-w-3xl mx-auto px-6 py-16 md:py-24">
+		<nav class="text-xs font-mono text-muted-strong mb-8 flex items-center gap-2">
+			<a href="/" class="hover:text-ink transition-colors">Inicio</a>
+			<span>/</span>
+			<span class="text-ink font-medium">Términos y Condiciones</span>
+		</nav>
+
+		<h1 class="text-3xl md:text-4xl font-medium tracking-tight text-ink mb-3">
+			Términos y Condiciones
+		</h1>
+		<p class="text-sm text-muted-strong mb-12">Última actualización: {lastUpdated}</p>
+
+		<div class="space-y-10 text-sm text-muted leading-relaxed">
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">1. Objeto</h2>
+				<p>
+					Estos términos aplican a la venta de refacciones y equipos Google Pixel, y a los
+					servicios de reparación y gestión de garantía que ofrece Pixel Fix México a través de
+					este sitio y de WhatsApp. Al cotizar o confirmar una compra con nosotros, aceptas estos
+					términos.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">2. Cómo se realiza una compra</h2>
+				<p>
+					Este sitio no procesa pagos ni tiene un carrito de compra final. El carrito sirve para
+					armar tu pedido y enviarlo por WhatsApp; la cotización, confirmación de disponibilidad
+					y forma de pago se acuerdan directamente en esa conversación antes de cualquier cargo.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">3. Precios y envío</h2>
+				<ul class="list-disc pl-5 space-y-1.5">
+					<li>Todos los precios se muestran en pesos mexicanos (MXN) y pueden cambiar sin previo aviso.</li>
+					<li>
+						El envío tiene un costo fijo de {formatPrice(shippingCost)} a cualquier parte de
+						México, sin importar la cantidad de piezas o equipos en el mismo pedido.
+					</li>
+					<li>
+						Las refacciones se importan con un tiempo de entrega de 10 a 12 días hábiles. Los
+						equipos en venta siguen el mismo tiempo de importación salvo que se indique
+						disponibilidad inmediata en Monterrey.
+					</li>
+					<li>Aceptamos tarjeta de débito/crédito, transferencia SPEI y efectivo.</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">4. Refacciones originales y réplica</h2>
+				<p>
+					Cuando un producto se describe como <strong class="text-ink">"Original"</strong>, es
+					una pieza genuina de fábrica. Cuando se describe como
+					<strong class="text-ink">"Réplica Excelente"</strong>, es una pieza compatible de alta
+					calidad (no es una pieza original de Google), con sensor de huella activo y rendimiento
+					equivalente. Esta distinción siempre se indica antes de la compra.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">5. Garantía y devoluciones</h2>
+				<p class="mb-3">
+					Toda compra de refacciones, equipos o reparación instalada cuenta con
+					<strong class="text-ink">28 días de garantía</strong> directa local en Monterrey,
+					contados desde la entrega. La garantía cubre defectos de la pieza o de la instalación
+					realizada por nosotros.
+				</p>
+				<p class="mb-3">
+					Transcurridos los 28 días, no se aceptan devoluciones ni cambios bajo ninguna
+					circunstancia. Tampoco cubre daños posteriores a la entrega por mal uso, golpes,
+					humedad o intervención de un tercero no autorizado.
+				</p>
+				<p>
+					Como las refacciones se importan a pedido y los equipos usados/Open Box se venden en
+					unidades específicas, no se aceptan devoluciones por cambio de opinión una vez
+					confirmada la compra.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">6. Gestión de garantía con Google USA</h2>
+				<p>
+					Este es un servicio logístico independiente de nuestra garantía local: tramitamos el
+					envío de tu dispositivo a soporte oficial de Google en USA para fallas de hardware de
+					fábrica en versiones americanas o globales, sujeto a verificación de IMEI y a la
+					aprobación final de Google. La tarifa de gestión cubre el trabajo logístico y no es
+					reembolsable si Google rechaza el caso por causas ajenas a Pixel Fix (por ejemplo,
+					daño accidental no cubierto por la garantía de fábrica).
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">7. Equipos en venta</h2>
+				<p>
+					Vendemos únicamente equipos <strong class="text-ink">Usados Estética 9 (sin caja)</strong>
+					y <strong class="text-ink">Open Box (con caja y accesorios originales)</strong>. No
+					vendemos equipos reacondicionados. El color y los accesorios de regalo (mica, cargador
+					rápido, funda) pueden variar según disponibilidad y se confirman antes de la compra.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">8. Limitación de responsabilidad</h2>
+				<p>
+					No somos responsables por retrasos de paquetería fuera de nuestro control, ni por
+					información del dispositivo (IMEI, estado de garantía con Google) que el cliente
+					proporcione de forma incorrecta. Nuestra responsabilidad se limita al valor de la
+					pieza, equipo o servicio contratado.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">9. Legislación aplicable</h2>
+				<p>
+					Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Cualquier
+					controversia se resolverá ante los tribunales competentes de Monterrey, Nuevo León.
+				</p>
+			</section>
+
+			<section>
+				<h2 class="text-lg font-medium text-ink mb-3">10. Contacto</h2>
+				<p>
+					Para dudas sobre estos términos, escríbenos por
+					<a href={`https://wa.me/${phoneNumber}`} target="_blank" rel="noopener noreferrer" class="text-ink underline hover:text-accent transition-colors">WhatsApp</a>.
+					También puedes consultar nuestro
+					<a href="/aviso-de-privacidad" class="text-ink underline hover:text-accent transition-colors">Aviso de Privacidad</a>.
+				</p>
+			</section>
+		</div>
+
+		<a
+			href="/"
+			class="inline-flex items-center gap-2 mt-12 text-sm text-muted-strong hover:text-ink transition-colors"
+		>
+			Volver al inicio
+		</a>
+	</main>
+</Layout>
