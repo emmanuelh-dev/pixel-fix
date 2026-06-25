@@ -1,0 +1,176 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { repairCatalog, formatPrice } from '../../data/catalog';
+
+// ponytail: generar rutas estáticas de todas las combinaciones modelo+pieza
+export function getStaticPaths() {
+  const paths: { params: { pieza: string }; props: any }[] = [];
+
+  for (const series of repairCatalog) {
+    for (const part of series.parts) {
+      const isBateria = part.name.toLowerCase().includes('pila');
+      const partSlug = isBateria ? 'bateria' : 'pantalla';
+      const modelSlug = part.model
+        .toLowerCase()
+        .replace(/\s*\/\s*/g, '-')
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+      const slug = `${partSlug}-${modelSlug}`;
+
+      // Evitar duplicados: si ya existe el slug, combinar props
+      const existing = paths.find(p => p.params.pieza === slug);
+      if (!existing) {
+        paths.push({
+          params: { pieza: slug },
+          props: {
+            slug,
+            partType: isBateria ? 'Batería' : 'Pantalla',
+            partEmoji: isBateria ? '🔋' : '📱',
+            model: part.model,
+            series: series.series,
+            parts: [part],
+          },
+        });
+      } else {
+        existing.props.parts.push(part);
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { pieza } = Astro.params;
+const { partType, partEmoji, model, series, parts } = Astro.props;
+
+const phoneNumber = "528111913676";
+const pageUrl = `https://www.pixelfixmexico.com/piezas/${pieza}/`;
+
+// Título SEO: "Pantalla Pixel 8 México | Comprar Pantalla Google Pixel 8 — Pixel Fix"
+const titleModel = model.replace(/\//g, 'y');
+const title = `${partType} ${titleModel} México | Comprar ${partType} Google ${titleModel} — Pixel Fix`;
+const description = `Compra la ${partType.toLowerCase()} para tu Google ${titleModel} en México. ${parts[0]?.name}. Precio desde ${formatPrice(Math.min(...parts.map(p => p.pricePart)))} MXN. Envío a todo México en ${parts[0]?.delivery}.`;
+
+const lowestPrice = Math.min(...parts.map(p => p.pricePart));
+const waMsg = encodeURIComponent(`Hola, quiero comprar la ${partType} para mi ${model}. ¿Pueden darme más información?`);
+
+const productSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": `${partType} Google ${titleModel}`,
+  "description": description,
+  "brand": { "@type": "Brand", "name": "Google Pixel" },
+  "offers": parts.map(p => ({
+    "@type": "Offer",
+    "priceCurrency": "MXN",
+    "price": p.pricePart,
+    "availability": "https://schema.org/InStock",
+    "seller": { "@type": "Organization", "name": "Pixel Fix México" }
+  }))
+});
+---
+
+<Layout title={title} description={description} url={pageUrl}>
+  <script type="application/ld+json" set:html={productSchema} />
+
+  <main class="min-h-screen max-w-4xl mx-auto px-4 py-12 md:py-20">
+
+    <!-- Breadcrumb -->
+    <nav class="text-xs font-mono text-[#ADADAD] mb-8 flex items-center gap-2">
+      <a href="/" class="hover:text-[#111111] transition-colors">Inicio</a>
+      <span>/</span>
+      <a href="/tienda" class="hover:text-[#111111] transition-colors">Tienda</a>
+      <span>/</span>
+      <span class="text-[#787774]">{partType} {model}</span>
+    </nav>
+
+    <!-- Hero -->
+    <div class="mb-12">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
+        {partEmoji} {partType} · {series}
+      </span>
+      <h1 class="text-4xl md:text-6xl font-medium tracking-tight text-[#111111] leading-tight mb-4">
+        {partType} para {model}
+      </h1>
+      <p class="text-[#787774] text-lg max-w-2xl">
+        {parts[0]?.name}. Importada desde distribuidores autorizados en USA. 
+        Envío a todo México en {parts[0]?.delivery}.
+      </p>
+    </div>
+
+    <!-- Opciones de pieza -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+      {parts.map((part) => (
+        <div class="bg-white border border-[#EAEAEA] rounded-xl p-6 flex flex-col gap-4">
+          <div>
+            <p class="text-xs font-mono uppercase tracking-wider text-[#787774] mb-1">{part.model}</p>
+            <p class="font-medium text-[#111111]">{part.name}</p>
+          </div>
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-[#787774]">Solo refacción</span>
+              <span class="font-semibold text-[#111111]">{formatPrice(part.pricePart)}</span>
+            </div>
+            {part.priceInstall && (
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-[#787774]">Con instalación</span>
+                <span class="font-semibold text-[#111111]">{formatPrice(part.priceInstall)}</span>
+              </div>
+            )}
+            <div class="flex items-center gap-1 pt-1">
+              <span class="text-[10px] text-[#ADADAD]">📦 Entrega: {part.delivery}</span>
+            </div>
+          </div>
+          <a
+            href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hola, quiero comprar la ${part.name} para mi ${part.model}. ¿Pueden darme más información?`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 py-3 bg-[#111111] text-white rounded-xl text-sm font-medium hover:bg-[#333] transition-colors"
+          >
+            Pedir por WhatsApp
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Info de envío -->
+    <div class="bg-white border border-[#EAEAEA] rounded-xl p-6 mb-8">
+      <h2 class="font-semibold text-[#111111] mb-4">Información de envío y garantía</h2>
+      <ul class="space-y-3 text-sm text-[#787774]">
+        <li class="flex items-start gap-3">
+          <span class="text-base mt-0.5">🇲🇽</span>
+          <span>Envío a todo México. La pieza se importa desde distribuidores autorizados en USA en 10-12 días hábiles.</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-base mt-0.5">🔒</span>
+          <span>28 días de garantía directa local en Monterrey desde la fecha de entrega.</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-base mt-0.5">🛠️</span>
+          <span>Instalación disponible en Monterrey. Solicita el precio "con instalación" al cotizar.</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-base mt-0.5">✅</span>
+          <span>Piezas originales o réplica excelente. Funcionalidad completa incluyendo sensor de huella dactilar.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CTA global -->
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a
+        href={`https://wa.me/${phoneNumber}?text=${waMsg}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex-1 flex items-center justify-center gap-2 py-4 bg-[#25D366] text-white rounded-xl font-medium hover:bg-[#1ebe5d] transition-colors"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Cotizar por WhatsApp
+      </a>
+      <a href="/tienda" class="flex items-center justify-center gap-2 py-4 px-6 bg-[#F3F3F1] text-[#111111] rounded-xl font-medium hover:bg-[#EAEAEA] transition-colors border border-[#EAEAEA]">
+        Ver toda la tienda
+      </a>
+    </div>
+
+  </main>
+</Layout>

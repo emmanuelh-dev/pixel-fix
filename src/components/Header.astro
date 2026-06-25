@@ -7,18 +7,27 @@ const phoneNumber = "528111913676";
 		<a href="/" data-umami-event="header_logo_click" class="font-bold text-[#111111] tracking-tight hover:opacity-80 transition-opacity">Pixel Fix.</a>
 		<nav class="hidden md:flex items-center gap-6 text-xs font-mono tracking-wider uppercase text-[#787774]">
 			<a href="/" data-umami-event="header_nav_click" data-umami-event-page="inicio" class="hover:text-[#111111] transition-colors">Inicio</a>
+			<a href="/tienda" data-umami-event="header_nav_click" data-umami-event-page="tienda" class="hover:text-[#111111] transition-colors">Tienda</a>
 			<a href="/reparacion-google-pixel-monterrey" data-umami-event="header_nav_click" data-umami-event-page="reparacion" class="hover:text-[#111111] transition-colors">Reparación</a>
-			<a href="/venta-google-pixel-monterrey" data-umami-event="header_nav_click" data-umami-event-page="venta" class="hover:text-[#111111] transition-colors">Venta de Equipos</a>
+			<a href="/venta-google-pixel-monterrey" data-umami-event="header_nav_click" data-umami-event-page="venta" class="hover:text-[#111111] transition-colors">Venta</a>
 			<a href="#testimoniales" data-umami-event="header_nav_click" data-umami-event-page="testimoniales" class="hover:text-[#111111] transition-colors">Testimoniales</a>
 		</nav>
-		<a href={`https://wa.me/${phoneNumber}`} target="_blank" rel="noopener noreferrer" data-umami-event="header_contact_click" class="px-4 py-2 bg-[#111111] text-white text-xs font-medium rounded transition-transform hover:scale-[0.98]">
-			Contacto
-		</a>
+		<div class="flex items-center gap-2">
+			<a href="/tienda" data-umami-event="header_search_click" title="Buscar piezas y equipos" class="p-2 text-[#787774] hover:text-[#111111] hover:bg-[#EAEAEA] rounded-lg transition-all" aria-label="Buscar en tienda">
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+				</svg>
+			</a>
+			<a href={`https://wa.me/${phoneNumber}`} target="_blank" rel="noopener noreferrer" data-umami-event="header_contact_click" class="px-4 py-2 bg-[#111111] text-white text-xs font-medium rounded transition-transform hover:scale-[0.98]">
+				Contacto
+			</a>
+		</div>
 	</div>
 	
 	<!-- Menú de Navegación Móvil (visible solo en móviles) -->
 	<div class="md:hidden border-t border-[#EAEAEA]/50 bg-[#F3F3F1]/95 py-2.5 px-6 flex items-center justify-center gap-6 text-[10px] font-mono tracking-wider uppercase text-[#787774]">
 		<a href="/" data-umami-event="header_nav_mobile_click" data-umami-event-page="inicio" class="hover:text-[#111111] transition-colors">Inicio</a>
+		<a href="/tienda" data-umami-event="header_nav_mobile_click" data-umami-event-page="tienda" class="hover:text-[#111111] transition-colors">Tienda</a>
 		<a href="/reparacion-google-pixel-monterrey" data-umami-event="header_nav_mobile_click" data-umami-event-page="reparacion" class="hover:text-[#111111] transition-colors">Reparación</a>
 		<a href="/venta-google-pixel-monterrey" data-umami-event="header_nav_mobile_click" data-umami-event-page="venta" class="hover:text-[#111111] transition-colors">Venta</a>
 		<a href="#testimoniales" data-umami-event="header_nav_mobile_click" data-umami-event-page="testimoniales" class="hover:text-[#111111] transition-colors">Opiniones</a>

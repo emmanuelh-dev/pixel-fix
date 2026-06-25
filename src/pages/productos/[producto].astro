@@ -1,0 +1,223 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { repairCatalog, formatPrice } from '../../data/catalog';
+
+export function getStaticPaths() {
+  const paths: { params: { producto: string }; props: any }[] = [];
+
+  for (const series of repairCatalog) {
+    for (const part of series.parts) {
+      const isBateria = part.name.toLowerCase().includes('pila');
+      const partType = isBateria ? 'bateria' : 'pantalla';
+      const isOriginal = part.name.toLowerCase().includes('original');
+      const qualityTag = isOriginal ? 'original' : 'replica-excelente';
+      const modelSlug = part.model
+        .toLowerCase()
+        .replace(/\s*\/\s*/g, '-')
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+      const slug = `${partType}-${modelSlug}-${qualityTag}`;
+
+      const existing = paths.find(p => p.params.producto === slug);
+      if (!existing) {
+        paths.push({
+          params: { producto: slug },
+          props: { slug, isBateria, isOriginal, model: part.model, series: series.series, seriesId: series.id, parts: [part] },
+        });
+      } else {
+        existing.props.parts.push(part);
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { isBateria, isOriginal, model, series, parts } = Astro.props;
+const { producto } = Astro.params;
+
+const phoneNumber = "528111913676";
+const partLabel = isBateria ? 'Batería' : 'Pantalla';
+const qualityLabel = isOriginal ? 'Original' : 'Réplica Excelente';
+const modelDisplay = model.replace(/\//g, 'y');
+
+// SEO: apuntar a "pantalla pixel 8 original mexico" y capturar tráfico de iFixit
+const title = `${partLabel} Google ${modelDisplay} ${qualityLabel} en México | Pixel Fix — Alternativa iFixit`;
+const description = `Compra la ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} para tu Google ${modelDisplay} en México. Envío nacional en ${parts[0]?.delivery}. Precio desde ${formatPrice(Math.min(...parts.map((p: any) => p.pricePart)))}. iFixit no envía a México — nosotros sí.`;
+
+const pageUrl = `https://www.pixelfixmexico.com/productos/${producto}/`;
+const minPrice = Math.min(...parts.map((p: any) => p.pricePart));
+const waMsg = encodeURIComponent(`Hola, quiero comprar la ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} para mi Google ${model}. ¿Pueden darme más información y confirmar disponibilidad?`);
+
+const productSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": `${partLabel} Google ${modelDisplay} ${qualityLabel}`,
+  "description": description,
+  "brand": { "@type": "Brand", "name": "Google" },
+  "offers": parts.map((p: any) => ({
+    "@type": "Offer",
+    "priceCurrency": "MXN",
+    "price": p.pricePart,
+    "availability": "https://schema.org/InStock",
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "MX" },
+      "deliveryTime": { "@type": "ShippingDeliveryTime", "businessDays": { "@type": "OpeningHoursSpecification", "description": p.delivery } }
+    },
+    "seller": { "@type": "Organization", "name": "Pixel Fix México", "url": "https://www.pixelfixmexico.com" }
+  }))
+});
+---
+
+<Layout title={title} description={description} url={pageUrl}>
+  <script type="application/ld+json" set:html={productSchema} />
+
+  <main class="min-h-screen max-w-4xl mx-auto px-4 py-12 md:py-20">
+
+    <!-- Breadcrumb -->
+    <nav class="text-xs font-mono text-[#ADADAD] mb-10 flex items-center gap-2 flex-wrap">
+      <a href="/" class="hover:text-[#111111] transition-colors">Inicio</a>
+      <span>/</span>
+      <a href="/tienda" class="hover:text-[#111111] transition-colors">Tienda</a>
+      <span>/</span>
+      <span class="text-[#787774]">{partLabel} {model}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+
+      <!-- Info principal -->
+      <div>
+        <span class="inline-flex items-center gap-2 px-3 py-1 bg-[#E1F3FE] text-[#1F6C9F] text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-5">
+          {partLabel} · {series}
+        </span>
+
+        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-[#111111] leading-tight mb-3">
+          {partLabel} Google {modelDisplay}
+          <span class="block text-lg font-normal text-[#787774] mt-1">{qualityLabel} — disponible en México</span>
+        </h1>
+
+        <p class="text-[#787774] leading-relaxed mb-6">
+          {isBateria
+            ? `Batería ${qualityLabel.toLowerCase()} para ${model}. Capacidad y voltaje originales de fábrica. Compatible con todas las funciones del sistema, incluyendo indicador de porcentaje preciso.`
+            : `Pantalla ${qualityLabel.toLowerCase()} con sensor de huella dactilar integrado para ${model}. Compatible al 100% con las funciones táctiles y de reconocimiento biométrico del equipo.`
+          }
+        </p>
+
+        <!-- Puntos de venta vs iFixit -->
+        <div class="bg-[#F3F3F1] rounded-xl p-5 mb-6 space-y-3">
+          <p class="text-xs font-mono uppercase tracking-wider text-[#787774] mb-3">¿Por qué Pixel Fix?</p>
+          {[
+            `Envío a todo México — iFixit no envía a México`,
+            `Importación directa desde distribuidores OEM en USA`,
+            `Garantía local de 28 días en Monterrey`,
+            `Instalación disponible con técnicos certificados`,
+            isOriginal ? `Pieza de fábrica Google / iFixit compatible` : `Calidad Réplica Excelente con huella activa`,
+          ].map(point => (
+            <div class="flex items-start gap-2.5">
+              <svg class="w-4 h-4 text-[#1F6C9F] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="text-sm text-[#111111]">{point}</span>
+            </div>
+          ))}
+        </div>
+
+        <!-- CTA -->
+        <a
+          href={`https://wa.me/${phoneNumber}?text=${waMsg}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center gap-2 w-full py-4 bg-[#25D366] text-white rounded-xl font-semibold hover:bg-[#1ebe5d] transition-colors mb-3"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir por WhatsApp
+        </a>
+        <a href="/tienda" class="flex items-center justify-center gap-2 w-full py-3 text-sm text-[#787774] hover:text-[#111111] transition-colors border border-[#EAEAEA] rounded-xl hover:border-[#111111]">
+          Ver todo el catálogo
+        </a>
+      </div>
+
+      <!-- Tabla de precios -->
+      <div class="space-y-4">
+        <h2 class="text-sm font-mono uppercase tracking-wider text-[#787774]">Precios y variantes</h2>
+        {parts.map((part: any) => (
+          <div class="bg-white border border-[#EAEAEA] rounded-xl p-5">
+            <p class="text-xs font-mono text-[#ADADAD] mb-2">{part.model}</p>
+            <p class="text-sm font-medium text-[#111111] mb-4">{part.name}</p>
+
+            <div class="space-y-2 mb-4">
+              <div class="flex justify-between items-center py-2 border-b border-[#F3F3F1]">
+                <span class="text-sm text-[#787774]">Solo refacción</span>
+                <span class="font-bold text-[#111111]">{formatPrice(part.pricePart)}</span>
+              </div>
+              {part.priceInstall > 0 && (
+                <div class="flex justify-between items-center py-2">
+                  <span class="text-sm text-[#787774]">Con instalación en MTY</span>
+                  <span class="font-bold text-[#111111]">{formatPrice(part.priceInstall)}</span>
+                </div>
+              )}
+            </div>
+
+            <div class="flex items-center gap-2 text-[11px] text-[#ADADAD]">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <rect x="1" y="3" width="15" height="13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="5.5" cy="18.5" r="2.5" stroke-width="1.5"/><circle cx="18.5" cy="18.5" r="2.5" stroke-width="1.5"/>
+              </svg>
+              {part.delivery}
+            </div>
+
+            <a
+              href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(`Hola, quiero la ${part.name} para mi ${part.model}. ¿Pueden confirmar disponibilidad?`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-4 flex items-center justify-center gap-1.5 w-full py-2.5 bg-[#111111] text-white text-xs font-medium rounded-lg hover:bg-[#333] transition-colors"
+            >
+              Pedir esta variante
+            </a>
+          </div>
+        ))}
+
+        <!-- Nota garantía -->
+        <div class="text-xs text-[#ADADAD] leading-relaxed p-4 border border-[#EAEAEA] rounded-xl">
+          <strong class="text-[#787774] block mb-1">Garantía y devoluciones</strong>
+          28 días de garantía directa en Monterrey. Transcurrido este plazo no se aceptan devoluciones ni cambios bajo ninguna circunstancia.
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ SEO -->
+    <div class="mt-16 border-t border-[#EAEAEA] pt-12">
+      <h2 class="text-xl font-semibold text-[#111111] mb-6">Preguntas frecuentes</h2>
+      <div class="space-y-6 max-w-2xl">
+        {[
+          {
+            q: `¿Puedo comprar la ${partLabel.toLowerCase()} del ${model} en México?`,
+            a: `Sí. En Pixel Fix importamos la ${partLabel.toLowerCase()} directamente desde distribuidores OEM en USA y la enviamos a todo México. El tiempo de entrega es de ${parts[0]?.delivery}.`
+          },
+          {
+            q: `¿iFixit envía ${partLabel.toLowerCase()}s de Google Pixel a México?`,
+            a: `iFixit es un referente mundial en refacciones originales de Google Pixel, pero actualmente no tiene envíos directos a México. Pixel Fix importa piezas de la misma cadena de distribución y las entrega en territorio nacional.`
+          },
+          {
+            q: `¿La ${partLabel.toLowerCase()} ${qualityLabel.toLowerCase()} funciona igual que la original?`,
+            a: isBateria
+              ? `Sí. Las baterías originales son idénticas a las de fábrica en capacidad y voltaje. Las réplica excelente tienen rendimiento equivalente al 95% de la original.`
+              : `La pantalla incluye el sensor de huella dactilar integrado y funciona con todas las características del sistema. La calidad ${qualityLabel.toLowerCase()} es la mejor disponible en el mercado para esta pantalla.`
+          },
+          {
+            q: `¿Cuánto cuesta enviar la ${partLabel.toLowerCase()} a mi ciudad?`,
+            a: `El costo de envío ya está incluido en el precio de la refacción. No hay cargos adicionales por envío a cualquier parte de México.`
+          },
+        ].map(faq => (
+          <div>
+            <p class="font-medium text-[#111111] mb-1.5">{faq.q}</p>
+            <p class="text-sm text-[#787774] leading-relaxed">{faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </main>
+</Layout>
