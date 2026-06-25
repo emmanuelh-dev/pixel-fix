@@ -5,9 +5,36 @@ import Testimonials from "../components/Testimonials.astro";
 import Faq from "../components/Faq.astro";
 import ProcessSteps from "../components/ProcessSteps.astro";
 import WarrantySupport from "../components/WarrantySupport.astro";
-import { repairCatalog, formatPrice } from "../data/catalog";
+import { repairCatalog, storeCatalog, formatPrice, type StoreItem } from "../data/catalog";
 import { phoneNumber } from "../data/store";
 import { localBusinessSchema, faqSchema } from "../lib/seo";
+
+const typeIcon = {
+	screen: "ph:rectangle",
+	battery: "ph:battery-charging-vertical",
+	device: "ph:device-mobile",
+} as const;
+
+// Piezas que más se preguntan por WhatsApp: Pixel 7 (toda la línea) y Pixel 8
+function findPopular(model: string, type: "Pantalla" | "Batería") {
+	const matches = storeCatalog.filter(
+		(i) => i.model === model && i.type === type && i.category === "refaccion",
+	);
+	return matches.find((i) => i.name.toLowerCase().includes("réplica")) ?? matches[0];
+}
+
+const popularItems = (
+	[
+		["Pixel 7 Pro", "Pantalla"],
+		["Pixel 7 Pro", "Batería"],
+		["Pixel 7", "Pantalla"],
+		["Pixel 7", "Batería"],
+		["Pixel 8", "Pantalla"],
+		["Pixel 8", "Batería"],
+	] as const
+)
+	.map(([model, type]) => findPopular(model, type))
+	.filter((i): i is StoreItem => Boolean(i));
 
 const faqs = [
 	{
@@ -146,122 +173,100 @@ const productsSchema = JSON.stringify({
 			</div>
 		</section>
 
-		<!-- Selector de Modelos y Precios -->
+		<!-- Piezas más populares -->
 		<section
-			id="cotizador"
+			id="populares"
 			class="max-w-5xl mx-auto px-6 py-24 border-t border-border reveal"
 		>
 			<div class="mb-12 max-w-2xl">
-				<h2
-					class="text-3xl md:text-4xl tracking-tight text-ink mb-4"
-				>
-					Catálogo y Cotizador.
+				<h2 class="text-3xl md:text-4xl tracking-tight text-ink mb-4">
+					Piezas más populares.
 				</h2>
-				<p class="text-muted leading-[1.6] mb-4">
-					Refacciones OEM y mano de obra experta para tu Google Pixel.
-					Importamos piezas directamente desde EE. UU., y **estamos trabajando
-					activamente para tener en stock local inmediato las refacciones más
-					solicitadas**. Confía en nosotros.
+				<p class="text-muted leading-[1.6]">
+					Lo que más nos preguntan por WhatsApp: pantallas y pilas para Pixel 7 y
+					Pixel 8. Agrégalas al carrito o consulta el catálogo completo con
+					todos los modelos.
 				</p>
-				<div class="flex flex-wrap gap-2">
-					<div
-						class="inline-flex items-center px-3 py-1.5 bg-surface-muted border border-border rounded font-mono text-xs text-ink"
-					>
-						<span class="w-1.5 h-1.5 rounded-full bg-ink mr-2"></span>
-						Piezas originales y calidad OEM. Todas las refacciones son importadas
-						y oficiales.
-					</div>
-					<div
-						class="inline-flex items-center px-3 py-1.5 bg-success-soft border border-success-border rounded font-mono text-xs text-success"
-					>
-						<span class="w-1.5 h-1.5 rounded-full bg-success mr-2"></span>
-						<span
-							><strong>¡Promoción Combo!</strong> Pantalla + Pila juntas en el mismo
-							equipo: instalación a <strong>$800 MXN</strong> total (ahorras $800).</span
-						>
-					</div>
-				</div>
 			</div>
 
-			<!-- Selector de Series -->
-			<div class="flex justify-center mb-10 w-full max-w-xs mx-auto">
-				<div class="relative w-full">
-					<select
-						id="model-select"
-						data-umami-event="cotizador_select_changed"
-						class="w-full bg-white border border-border rounded-lg px-4 py-3 text-sm font-medium text-ink appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-ink focus:border-ink transition-all shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
-					>
-						{
-							repairCatalog.map((catalog, index) => (
-								<option value={catalog.id} selected={index === 2}>
-									{catalog.series}
-								</option>
-							))
-						}
-					</select>
-					<div
-						class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-muted"
-					>
-						<Icon name="ph:caret-down" class="h-4 w-4" />
-					</div>
-				</div>
-			</div>
-
-			<!-- Tab Contents -->
-			<div class="relative min-h-[300px]">
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
 				{
-					repairCatalog.map((catalog, index) => (
-						<div
-							class={`tab-content grid grid-cols-1 md:grid-cols-2 gap-6 ${index === 2 ? "" : "hidden"}`}
-							id={catalog.id}
-						>
-							{catalog.parts.map((part) => (
-								<div class="bg-surface p-6 border border-border rounded-xl flex flex-col justify-between transition-all hover:shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:border-border-strong">
-									<div>
-										<div class="flex items-center justify-between gap-2 mb-4 border-b border-bg pb-3">
-											<span class="text-xs font-mono font-medium text-ink bg-surface-muted border border-border px-2 py-0.5 rounded-full">
-												{part.model}
-											</span>
-											<span class="text-xs font-mono text-warning bg-warning-soft px-2 py-0.5 rounded">
-												{part.delivery}
-											</span>
-										</div>
-										<h3 class="text-lg font-semibold text-ink leading-snug mb-4">
-											{part.name}
-										</h3>
+					popularItems.map((item) => {
+						const whatsappText = encodeURIComponent(
+							`Hola, me interesa comprar el siguiente producto:\n\n*Modelo:* ${item.model}\n*Detalle:* ${item.name}\n*Precio:* ${formatPrice(item.pricePart)}`,
+						);
+						const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappText}`;
 
-										<div class="space-y-3 text-sm text-muted mb-6">
-											<div class="flex justify-between border-b border-bg/50 pb-2">
-												<span>Refacción sola:</span>
-												<span class="font-medium text-ink font-mono">
-													{formatPrice(part.pricePart, part.ganancia)}
-												</span>
-											</div>
-											<div class="flex justify-between pb-1">
-												<span>Con instalación en MTY:</span>
-												<span class="font-medium text-ink font-mono">
-													{formatPrice(part.priceInstall, part.ganancia)}
-												</span>
-											</div>
+						return (
+							<div class="bg-white border border-border-strong rounded-xl p-5 flex flex-col gap-4 hover:shadow-sm hover:border-ink transition-all">
+								<a
+									href={`/productos/${item.slug}`}
+									class="flex flex-col gap-4 flex-1 block select-none cursor-pointer"
+								>
+									<div class="flex items-start justify-between gap-3">
+										<div class="flex-1 min-w-0">
+											<span class="text-[10px] font-mono uppercase tracking-wider text-muted-strong">
+												{item.type}
+											</span>
+											<p class="font-medium text-ink text-sm leading-snug mt-0.5">
+												{item.model}
+											</p>
+											<p class="text-xs text-muted-strong mt-0.5 line-clamp-1">
+												{item.name}
+											</p>
+										</div>
+										<div class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-muted text-muted-strong border border-border flex-shrink-0">
+											<Icon name={typeIcon[item.iconType]} class="w-4 h-4" />
 										</div>
 									</div>
 
+									<div>
+										<p class="text-lg font-bold text-ink font-mono">
+											{formatPrice(item.pricePart)}
+										</p>
+										{item.priceInstall > 0 && (
+											<p class="text-[11px] text-muted-strong">
+												Con instalación MTY: {formatPrice(item.priceInstall)}
+											</p>
+										)}
+									</div>
+								</a>
+
+								<div class="flex items-center gap-2 mt-auto">
 									<a
-										href="#"
-										data-msg={`Hola Pixel Fix, quiero solicitar reparación / compra para la ${part.name} del ${part.model}. Pásame los detalles.`}
-										data-umami-event="cotizar_reparacion_click"
-										data-umami-event-model={part.model}
-										data-umami-event-part={part.name}
-										class="wa-link block w-full text-center py-3 bg-ink hover:bg-ink-hover text-white text-xs font-mono font-medium rounded transition-transform hover:scale-[0.98]"
+										href={whatsappUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+										data-umami-event="home_popular_comprar_click"
+										class="px-3 py-2 text-[11px] font-mono border border-border-strong rounded-lg text-muted-strong hover:border-ink hover:text-ink hover:bg-surface-muted transition-all whitespace-nowrap"
 									>
-										Cotizar Servicio
+										Comprar
 									</a>
+									<button
+										data-id={item.id}
+										data-name={item.model}
+										data-part={item.name}
+										data-price={item.pricePart}
+										class="add-btn flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-ink text-white text-[11px] font-medium rounded-lg hover:bg-ink-hover transition-colors"
+									>
+										<Icon name="ph:shopping-cart" class="w-3.5 h-3.5 btn-icon-cart" />
+										<Icon name="ph:check" class="w-3.5 h-3.5 btn-icon-check hidden" />
+										<span class="btn-label">Agregar al carrito</span>
+									</button>
 								</div>
-							))}
-						</div>
-					))
+							</div>
+						);
+					})
 				}
 			</div>
+
+			<a
+				href="/tienda"
+				data-umami-event="home_view_full_catalog_click"
+				class="flex items-center justify-center gap-2 w-full sm:w-auto sm:mx-auto py-3 px-6 text-sm text-muted-strong hover:text-ink transition-colors border border-border-strong rounded-xl hover:border-ink bg-white"
+			>
+				Ver catálogo completo
+			</a>
 		</section>
 
 		<ProcessSteps
@@ -329,34 +334,14 @@ const productsSchema = JSON.stringify({
 </Layout>
 
 <script>
-	import { phoneNumber as PHONE_NUMBER } from "../data/store";
-
-	// Model Selector Logic
-	const modelSelect = document.getElementById("model-select");
-	const contents = document.querySelectorAll(".tab-content");
-
-	if (modelSelect) {
-		modelSelect.addEventListener("change", (e) => {
-			const targetId = (e.target as HTMLSelectElement).value;
-			contents.forEach((c) => c.classList.add("hidden"));
-			const targetEl = document.getElementById(targetId);
-			if (targetEl) targetEl.classList.remove("hidden");
-		});
-	}
-
-	// WhatsApp Links Builder
-	const waLinks = document.querySelectorAll(".wa-link");
-
-	waLinks.forEach((link) => {
-		const msg = link.getAttribute("data-msg");
-		if (msg) {
-			link.setAttribute(
-				"href",
-				`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`,
-			);
-			link.setAttribute("target", "_blank");
-			link.setAttribute("rel", "noopener noreferrer");
-		}
+	document.getElementById("populares")?.addEventListener("click", (e) => {
+		const btn = (e.target as Element).closest(".add-btn") as HTMLElement;
+		if (!btn || !window.pfCart) return;
+		window.pfCart.add(
+			btn.dataset.id!,
+			btn.dataset.name!,
+			btn.dataset.part!,
+			Number(btn.dataset.price),
+		);
 	});
-
 </script>
