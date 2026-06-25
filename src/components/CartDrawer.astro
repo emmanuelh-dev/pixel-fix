@@ -62,6 +62,10 @@ import { phoneNumber, shippingCost } from "../data/store";
   const fmtS = n => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(n);
 
   let cart = JSON.parse(localStorage.getItem('pf-cart') || '[]');
+  // Migra carritos guardados antes del soporte de cantidades (sin campo qty -> NaN en totales)
+  cart = cart
+    .map(i => ({ ...i, price: Number(i.price) || 0, qty: Number(i.qty) || 1 }))
+    .filter(i => i.id && i.price > 0);
   const save = () => localStorage.setItem('pf-cart', JSON.stringify(cart));
 
   function syncUI() {
