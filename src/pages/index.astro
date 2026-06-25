@@ -115,21 +115,21 @@ const productsSchema = JSON.stringify({
 	<main class="min-h-screen">
 		<!-- Hero Section -->
 		<section
-			class="max-w-5xl mx-auto px-6 py-24 md:py-32 flex flex-col md:flex-row items-center gap-12 reveal"
+			class="max-w-5xl mx-auto px-6 pt-12 pb-16 md:py-32 flex flex-col md:flex-row items-center gap-10 md:gap-12 reveal"
 		>
 			<div class="flex-1 flex flex-col items-start text-left">
 				<h1
-					class="text-5xl md:text-[5rem] font-medium tracking-[-0.03em] text-ink leading-[1.05] mb-8"
+					class="text-4xl md:text-4xl font-medium tracking-[-0.03em] text-ink leading-[1.15] mb-6"
 				>
-					Especialistas en Google Pixel.
+					Tu especialista <span class="whitespace-nowrap">Google Pixel</span> en México.
 				</h1>
 				<p
-					class="text-lg md:text-xl text-muted mb-10 leading-[1.6] max-w-lg font-light"
+					class="text-base md:text-xl text-muted mb-8 leading-[1.6] max-w-lg font-light"
 				>
 					Reparación especializada y venta de equipos Google Pixel en México.
 					Refacciones originales con garantía local y envíos a todo el país.
 				</p>
-				<div class="flex flex-wrap gap-4 mt-8 w-full">
+				<div class="flex flex-wrap gap-4 w-full">
 					<a
 						href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20cotizar%20un%20servicio%20o%20equipo.`}
 						target="_blank"
@@ -147,16 +147,16 @@ const productsSchema = JSON.stringify({
 					>
 						<span>Reparación y Piezas</span>
 					</a>
-					<a
-						href="/venta-google-pixel-monterrey"
-						data-umami-event="hero_venta_click"
-						class="inline-flex items-center justify-center px-6 py-3.5 bg-white border border-border text-ink text-xs font-mono font-medium rounded hover:bg-surface-muted transition-all hover:scale-[0.98] w-full sm:w-auto"
-					>
-						<span>Comprar Equipos</span>
-					</a>
 				</div>
+				<a
+					href="/venta-google-pixel-monterrey"
+					data-umami-event="hero_venta_click"
+					class="inline-flex items-center gap-1.5 mt-5 text-xs font-mono text-muted-strong hover:text-ink transition-colors underline"
+				>
+					¿Buscas comprar un equipo? Ver catálogo de venta
+				</a>
 			</div>
-			<div class="flex-1 w-full relative h-[400px] md:h-[500px]">
+			<div class="flex-1 w-full relative h-[260px] md:h-[500px]">
 				<!-- Taste-skill standard: highly desaturated image with subtle grain/overlay -->
 				<div
 					class="absolute inset-0 bg-surface-muted border border-border rounded-xl overflow-hidden"
