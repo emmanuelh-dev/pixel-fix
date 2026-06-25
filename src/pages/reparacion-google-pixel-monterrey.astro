@@ -109,6 +109,61 @@ const questionsSchema = faqSchema(faqs);
 				</div>
 			</div>
 		</section>
+
+		<!-- Banner garantía Google USA -->
+		{(() => {
+			const waGarantia = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Hola, me interesa el servicio de garantía con Google USA. ¿Cómo funciona?")}`;
+			return (
+				<section class="max-w-5xl mx-auto px-6 mb-6">
+					<div class="rounded-2xl border border-border-strong bg-white overflow-hidden">
+						<div class="px-5 py-4 border-b border-border flex items-center gap-3">
+							<span class="text-base">🛡️</span>
+							<div>
+								<p class="text-sm font-semibold text-ink leading-snug">
+									Manda tu Pixel a garantía con Google <span class="font-normal text-muted-strong">Estados Unidos</span>
+								</p>
+								<p class="text-xs text-muted-strong mt-0.5">
+									Trámite directo con Google USA — <span class="text-ink font-medium">garantía vigente al momento del envío</span> · nosotros gestionamos todo
+								</p>
+								<div class="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+									<span class="text-[11px] text-muted-strong flex items-center gap-1">
+										<span class="inline-block w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0"></span>
+										Línea en pantalla — todos los Pixel 8 aplican
+									</span>
+									<span class="text-[11px] text-muted-strong flex items-center gap-1">
+										<span class="inline-block w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0"></span>
+										Garantía activa 2025 o 2026
+									</span>
+								</div>
+							</div>
+							<a
+								href={waGarantia}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="ml-auto whitespace-nowrap px-3 py-2 bg-ink text-white text-[11px] font-mono rounded-lg hover:bg-ink-hover transition-colors flex-shrink-0"
+							>
+								Consultar
+							</a>
+						</div>
+						<div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-border">
+							{[
+								{ model: "Pixel 8 (todos)", detail: "Línea en pantalla", price: "$2,950" },
+								{ model: "Pixel 9 Pro / 9 XL", detail: "Pantalla", price: "$3,850" },
+								{ model: "Pixel 7a", detail: "Batería", price: "$2,000" },
+								{ model: "Garantía general", detail: "Cualquier Pixel vigente", price: "$2,800" },
+							].map(({ model, detail, price }) => (
+								<div class="px-4 py-3.5 flex flex-col gap-0.5">
+									<span class="text-[10px] font-mono text-muted-strong uppercase tracking-wider">{model}</span>
+									<span class="text-[11px] text-muted">{detail}</span>
+									<span class="text-sm font-bold font-mono text-ink mt-1">{price} <span class="text-[10px] font-normal text-muted-strong">MXN</span></span>
+								</div>
+							))}
+						</div>
+					</div>
+				</section>
+			);
+		})()}
+
 		<Store />
 		<!-- Enlace contextual a ventas -->
 		<section class="max-w-5xl mx-auto px-6 pb-24 reveal">
