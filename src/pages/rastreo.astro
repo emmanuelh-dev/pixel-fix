@@ -129,6 +129,17 @@ import Layout from '../layouts/Layout.astro';
     const stepsHtml = STATUS_STEPS.map((step, i) => {
       const done = i < currentIdx;
       const active = i === currentIdx;
+      // La guía DHL sólo aplica una vez que la orden se envía: se pega dentro de ese paso.
+      const dhlHtml = (step.key === 'enviado' && i <= currentIdx && order.dhl_tracking_code) ? `
+        <div class="mt-2 rounded-xl border border-border bg-surface-muted p-3 flex items-center justify-between gap-3 flex-wrap">
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Guía DHL</p>
+            <p class="mt-0.5 font-mono text-sm font-medium text-ink">${esc(order.dhl_tracking_code)}</p>
+          </div>
+          <a href="https://www.dhl.com/mx-en/home/tracking.html?tracking-id=${encodeURIComponent(order.dhl_tracking_code)}&submit=1" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-ink text-white text-xs font-medium rounded-lg hover:bg-ink-hover transition-colors whitespace-nowrap">
+            Rastrear en DHL
+          </a>
+        </div>` : '';
       return `
         <li class="flex gap-4 rounded-xl px-4 py-3 transition ${active ? 'bg-surface-muted' : ''}">
           <div class="flex flex-col items-center">
@@ -142,6 +153,7 @@ import Layout from '../layouts/Layout.astro';
               ${esc(step.label)}${active ? ' <span class="ml-2 text-xs font-normal text-muted">(estado actual)</span>' : ''}
             </p>
             ${(active || done) ? `<p class="mt-0.5 text-xs text-muted">${esc(step.description)}</p>` : ''}
+            ${dhlHtml}
           </div>
         </li>`;
     }).join('');
@@ -163,16 +175,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
         ${order.description ? `<p class="mb-6 rounded-lg bg-surface-muted px-4 py-2 text-sm text-muted-strong">${esc(order.description)}</p>` : ''}
         <ol class="relative space-y-1">${stepsHtml}</ol>
-        ${order.dhl_tracking_code ? `
-        <div class="mt-4 rounded-xl border border-border bg-surface-muted p-4 flex items-center justify-between gap-4 flex-wrap">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-muted">Guía DHL</p>
-            <p class="mt-0.5 font-mono text-sm font-medium text-ink">${esc(order.dhl_tracking_code)}</p>
-          </div>
-          <a href="https://www.dhl.com/mx-en/home/tracking.html?tracking-id=${encodeURIComponent(order.dhl_tracking_code)}&submit=1" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-ink text-white text-xs font-medium rounded-lg hover:bg-ink-hover transition-colors whitespace-nowrap">
-            Rastrear en DHL
-          </a>
-        </div>` : ''}
         <p class="mt-4 text-right text-xs text-faint">Actualizado: ${updated}</p>
       </div>`;
   }
