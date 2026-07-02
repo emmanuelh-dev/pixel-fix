@@ -1,58 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const API = 'https://admin.bysmax.com/api';
-
-type OrderStatus =
-  | 'orden_recibida'
-  | 'pago_confirmado'
-  | 'pedido_a_proveedor'
-  | 'en_bodega_usa'
-  | 'enviado'
-  | 'entregado';
-
-interface Order {
-  id: string;
-  code: string;
-  status: OrderStatus;
-  customer_name?: string;
-  description?: string;
-  notes?: string;
-  created_at: string;
-  updated_at: string;
-}
-
-const STATUS_STEPS: { key: OrderStatus; label: string; description: string }[] = [
-  { key: 'orden_recibida',      label: 'Orden recibida',       description: 'Tu orden fue registrada correctamente.' },
-  { key: 'pago_confirmado',     label: 'Pago confirmado',      description: 'Recibimos y confirmamos tu pago.' },
-  { key: 'pedido_a_proveedor',  label: 'Pedido a proveedor',   description: 'Realizamos el pedido con nuestro proveedor en EUA.' },
-  { key: 'en_bodega_usa',       label: 'En bodega USA',        description: 'Tu pedido llegó a nuestra bodega en Estados Unidos.' },
-  { key: 'enviado',             label: 'Enviado',              description: 'Tu pedido está en camino hacia ti.' },
-  { key: 'entregado',           label: 'Entregado',            description: '¡Tu pedido fue entregado!' },
-];
-
-const code = (Astro.url.searchParams.get('id') ?? '').trim().toLowerCase();
-let order: Order | null = null;
-let error = '';
-
-if (code) {
-  if (!/^[a-z0-9]{4}$/.test(code)) {
-    error = 'El código debe ser de 4 caracteres alfanuméricos.';
-  } else {
-    try {
-      const res = await fetch(`${API}/orders/code/${code}`);
-      if (res.ok) {
-        order = await res.json();
-      } else {
-        error = 'No encontramos ninguna orden con ese código.';
-      }
-    } catch {
-      error = 'Error de conexión. Intenta de nuevo.';
-    }
-  }
-}
-
-const currentIdx = order ? STATUS_STEPS.findIndex((s) => s.key === order!.status) : -1;
 ---
 
 <Layout
@@ -73,12 +20,12 @@ const currentIdx = order ? STATUS_STEPS.findIndex((s) => s.key === order!.status
       </div>
 
       <!-- Formulario de búsqueda -->
-      <form method="get" action="/rastreo" class="mb-8 flex gap-3">
+      <form id="rastreo-form" class="mb-8 flex gap-3">
         <input
           type="text"
+          id="rastreo-input"
           name="id"
           maxlength="4"
-          value={code}
           placeholder="Ej. a13b"
           autocomplete="off"
           spellcheck="false"
@@ -92,92 +39,123 @@ const currentIdx = order ? STATUS_STEPS.findIndex((s) => s.key === order!.status
         </button>
       </form>
 
-      <!-- Error -->
-      {error && (
-        <div class="mb-6 rounded-xl border border-danger-soft bg-danger-soft p-4 text-center text-sm text-danger">
-          {error}
-        </div>
-      )}
-
-      <!-- Resultado -->
-      {order && (
-        <div class="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-
-          <!-- Código + nombre -->
-          <div class="mb-6 flex items-center justify-between">
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-muted">Código</p>
-              <p class="mt-0.5 font-mono text-2xl font-bold text-accent">{order.code.toUpperCase()}</p>
-            </div>
-            {order.customer_name && (
-              <div class="text-right">
-                <p class="text-xs font-semibold uppercase tracking-wider text-muted">Cliente</p>
-                <p class="mt-0.5 text-sm font-medium text-ink">{order.customer_name}</p>
-              </div>
-            )}
-          </div>
-
-          {order.description && (
-            <p class="mb-6 rounded-lg bg-surface-muted px-4 py-2 text-sm text-muted-strong">
-              📦 {order.description}
-            </p>
-          )}
-
-          <!-- Pasos -->
-          <ol class="relative space-y-1">
-            {STATUS_STEPS.map((step, i) => {
-              const done = i < currentIdx;
-              const active = i === currentIdx;
-              const pending = i > currentIdx;
-              return (
-                <li class={[
-                  'flex gap-4 rounded-xl px-4 py-3 transition',
-                  active ? 'bg-accent-soft' : '',
-                ].join(' ')}>
-                  <!-- Indicador -->
-                  <div class="flex flex-col items-center">
-                    <div class={[
-                      'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold',
-                      done   ? 'bg-success text-white' : '',
-                      active ? 'bg-accent text-white ring-4 ring-accent/20' : '',
-                      pending ? 'bg-border text-muted' : '',
-                    ].join(' ')}>
-                      {done ? '✓' : i + 1}
-                    </div>
-                    {i < STATUS_STEPS.length - 1 && (
-                      <div class={[
-                        'mt-1 w-0.5 flex-1',
-                        i < currentIdx ? 'bg-success' : 'bg-border',
-                      ].join(' ')} style="min-height:16px" />
-                    )}
-                  </div>
-                  <!-- Texto -->
-                  <div class="pb-3">
-                    <p class={[
-                      'text-sm font-semibold',
-                      active  ? 'text-accent' : '',
-                      done    ? 'text-ink' : '',
-                      pending ? 'text-muted' : '',
-                    ].join(' ')}>
-                      {step.label}
-                      {active && <span class="ml-2 text-xs font-normal">(estado actual)</span>}
-                    </p>
-                    {(active || done) && (
-                      <p class="mt-0.5 text-xs text-muted">{step.description}</p>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-
-          <!-- Fecha -->
-          <p class="mt-4 text-right text-xs text-faint">
-            Actualizado: {new Date(order.updated_at).toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' })}
-          </p>
-        </div>
-      )}
+      <div id="rastreo-result"></div>
 
     </div>
   </main>
 </Layout>
+
+<script>
+  type OrderStatus =
+    | 'orden_recibida'
+    | 'pago_confirmado'
+    | 'pedido_a_proveedor'
+    | 'en_bodega_usa'
+    | 'enviado'
+    | 'entregado';
+
+  interface Order {
+    code: string;
+    status: OrderStatus;
+    customer_name?: string;
+    description?: string;
+    updated_at: string;
+  }
+
+  const API = 'https://admin.bysmax.com/api';
+
+  const STATUS_STEPS: { key: OrderStatus; label: string; description: string }[] = [
+    { key: 'orden_recibida',     label: 'Orden recibida',     description: 'Tu orden fue registrada correctamente.' },
+    { key: 'pago_confirmado',    label: 'Pago confirmado',    description: 'Recibimos y confirmamos tu pago.' },
+    { key: 'pedido_a_proveedor', label: 'Pedido a proveedor', description: 'Realizamos el pedido con nuestro proveedor en EUA.' },
+    { key: 'en_bodega_usa',      label: 'En bodega USA',      description: 'Tu pedido llegó a nuestra bodega en Estados Unidos.' },
+    { key: 'enviado',            label: 'Enviado',            description: 'Tu pedido está en camino hacia ti.' },
+    { key: 'entregado',          label: 'Entregado',          description: '¡Tu pedido fue entregado!' },
+  ];
+
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
+
+  function renderError(msg: string) {
+    document.getElementById('rastreo-result')!.innerHTML = `
+      <div class="mb-6 rounded-xl border border-danger-soft bg-danger-soft p-4 text-center text-sm text-danger">
+        ${esc(msg)}
+      </div>`;
+  }
+
+  function renderOrder(order: Order) {
+    const currentIdx = STATUS_STEPS.findIndex((s) => s.key === order.status);
+
+    const stepsHtml = STATUS_STEPS.map((step, i) => {
+      const done = i < currentIdx;
+      const active = i === currentIdx;
+      const pending = i > currentIdx;
+      return `
+        <li class="flex gap-4 rounded-xl px-4 py-3 transition ${active ? 'bg-accent-soft' : ''}">
+          <div class="flex flex-col items-center">
+            <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+              done ? 'bg-success text-white' : active ? 'bg-accent text-white ring-4 ring-accent/20' : 'bg-border text-muted'
+            }">${done ? '✓' : i + 1}</div>
+            ${i < STATUS_STEPS.length - 1 ? `<div class="mt-1 w-0.5 flex-1 ${i < currentIdx ? 'bg-success' : 'bg-border'}" style="min-height:16px"></div>` : ''}
+          </div>
+          <div class="pb-3">
+            <p class="text-sm font-semibold ${active ? 'text-accent' : done ? 'text-ink' : 'text-muted'}">
+              ${esc(step.label)}${active ? ' <span class="ml-2 text-xs font-normal">(estado actual)</span>' : ''}
+            </p>
+            ${(active || done) ? `<p class="mt-0.5 text-xs text-muted">${esc(step.description)}</p>` : ''}
+          </div>
+        </li>`;
+    }).join('');
+
+    const updated = new Date(order.updated_at).toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' });
+
+    document.getElementById('rastreo-result')!.innerHTML = `
+      <div class="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+        <div class="mb-6 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-muted">Código</p>
+            <p class="mt-0.5 font-mono text-2xl font-bold text-accent">${esc(order.code.toUpperCase())}</p>
+          </div>
+          ${order.customer_name ? `
+          <div class="text-right">
+            <p class="text-xs font-semibold uppercase tracking-wider text-muted">Cliente</p>
+            <p class="mt-0.5 text-sm font-medium text-ink">${esc(order.customer_name)}</p>
+          </div>` : ''}
+        </div>
+        ${order.description ? `<p class="mb-6 rounded-lg bg-surface-muted px-4 py-2 text-sm text-muted-strong">📦 ${esc(order.description)}</p>` : ''}
+        <ol class="relative space-y-1">${stepsHtml}</ol>
+        <p class="mt-4 text-right text-xs text-faint">Actualizado: ${updated}</p>
+      </div>`;
+  }
+
+  async function search(code: string) {
+    const resultEl = document.getElementById('rastreo-result')!;
+    if (!code) { resultEl.innerHTML = ''; return; }
+    if (!/^[a-z0-9]{4}$/.test(code)) {
+      renderError('El código debe ser de 4 caracteres alfanuméricos.');
+      return;
+    }
+    try {
+      const res = await fetch(`${API}/orders/code/${code}`);
+      if (!res.ok) { renderError('No encontramos ninguna orden con ese código.'); return; }
+      renderOrder(await res.json());
+    } catch {
+      renderError('Error de conexión. Intenta de nuevo.');
+    }
+  }
+
+  const input = document.getElementById('rastreo-input') as HTMLInputElement;
+  const form = document.getElementById('rastreo-form') as HTMLFormElement;
+
+  const initialCode = (new URLSearchParams(location.search).get('id') ?? '').trim().toLowerCase();
+  if (initialCode) {
+    input.value = initialCode;
+    search(initialCode);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const code = input.value.trim().toLowerCase();
+    history.replaceState(null, '', code ? `/rastreo?id=${code}` : '/rastreo');
+    search(code);
+  });
+</script>
