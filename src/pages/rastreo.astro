@@ -7,20 +7,31 @@ import Layout from '../layouts/Layout.astro';
   description="Consulta el estado de tu pedido en Pixel Fix Monterrey."
   url="https://www.pixelfixmexico.com/rastreo"
 >
-  <main class="min-h-screen bg-bg py-16 px-4">
-    <div class="mx-auto max-w-lg">
+  <main class="min-h-screen max-w-5xl mx-auto px-4 py-12 md:py-20">
+
+    <nav class="text-xs font-mono text-muted-strong mb-8 flex items-center gap-2">
+      <a href="/" class="hover:text-ink transition-colors">Inicio</a>
+      <span>/</span>
+      <span class="text-ink font-medium">Rastreo</span>
+    </nav>
+
+    <div class="max-w-lg mx-auto">
 
       <!-- Encabezado -->
       <div class="mb-10 text-center">
-        <span class="inline-block mb-3 rounded-full bg-accent-soft px-4 py-1 text-sm font-semibold text-accent">
+        <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
           Rastreo de pedido
         </span>
-        <h1 class="text-3xl font-bold text-ink">¿Dónde está mi pedido?</h1>
-        <p class="mt-2 text-muted">Ingresa el código de 4 caracteres que te enviamos.</p>
+        <h1 class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-[1.05] mb-3">
+          ¿Dónde está mi pedido?
+        </h1>
+        <p class="text-base text-muted leading-relaxed">
+          Ingresa el código de 4 caracteres que te enviamos por WhatsApp.
+        </p>
       </div>
 
       <!-- Formulario de búsqueda -->
-      <form id="rastreo-form" class="mb-8 flex gap-3">
+      <form id="rastreo-form" class="mb-10 flex gap-3">
         <input
           type="text"
           id="rastreo-input"
@@ -29,11 +40,11 @@ import Layout from '../layouts/Layout.astro';
           placeholder="Ej. a13b"
           autocomplete="off"
           spellcheck="false"
-          class="flex-1 rounded-xl border border-border bg-surface px-4 py-3 text-center text-xl font-mono font-bold uppercase tracking-widest text-ink placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+          class="flex-1 rounded-xl border border-border-strong bg-white px-4 py-3 text-center text-xl font-mono font-bold uppercase tracking-widest text-ink placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-ink/10"
         />
         <button
           type="submit"
-          class="rounded-xl bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent/90 active:scale-95"
+          class="px-6 py-3 bg-ink text-white text-sm font-medium rounded-xl hover:bg-ink-hover transition-colors"
         >
           Buscar
         </button>
@@ -42,6 +53,35 @@ import Layout from '../layouts/Layout.astro';
       <div id="rastreo-result"></div>
 
     </div>
+
+    <!-- Cómo funciona -->
+    <div class="max-w-2xl mx-auto mt-20 pt-16 border-t border-border">
+      <h2 class="text-lg font-medium text-ink mb-6 text-center">¿Cómo funciona el rastreo?</h2>
+      <div class="grid sm:grid-cols-3 gap-8">
+        <div>
+          <span class="text-xs font-mono text-accent block mb-2">Paso 01</span>
+          <h3 class="text-sm font-medium text-ink mb-2">Confirmamos tu orden</h3>
+          <p class="text-xs text-muted leading-[1.6]">
+            Al recibir y confirmar tu pago te asignamos un código de 4 caracteres y te lo compartimos por WhatsApp.
+          </p>
+        </div>
+        <div>
+          <span class="text-xs font-mono text-accent block mb-2">Paso 02</span>
+          <h3 class="text-sm font-medium text-ink mb-2">Pedimos tu equipo a EE. UU.</h3>
+          <p class="text-xs text-muted leading-[1.6]">
+            Hacemos el pedido con nuestro proveedor, lo recibimos en nuestra bodega en Estados Unidos y lo preparamos para el envío.
+          </p>
+        </div>
+        <div>
+          <span class="text-xs font-mono text-accent block mb-2">Paso 03</span>
+          <h3 class="text-sm font-medium text-ink mb-2">Consulta cuando quieras</h3>
+          <p class="text-xs text-muted leading-[1.6]">
+            Regresa a esta página con tu código y verás en tiempo real en qué paso va tu pedido, hasta que llegue a tus manos.
+          </p>
+        </div>
+      </div>
+    </div>
+
   </main>
 </Layout>
 
@@ -77,7 +117,7 @@ import Layout from '../layouts/Layout.astro';
 
   function renderError(msg: string) {
     document.getElementById('rastreo-result')!.innerHTML = `
-      <div class="mb-6 rounded-xl border border-danger-soft bg-danger-soft p-4 text-center text-sm text-danger">
+      <div class="rounded-xl border border-danger-soft bg-danger-soft p-4 text-center text-sm text-danger">
         ${esc(msg)}
       </div>`;
   }
@@ -88,18 +128,17 @@ import Layout from '../layouts/Layout.astro';
     const stepsHtml = STATUS_STEPS.map((step, i) => {
       const done = i < currentIdx;
       const active = i === currentIdx;
-      const pending = i > currentIdx;
       return `
-        <li class="flex gap-4 rounded-xl px-4 py-3 transition ${active ? 'bg-accent-soft' : ''}">
+        <li class="flex gap-4 rounded-xl px-4 py-3 transition ${active ? 'bg-surface-muted' : ''}">
           <div class="flex flex-col items-center">
             <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-              done ? 'bg-success text-white' : active ? 'bg-accent text-white ring-4 ring-accent/20' : 'bg-border text-muted'
-            }">${done ? '✓' : i + 1}</div>
-            ${i < STATUS_STEPS.length - 1 ? `<div class="mt-1 w-0.5 flex-1 ${i < currentIdx ? 'bg-success' : 'bg-border'}" style="min-height:16px"></div>` : ''}
+              done ? 'bg-success text-white' : active ? 'bg-ink text-white' : 'bg-border text-muted'
+            }">${i + 1}</div>
+            ${i < STATUS_STEPS.length - 1 ? `<div class="mt-1 w-0.5 flex-1 ${done ? 'bg-success' : 'bg-border'}" style="min-height:16px"></div>` : ''}
           </div>
           <div class="pb-3">
-            <p class="text-sm font-semibold ${active ? 'text-accent' : done ? 'text-ink' : 'text-muted'}">
-              ${esc(step.label)}${active ? ' <span class="ml-2 text-xs font-normal">(estado actual)</span>' : ''}
+            <p class="text-sm font-semibold ${active || done ? 'text-ink' : 'text-muted'}">
+              ${esc(step.label)}${active ? ' <span class="ml-2 text-xs font-normal text-muted">(estado actual)</span>' : ''}
             </p>
             ${(active || done) ? `<p class="mt-0.5 text-xs text-muted">${esc(step.description)}</p>` : ''}
           </div>
@@ -109,11 +148,11 @@ import Layout from '../layouts/Layout.astro';
     const updated = new Date(order.updated_at).toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' });
 
     document.getElementById('rastreo-result')!.innerHTML = `
-      <div class="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+      <div class="rounded-2xl border border-border bg-surface p-6">
         <div class="mb-6 flex items-center justify-between">
           <div>
             <p class="text-xs font-semibold uppercase tracking-wider text-muted">Código</p>
-            <p class="mt-0.5 font-mono text-2xl font-bold text-accent">${esc(order.code.toUpperCase())}</p>
+            <p class="mt-0.5 font-mono text-2xl font-bold text-ink">${esc(order.code.toUpperCase())}</p>
           </div>
           ${order.customer_name ? `
           <div class="text-right">
@@ -121,7 +160,7 @@ import Layout from '../layouts/Layout.astro';
             <p class="mt-0.5 text-sm font-medium text-ink">${esc(order.customer_name)}</p>
           </div>` : ''}
         </div>
-        ${order.description ? `<p class="mb-6 rounded-lg bg-surface-muted px-4 py-2 text-sm text-muted-strong">📦 ${esc(order.description)}</p>` : ''}
+        ${order.description ? `<p class="mb-6 rounded-lg bg-surface-muted px-4 py-2 text-sm text-muted-strong">${esc(order.description)}</p>` : ''}
         <ol class="relative space-y-1">${stepsHtml}</ol>
         <p class="mt-4 text-right text-xs text-faint">Actualizado: ${updated}</p>
       </div>`;
