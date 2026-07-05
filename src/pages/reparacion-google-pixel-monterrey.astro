@@ -37,6 +37,16 @@ const faqs = [
 		answer:
 			"Gestionamos la logística de envío de tu Pixel a soporte oficial de Google en USA para versiones americanas/globales (fallas de hardware de fábrica, no accidentes), verificando tu IMEI. El costo de gestión del trámite depende del caso: fallas de pantalla en Pixel 8 ($3,300 MXN) o Pixel 9 Pro/XL ($4,000 MXN); pila inflada de Pixel 7a ($2,500 MXN); cambio de Pixel 9 Pro Fold a la Serie 10 ($6,000 a $10,500 MXN); o la gestión general de garantías vigentes de la Serie 9 ($2,500 MXN) o Serie 10 ($3,000 MXN).",
 	},
+	{
+		question: "¿Son un servicio técnico autorizado de Google Pixel en Monterrey o México?",
+		answer:
+			"No somos un centro de servicio técnico autorizado por Google. Somos un laboratorio independiente altamente especializado. A diferencia de opciones multimarca en Monterrey como Hospital Celular o Simtech, nos enfocamos exclusivamente en la marca Google Pixel, ofreciendo reparación experta y venta de repuestos originales o piezas OEM de la misma cadena de distribución de iFixit en USA.",
+	},
+	{
+		question: "¿Dónde comprar repuestos originales de Google Pixel en Monterrey?",
+		answer:
+			"En Pixel Fix Monterrey somos la tienda líder en venta e instalación de piezas y repuestos originales Google Pixel en México. Puedes adquirir pantallas OLED (con sensor de huella activo) y baterías originales nuevas, con opción de instalación en nuestro taller o envío nacional express asegurado por DHL.",
+	},
 ];
 
 const businessSchema = localBusinessSchema({
@@ -164,7 +174,7 @@ const questionsSchema = faqSchema(faqs);
 			);
 		})()}
 
-		<Store />
+		<Store categoryFilter="refaccion" />
 		<!-- Enlace contextual a ventas -->
 		<section class="max-w-5xl mx-auto px-6 pb-24 reveal">
 			<div
@@ -177,7 +187,7 @@ const questionsSchema = faqSchema(faqs);
 					<p class="text-sm text-muted leading-[1.6]">
 						Si la reparación no es viable o prefieres actualizar tu teléfono,
 						contamos con un catálogo curado de <a
-							href="/venta-google-pixel-monterrey"
+							href="/equipos"
 							data-umami-event="repairs_contextual_sales_link_click"
 							class="text-ink underline hover:text-accent transition-colors"
 							>celulares Google Pixel Usados Estética 9 y Open Box</a
@@ -185,7 +195,7 @@ const questionsSchema = faqSchema(faqs);
 					</p>
 				</div>
 				<a
-					href="/venta-google-pixel-monterrey"
+					href="/equipos"
 					data-umami-event="repairs_go_to_sales_click"
 					class="px-6 py-3.5 bg-ink text-white text-xs font-mono font-medium rounded hover:scale-[0.98] transition-all shrink-0"
 				>

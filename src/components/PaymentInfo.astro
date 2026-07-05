@@ -1,0 +1,35 @@
+---
+import { clabe } from '../data/store';
+---
+
+<div class="rounded-2xl border border-border bg-surface-muted p-5 flex items-center justify-between gap-4 flex-wrap">
+  <div>
+    <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">¿Necesitas pagar por transferencia?</p>
+    <p class="mt-1 text-sm text-muted-strong">Mercado Pago · CLABE interbancaria</p>
+    <p id="clabe-value" class="mt-1 font-mono text-lg font-bold text-ink tracking-wide">{clabe}</p>
+  </div>
+  <button
+    id="clabe-copy"
+    type="button"
+    class="px-4 py-2 bg-ink text-white text-xs font-medium rounded-lg hover:bg-ink-hover transition-colors whitespace-nowrap"
+  >
+    Copiar CLABE
+  </button>
+</div>
+
+<script>
+  const btn = document.getElementById('clabe-copy') as HTMLButtonElement | null;
+  const value = document.getElementById('clabe-value');
+
+  btn?.addEventListener('click', async () => {
+    const text = value?.textContent?.trim() ?? '';
+    try {
+      await navigator.clipboard.writeText(text);
+      const original = btn.textContent;
+      btn.textContent = '¡Copiado!';
+      setTimeout(() => { btn.textContent = original; }, 1800);
+    } catch {
+      // Sin permisos de portapapeles: el usuario puede seleccionar y copiar el número manualmente.
+    }
+  });
+</script>

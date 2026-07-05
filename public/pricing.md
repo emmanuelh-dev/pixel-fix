@@ -21,34 +21,34 @@ Cada dispositivo vendido incluye de regalo:
 - **+512 GB:** +$1,800 MXN
 
 ### Lista de Precios Base (128 GB):
-- **Pixel 10 Pro Fold** (Open Box): $16,900 MXN
-- **Pixel 10 Pro XL** (Open Box): $15,400 MXN
-- **Pixel 10 Pro** (Open Box): $13,900 MXN
-- **Pixel 10** (Open Box): $11,400 MXN
-- **Pixel 10a** (Open Box): $10,100 MXN
-- **Pixel 9 Pro Fold** (Usado Estética 9): $14,700 MXN
-- **Pixel 9 Pro XL** (Usado Estética 9): $11,700 MXN
-- **Pixel 9 Pro** (Usado Estética 9): $10,700 MXN
-- **Pixel 9** (Usado Estética 9): $9,700 MXN
-- **Pixel 9a** (Usado Estética 9): $9,400 MXN
-- **Pixel 8 Pro** (Usado Estética 9): $7,800 MXN
-- **Pixel 8** (Usado Estética 9): $7,400 MXN
-- **Pixel 8a** (Usado Estética 9): $7,100 MXN
-- **Pixel 7 Pro** (Usado Estética 9): $6,200 MXN
-- **Pixel 7** (Usado Estética 9): $5,500 MXN
-- **Pixel 7a** (Usado Estética 9): $5,200 MXN
-- **Pixel 6 Pro** (Usado Estética 9): $5,750 MXN
-- **Pixel 6** (Usado Estética 9): $4,900 MXN
-- **Pixel 6a** (Usado Estética 9): $4,800 MXN
+- **Pixel 10 Pro Fold** (Open Box): $19,500 MXN
+- **Pixel 10 Pro XL** (Open Box): $17,000 MXN
+- **Pixel 10 Pro** (Open Box): $14,500 MXN
+- **Pixel 10** (Open Box): $12,000 MXN
+- **Pixel 10a** (Open Box): $10,700 MXN
+- **Pixel 9 Pro Fold** (Usado Estética 9): $15,300 MXN
+- **Pixel 9 Pro XL** (Usado Estética 9): $12,300 MXN
+- **Pixel 9 Pro** (Usado Estética 9): $11,300 MXN
+- **Pixel 9** (Usado Estética 9): $10,300 MXN
+- **Pixel 9a** (Usado Estética 9): $10,000 MXN
+- **Pixel 8 Pro** (Usado Estética 9): $8,900 MXN
+- **Pixel 8** (Usado Estética 9): $8,000 MXN
+- **Pixel 8a** (Usado Estética 9): $7,700 MXN
+- **Pixel 7 Pro** (Usado Estética 9): $7,400 MXN
+- **Pixel 7** (Usado Estética 9): $6,100 MXN
+- **Pixel 7a** (Usado Estética 9): $5,800 MXN
+- **Pixel 6 Pro** (Usado Estética 9): $6,350 MXN
+- **Pixel 6** (Usado Estética 9): $5,500 MXN
+- **Pixel 6a** (Usado Estética 9): $5,400 MXN
 
 ---
 
 ## 2. Refacciones para Reparación
-*Las pantallas son paneles OLED con sensor de huella activo de calidad réplica excelente. Las pilas son nuevas y 100% originales.*
+*Las pantallas son paneles OLED con sensor de huella activo de calidad réplica excelente o paneles originales OEM. Las pilas son nuevas y 100% originales.*
 
 > **Promoción Combo de Mano de Obra:** Si realizas el cambio de **Pantalla y Pila juntas** en el mismo dispositivo, el costo total de instalación es de únicamente **$800 MXN** por ambas piezas (ahorras $800 MXN).
 
-### Pantallas OLED con Huella (Excelente Calidad Réplica):
+### Pantallas OLED (Originales / Réplica Excelente):
 - **Pixel 10 Pro XL:** $4,400 MXN *(Instalación: $5,200 MXN)*
 - **Pixel 10 Pro:** $4,300 MXN *(Instalación: $5,100 MXN)*
 - **Pixel 10 / 10a:** $4,200 MXN *(Instalación: $5,000 MXN)*
@@ -59,7 +59,8 @@ Cada dispositivo vendido incluye de regalo:
 - **Pixel 8 Pro (Original Reacondicionada):** $4,200 MXN *(Instalación: $5,000 MXN)*
 - **Pixel 8 Pro (Original Nueva):** $5,800 MXN *(Instalación: $6,600 MXN)*
 - **Pixel 8:** $2,900 MXN *(Instalación: $3,700 MXN)*
-- **Pixel 7 Pro:** $3,250 MXN *(Instalación: $4,050 MXN)*
+- **Pixel 7 Pro (Original):** $5,800 MXN *(Instalación: $6,600 MXN)*
+- **Pixel 7 Pro (Réplica Excelente):** $3,250 MXN *(Instalación: $4,050 MXN)*
 - **Pixel 7 / 7a:** $2,900 MXN *(Instalación: $3,700 MXN)*
 - **Pixel 6 / 6 Pro / 6a:** $2,700 MXN *(Instalación: $3,500 MXN)*
 

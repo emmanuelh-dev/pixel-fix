@@ -8,6 +8,9 @@ import icon from 'astro-icon';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.pixelfixmexico.com',
+  redirects: {
+    '/venta-google-pixel-monterrey': '/equipos'
+  },
   integrations: [sitemap(), icon()],
   vite: {
     plugins: [tailwindcss()]

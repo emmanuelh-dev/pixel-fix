@@ -41,7 +41,7 @@ Monitorear y optimizar para que la marca aparezca en las respuestas a estas preg
 
 | Intención de Consulta | Página que Responde | FAQ / Sección Relevante |
 | --- | --- | --- |
-| Dónde comprar un Pixel | `venta-google-pixel-monterrey.astro` | FAQ 01 y 03 / Sección de Equipos Disponibles |
+| Dónde comprar un Pixel | `equipos.astro` | FAQ 01 y 03 / Sección de Equipos Disponibles |
 | Dónde repararlo | `reparacion-google-pixel-monterrey.astro` | FAQ 01, 02 y 03 / Sección Catálogo de Reparaciones |
 | Comprar pantalla/batería | `index.astro` / `reparacion...` | Catálogo de Reparaciones / Refacciones OEM iFixit |
 | Garantía oficial Google | `index.astro` / `reparacion...` | Sección "Garantía Genuina y Oficial" / FAQ Garantías |

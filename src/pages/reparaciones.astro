@@ -4,16 +4,16 @@ import PaymentInfo from '../components/PaymentInfo.astro';
 ---
 
 <Layout
-  title="Rastrear pedido — Pixel Fix"
-  description="Consulta el estado de tu pedido en Pixel Fix Monterrey."
-  url="https://www.pixelfixmexico.com/rastreo"
+  title="Rastrear reparación — Pixel Fix"
+  description="Consulta el estado de tu reparación en Pixel Fix Monterrey."
+  url="https://www.pixelfixmexico.com/reparaciones"
 >
   <main class="min-h-screen max-w-5xl mx-auto px-4 py-12 md:py-20">
 
     <nav class="text-xs font-mono text-muted-strong mb-8 flex items-center gap-2">
       <a href="/" class="hover:text-ink transition-colors">Inicio</a>
       <span>/</span>
-      <span class="text-ink font-medium">Rastreo</span>
+      <span class="text-ink font-medium">Reparaciones</span>
     </nav>
 
     <div class="max-w-lg mx-auto">
@@ -21,10 +21,10 @@ import PaymentInfo from '../components/PaymentInfo.astro';
       <!-- Encabezado -->
       <div class="mb-10 text-center">
         <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4">
-          Rastreo de pedido
+          Rastreo de reparación
         </span>
         <h1 class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-[1.05] mb-3">
-          ¿Dónde está mi pedido?
+          ¿Cómo va mi reparación?
         </h1>
         <p class="text-base text-muted leading-relaxed">
           Ingresa el código de 4 caracteres que te enviamos por WhatsApp.
@@ -61,27 +61,27 @@ import PaymentInfo from '../components/PaymentInfo.astro';
 
     <!-- Cómo funciona -->
     <div class="max-w-2xl mx-auto mt-20 pt-16 border-t border-border">
-      <h2 class="text-lg font-medium text-ink mb-6 text-center">¿Cómo funciona el rastreo?</h2>
+      <h2 class="text-lg font-medium text-ink mb-6 text-center">¿Cómo funciona el rastreo de tu reparación?</h2>
       <div class="grid sm:grid-cols-3 gap-8">
         <div>
           <span class="text-xs font-mono text-accent block mb-2">Paso 01</span>
-          <h3 class="text-sm font-medium text-ink mb-2">Confirmamos tu orden</h3>
+          <h3 class="text-sm font-medium text-ink mb-2">Recibimos tu equipo</h3>
           <p class="text-xs text-muted leading-[1.6]">
-            Al recibir y confirmar tu pago te asignamos un código de 4 caracteres y te lo compartimos por WhatsApp.
+            Al recibir tu equipo en el taller te asignamos un código de 4 caracteres y te lo compartimos por WhatsApp.
           </p>
         </div>
         <div>
           <span class="text-xs font-mono text-accent block mb-2">Paso 02</span>
-          <h3 class="text-sm font-medium text-ink mb-2">Pedimos tu equipo a EE. UU.</h3>
+          <h3 class="text-sm font-medium text-ink mb-2">Diagnóstico y reparación</h3>
           <p class="text-xs text-muted leading-[1.6]">
-            Hacemos el pedido con nuestro proveedor, lo recibimos en nuestra bodega en Estados Unidos y lo preparamos para el envío.
+            Revisamos la falla, pedimos la pieza si hace falta y reparamos tu equipo en el taller.
           </p>
         </div>
         <div>
           <span class="text-xs font-mono text-accent block mb-2">Paso 03</span>
           <h3 class="text-sm font-medium text-ink mb-2">Consulta cuando quieras</h3>
           <p class="text-xs text-muted leading-[1.6]">
-            Regresa a esta página con tu código y verás en tiempo real en qué paso va tu pedido, hasta que llegue a tus manos.
+            Regresa a esta página con tu código y verás en tiempo real en qué paso va tu reparación, hasta que la tengas de vuelta.
           </p>
         </div>
       </div>
@@ -92,10 +92,12 @@ import PaymentInfo from '../components/PaymentInfo.astro';
 
 <script>
   type OrderStatus =
-    | 'orden_recibida'
-    | 'pago_confirmado'
-    | 'pedido_a_proveedor'
-    | 'en_bodega_usa'
+    | 'esperando_dispositivo'
+    | 'dispositivo_recibido'
+    | 'diagnostico'
+    | 'esperando_pieza'
+    | 'pieza_en_camino'
+    | 'en_reparacion'
     | 'enviado'
     | 'entregado';
 
@@ -111,12 +113,14 @@ import PaymentInfo from '../components/PaymentInfo.astro';
   const API = 'https://admin.bysmax.com/api';
 
   const STATUS_STEPS: { key: OrderStatus; label: string; description: string }[] = [
-    { key: 'orden_recibida',     label: 'Orden recibida',     description: 'Tu orden fue registrada correctamente.' },
-    { key: 'pago_confirmado',    label: 'Pago confirmado',    description: 'Recibimos y confirmamos tu pago.' },
-    { key: 'pedido_a_proveedor', label: 'Pedido a proveedor', description: 'Realizamos el pedido con nuestro proveedor en EUA.' },
-    { key: 'en_bodega_usa',      label: 'En bodega USA',      description: 'Tu pedido llegó a nuestra bodega en Estados Unidos.' },
-    { key: 'enviado',            label: 'Enviado',            description: 'Tu pedido está en camino hacia ti.' },
-    { key: 'entregado',          label: 'Entregado',          description: '¡Tu pedido fue entregado!' },
+    { key: 'esperando_dispositivo', label: 'Esperando dispositivo',        description: 'Estamos esperando que nos hagas llegar tu equipo.' },
+    { key: 'dispositivo_recibido',  label: 'Dispositivo recibido en taller', description: 'Recibimos tu equipo y ya está en nuestro taller.' },
+    { key: 'diagnostico',           label: 'Diagnóstico',                  description: 'Estamos revisando tu equipo para confirmar la falla.' },
+    { key: 'esperando_pieza',       label: 'Esperando pieza',              description: 'Pedimos la pieza necesaria para la reparación.' },
+    { key: 'pieza_en_camino',       label: 'Pieza en camino',              description: 'La pieza va en camino hacia nuestro taller.' },
+    { key: 'en_reparacion',         label: 'En reparación',                description: 'Tu equipo está siendo reparado.' },
+    { key: 'enviado',               label: 'Enviado',                      description: 'Tu equipo va de regreso hacia ti.' },
+    { key: 'entregado',             label: 'Entregado',                    description: '¡Tu equipo fue entregado!' },
   ];
 
   const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
@@ -134,7 +138,7 @@ import PaymentInfo from '../components/PaymentInfo.astro';
     const stepsHtml = STATUS_STEPS.map((step, i) => {
       const done = i < currentIdx;
       const active = i === currentIdx;
-      // La guía DHL sólo aplica una vez que la orden se envía: se pega dentro de ese paso.
+      // La guía DHL sólo aplica si tu equipo se regresa por paquetería: se pega dentro del paso "Enviado".
       const dhlHtml = (step.key === 'enviado' && i <= currentIdx && order.dhl_tracking_code) ? `
         <div class="mt-2 rounded-xl border border-border bg-surface-muted p-3 flex items-center justify-between gap-3 flex-wrap">
           <div>
@@ -193,7 +197,7 @@ import PaymentInfo from '../components/PaymentInfo.astro';
     }
     try {
       const res = await fetch(`${API}/orders/code/${code}`);
-      if (!res.ok) { renderError('No encontramos ninguna orden con ese código.'); return; }
+      if (!res.ok) { renderError('No encontramos ninguna reparación con ese código.'); return; }
       renderOrder(await res.json());
     } catch {
       renderError('Error de conexión. Intenta de nuevo.');
@@ -212,7 +216,7 @@ import PaymentInfo from '../components/PaymentInfo.astro';
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const code = input.value.trim().toLowerCase();
-    history.replaceState(null, '', code ? `/rastreo?id=${code}` : '/rastreo');
+    history.replaceState(null, '', code ? `/reparaciones?id=${code}` : '/reparaciones');
     search(code);
   });
 </script>
