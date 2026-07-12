@@ -1,0 +1,227 @@
+---
+import { Icon } from "astro-icon/components";
+import Layout from "../layouts/Layout.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Faq from "../components/Faq.astro";
+import Store from "../components/Store.astro";
+import { repairCatalog } from "../data/catalog";
+import { phoneNumber, facebookUrl } from "../data/store";
+import { localBusinessSchema, faqSchema, breadcrumbSchema } from "../lib/seo";
+
+const faqs = [
+	{
+		question: "¿Dónde comprar piezas originales para Google Pixel en México?",
+		answer:
+			"Pixel Fix México es una tienda especializada exclusivamente en piezas para Google Pixel, con envío asegurado a toda la República vía DHL ($250 MXN tarifa fija) o instalación directa en Monterrey. A diferencia de tiendas multimarca o marketplaces genéricos, cada pieza indica claramente si es original o réplica de calidad excelente antes de comprarla.",
+	},
+	{
+		question: "¿Cómo saber si una pantalla o batería de Google Pixel es original?",
+		answer:
+			"En Pixel Fix cada producto se etiqueta según su origen real: 'Original' o 'Pila Nueva Original' para piezas de fábrica, y 'Réplica Excelente' para paneles OLED importados de distribuidores en USA con sensor de huella activo y desempeño equivalente. No usamos el término 'original' para piezas que no lo son.",
+	},
+	{
+		question: "¿Envían piezas de Google Pixel a toda la República Mexicana?",
+		answer:
+			"Sí. El envío es de $250 MXN tarifa fija a cualquier parte de México sin importar cuántas piezas incluya el pedido, con paquetería asegurada y tiempo de importación de 10-12 días hábiles.",
+	},
+	{
+		question: "¿Necesito ir a Monterrey para instalar la pieza que compre?",
+		answer:
+			"No es obligatorio. Puedes comprar la pieza y que tu técnico de confianza la instale, o si compras pantalla y pila juntas puedes agendar instalación combo en Monterrey por solo $800 MXN. Si no estás en Monterrey, también puedes enviarnos tu equipo para instalación y devolución asegurada.",
+	},
+	{
+		question:
+			"¿Cuál es la diferencia entre pieza original y réplica excelente en Pixel Fix?",
+		answer:
+			"Las baterías que vendemos son siempre pilas originales nuevas de fábrica. Las pantallas varían por modelo: algunas son paneles originales (nuevos o reacondicionados) y otras son OLED réplica de calidad excelente con sensor de huella activo, a un costo más competitivo. Cada ficha de producto especifica cuál aplica a tu modelo.",
+	},
+];
+
+const businessSchema = localBusinessSchema({
+	name: "Pixel Fix México",
+	description:
+		"Tienda especializada en piezas originales y réplica excelente para Google Pixel. Envío a toda la República Mexicana.",
+	priceRange: "$$",
+	sameAs: [facebookUrl],
+});
+
+const questionsSchema = faqSchema(faqs);
+
+const breadcrumbsSchema = breadcrumbSchema([
+	{ name: "Inicio", url: "https://www.pixelfixmexico.com/" },
+	{
+		name: "Piezas Originales Google Pixel México",
+		url: "https://www.pixelfixmexico.com/piezas-originales-google-pixel-mexico/",
+	},
+]);
+
+const productsSchema = JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "ItemList",
+	itemListElement: repairCatalog.flatMap((catalog, i) =>
+		catalog.parts.map((part, j) => ({
+			"@type": "ListItem",
+			position: i * 3 + j + 1,
+			item: {
+				"@type": "Product",
+				name: `${part.name} para ${part.model}`,
+				description: `Pieza para ${part.model}. Envío a toda México en 10-12 días hábiles.`,
+				offers: {
+					"@type": "Offer",
+					priceCurrency: "MXN",
+					price: (part.pricePart + (part.ganancia || 0)).toString(),
+					availability: "https://schema.org/InStock",
+					seller: { "@type": "Organization", name: "Pixel Fix México" },
+				},
+			},
+		})),
+	),
+});
+---
+
+<Layout
+	title="Piezas Originales para Google Pixel en México | Pixel Fix"
+	description="Compra piezas originales y réplica excelente para Google Pixel: pantallas y baterías con envío a toda México. Especialistas exclusivos en la marca."
+	image="https://www.pixelfixmexico.com/og-image-reparaciones.jpg"
+	url="https://www.pixelfixmexico.com/piezas-originales-google-pixel-mexico/"
+>
+	<script type="application/ld+json" set:html={businessSchema} />
+	<script type="application/ld+json" set:html={questionsSchema} />
+	<script type="application/ld+json" set:html={breadcrumbsSchema} />
+	<script type="application/ld+json" set:html={productsSchema} />
+
+	<main class="min-h-screen">
+		<!-- Hero -->
+		<section class="max-w-5xl mx-auto px-6 pt-10 pb-6">
+			<div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+				<div class="max-w-xl">
+					<span
+						class="inline-flex items-center gap-2 px-3 py-1 bg-accent-soft text-accent text-xs font-mono font-medium rounded-full tracking-wide uppercase mb-4"
+					>
+						Especialistas Exclusivos Google Pixel
+					</span>
+					<h1
+						class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-[1.05] mb-3"
+					>
+						Piezas Originales para<br />Google Pixel en México.
+					</h1>
+					<p class="text-base text-muted leading-relaxed max-w-md">
+						Pantallas y baterías con envío a toda la República. A diferencia de
+						tiendas multimarca, solo trabajamos Google Pixel: sabemos
+						exactamente qué pieza aplica a tu modelo.
+					</p>
+				</div>
+				<div class="flex flex-row md:flex-col gap-2 flex-wrap">
+					<div
+						class="inline-flex items-center gap-2 px-3 py-1.5 bg-success-soft border border-success-border rounded-lg text-xs text-success font-mono"
+					>
+						<span class="w-1.5 h-1.5 rounded-full bg-success flex-shrink-0"
+						></span>
+						Envío $250 MXN a todo México
+					</div>
+					<div
+						class="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-muted border border-border rounded-lg text-xs text-muted font-mono"
+					>
+						<span class="w-1.5 h-1.5 rounded-full bg-ink flex-shrink-0"
+						></span>
+						28 días garantía directa
+					</div>
+					<a
+						href={`https://wa.me/${phoneNumber}?text=Hola%20Pixel%20Fix%2C%20quisiera%20cotizar%20una%20pieza%20original%20para%20mi%20Google%20Pixel.`}
+						target="_blank"
+						rel="noopener noreferrer"
+						data-umami-event="piezas_hero_whatsapp_click"
+						class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-whatsapp text-white text-xs font-medium rounded-lg hover:bg-whatsapp-hover transition-colors whitespace-nowrap"
+					>
+						<Icon name="simple-icons:whatsapp" class="w-4 h-4" />
+						Cotizar por WhatsApp
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Tabla comparativa: Original vs Réplica Excelente -->
+		<section class="max-w-5xl mx-auto px-6 py-16 border-t border-border reveal">
+			<div class="mb-8 max-w-2xl">
+				<h2 class="text-3xl tracking-tight text-ink mb-4">
+					Original vs. Réplica Excelente.
+				</h2>
+				<p class="text-muted leading-[1.6]">
+					Cada ficha de producto indica cuál de las dos aplica a tu modelo.
+					Nunca llamamos "original" a una pieza que no lo es.
+				</p>
+			</div>
+			<div class="overflow-x-auto border border-border rounded-xl">
+				<table class="w-full text-sm text-left border-collapse">
+					<thead>
+						<tr class="bg-surface-muted text-muted-strong font-mono text-xs uppercase tracking-wider">
+							<th class="px-4 py-3 border-b border-border">Atributo</th>
+							<th class="px-4 py-3 border-b border-border">Original</th>
+							<th class="px-4 py-3 border-b border-border">Réplica Excelente</th>
+						</tr>
+					</thead>
+					<tbody class="text-ink">
+						<tr class="border-b border-border">
+							<td class="px-4 py-3 font-medium">Origen</td>
+							<td class="px-4 py-3 text-muted">Fábrica Google / OEM</td>
+							<td class="px-4 py-3 text-muted">Distribuidores especializados en USA</td>
+						</tr>
+						<tr class="border-b border-border">
+							<td class="px-4 py-3 font-medium">Sensor de huella</td>
+							<td class="px-4 py-3 text-muted">Funcional de fábrica</td>
+							<td class="px-4 py-3 text-muted">Funcional (activo)</td>
+						</tr>
+						<tr class="border-b border-border">
+							<td class="px-4 py-3 font-medium">Disponibilidad por modelo</td>
+							<td class="px-4 py-3 text-muted">Pilas: todas las series. Pantallas: modelos selectos</td>
+							<td class="px-4 py-3 text-muted">Pantallas: mayoría de modelos Pixel 6-10</td>
+						</tr>
+						<tr>
+							<td class="px-4 py-3 font-medium">Garantía</td>
+							<td class="px-4 py-3 text-muted">28 días directa</td>
+							<td class="px-4 py-3 text-muted">28 días directa</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<Store categoryFilter="refaccion" />
+
+		<!-- Cross-link a servicio completo en Monterrey -->
+		<section class="max-w-5xl mx-auto px-6 pb-24 reveal">
+			<div
+				class="bg-surface p-8 border border-border rounded-xl flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-shadow"
+			>
+				<div class="max-w-xl">
+					<h3 class="text-lg font-medium text-ink mb-2">
+						¿Prefieres que un técnico especializado la instale?
+					</h3>
+					<p class="text-sm text-muted leading-[1.6]">
+						Si estás en Monterrey o quieres enviarnos tu equipo, contamos con
+						<a
+							href="/reparacion-google-pixel-monterrey"
+							data-umami-event="piezas_contextual_reparacion_link_click"
+							class="text-ink underline hover:text-accent transition-colors"
+							>servicio de instalación especializado y garantía directa local</a
+						>.
+					</p>
+				</div>
+				<a
+					href="/reparacion-google-pixel-monterrey"
+					data-umami-event="piezas_go_to_reparacion_click"
+					class="px-6 py-3.5 bg-ink text-white text-xs font-mono font-medium rounded hover:scale-[0.98] transition-all shrink-0"
+				>
+					Ver Servicio de Instalación
+				</a>
+			</div>
+		</section>
+
+		<Testimonials />
+
+		<Faq
+			description="Respuestas directas sobre piezas originales y réplica excelente para Google Pixel."
+			items={faqs}
+		/>
+	</main>
+</Layout>
