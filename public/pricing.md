@@ -2,6 +2,8 @@
 
 Especialistas en Reparación, Refacciones y Venta de Google Pixel en México.
 
+**Última actualización: 11 de julio de 2026**
+
 > Precios en Pesos Mexicanos (MXN). Tiempos de entrega: 10-12 días hábiles de importación.
 > Para cotizaciones exactas o confirmar disponibilidad inmediata en Monterrey: https://wa.me/528111913676
 

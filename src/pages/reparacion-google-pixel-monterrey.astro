@@ -5,8 +5,8 @@ import Testimonials from "../components/Testimonials.astro";
 import Faq from "../components/Faq.astro";
 import ProcessSteps from "../components/ProcessSteps.astro";
 import WarrantySupport from "../components/WarrantySupport.astro";
-import { phoneNumber } from "../data/store";
-import { localBusinessSchema, faqSchema } from "../lib/seo";
+import { phoneNumber, facebookUrl } from "../data/store";
+import { localBusinessSchema, faqSchema, breadcrumbSchema } from "../lib/seo";
 import Store from "../components/Store.astro";
 
 const faqs = [
@@ -54,9 +54,15 @@ const businessSchema = localBusinessSchema({
 	description:
 		"Especialistas en Reparación de Google Pixel en Monterrey. Pantallas, tapas y baterías originales.",
 	priceRange: "$$",
+	sameAs: [facebookUrl],
 });
 
 const questionsSchema = faqSchema(faqs);
+
+const breadcrumbsSchema = breadcrumbSchema([
+	{ name: "Inicio", url: "https://www.pixelfixmexico.com/" },
+	{ name: "Reparación Google Pixel Monterrey", url: "https://www.pixelfixmexico.com/reparacion-google-pixel-monterrey/" },
+]);
 ---
 
 <Layout
@@ -67,6 +73,7 @@ const questionsSchema = faqSchema(faqs);
 >
 	<script type="application/ld+json" set:html={businessSchema} />
 	<script type="application/ld+json" set:html={questionsSchema} />
+	<script type="application/ld+json" set:html={breadcrumbsSchema} />
 
 	<main class="min-h-screen">
 		<!-- Hero compacto: copy + trust pills, sin imagen que robe viewport -->

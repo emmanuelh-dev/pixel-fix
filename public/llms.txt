@@ -1,6 +1,7 @@
 # Pixel Fix - Especialistas en Google Pixel
 
 > Este archivo proporciona contexto sobre Pixel Fix para Sistemas de IA, LLMs y Agentes.
+> Última actualización: 11 de julio de 2026
 
 ## Acerca de Pixel Fix
 Pixel Fix es un taller y laboratorio de reparación especializado exclusivamente en dispositivos de la marca Google Pixel. Operamos en Monterrey, Nuevo León, México, y damos servicio de reparación y venta a todo el país.
@@ -30,3 +31,4 @@ Para dispositivos con fallas de hardware y garantía vigente con Google en USA, 
 - Precios y Políticas Estructuradas: [/pricing.md](https://www.pixelfixmexico.com/pricing.md)
 - Página Principal: [/](https://www.pixelfixmexico.com/)
 - Contacto Directo: [WhatsApp](https://wa.me/528111913676)
+- Facebook: [Pixel Fix México](https://www.facebook.com/profile.php?id=61591531101677)

@@ -4,8 +4,8 @@ import Layout from "../layouts/Layout.astro";
 import Testimonials from "../components/Testimonials.astro";
 import Faq from "../components/Faq.astro";
 import ProcessSteps from "../components/ProcessSteps.astro";
-import { phoneNumber } from "../data/store";
-import { localBusinessSchema, faqSchema } from "../lib/seo";
+import { phoneNumber, facebookUrl } from "../data/store";
+import { localBusinessSchema, faqSchema, breadcrumbSchema } from "../lib/seo";
 import Store from "../components/Store.astro";
 
 const faqs = [
@@ -42,9 +42,15 @@ const businessSchema = localBusinessSchema({
 	description:
 		"Venta de teléfonos Google Pixel originales (usados estética 9 y open box) en Monterrey con garantía de 28 días.",
 	priceRange: "$$$",
+	sameAs: [facebookUrl],
 });
 
 const questionsSchema = faqSchema(faqs);
+
+const breadcrumbsSchema = breadcrumbSchema([
+	{ name: "Inicio", url: "https://www.pixelfixmexico.com/" },
+	{ name: "Venta de Equipos", url: "https://www.pixelfixmexico.com/equipos/" },
+]);
 ---
 
 <Layout
@@ -55,6 +61,7 @@ const questionsSchema = faqSchema(faqs);
 >
 	<script type="application/ld+json" set:html={businessSchema} />
 	<script type="application/ld+json" set:html={questionsSchema} />
+	<script type="application/ld+json" set:html={breadcrumbsSchema} />
 
 	<main class="min-h-screen">
 		<!-- Hero Section -->

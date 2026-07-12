@@ -4,6 +4,7 @@ export function localBusinessSchema(opts: {
   name: string;
   description: string;
   priceRange: string;
+  sameAs?: string[];
 }) {
   return JSON.stringify({
     "@context": "https://schema.org",
@@ -21,6 +22,7 @@ export function localBusinessSchema(opts: {
     geo: { "@type": "GeoCoordinates", latitude: 25.6866, longitude: -100.3161 },
     priceRange: opts.priceRange,
     telephone: `+${phoneNumber}`,
+    ...(opts.sameAs ? { sameAs: opts.sameAs } : {}),
   });
 }
 

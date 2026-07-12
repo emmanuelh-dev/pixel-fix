@@ -27,8 +27,15 @@ try {
 			Lo Que Dicen Nuestros Clientes.
 		</h2>
 		<p class="text-muted leading-[1.6]">
-			Opiniones reales y capturas de conversaciones con clientes satisfechos que
-			confiaron en Pixel Fix.
+			{testimonialImages.length > 0 ? (
+				<>
+					{testimonialImages.length} capturas reales de conversaciones con
+					clientes satisfechos que confiaron en Pixel Fix.
+				</>
+			) : (
+				<>Opiniones reales y capturas de conversaciones con clientes satisfechos que
+				confiaron en Pixel Fix.</>
+			)}
 		</p>
 	</div>
 

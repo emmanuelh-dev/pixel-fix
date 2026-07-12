@@ -6,7 +6,7 @@ import Faq from "../components/Faq.astro";
 import ProcessSteps from "../components/ProcessSteps.astro";
 import WarrantySupport from "../components/WarrantySupport.astro";
 import { repairCatalog, storeCatalog, formatPrice, type StoreItem } from "../data/catalog";
-import { phoneNumber } from "../data/store";
+import { phoneNumber, facebookUrl } from "../data/store";
 import { localBusinessSchema, faqSchema } from "../lib/seo";
 
 const typeIcon = {
@@ -71,6 +71,7 @@ const businessSchema = localBusinessSchema({
 	description:
 		"Especialistas en Reparación y Refacciones Google Pixel en México. Pantallas, tapas y baterías originales.",
 	priceRange: "$$",
+	sameAs: [facebookUrl],
 });
 
 const questionsSchema = faqSchema(faqs);
