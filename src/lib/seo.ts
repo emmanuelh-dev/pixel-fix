@@ -63,6 +63,33 @@ export function productSchema(opts: {
   });
 }
 
+export function articleSchema(opts: {
+  headline: string;
+  description: string;
+  image: string;
+  url: string;
+  datePublished: Date;
+  dateModified?: Date;
+}) {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: opts.headline,
+    description: opts.description,
+    image: opts.image,
+    url: opts.url,
+    datePublished: opts.datePublished.toISOString(),
+    dateModified: (opts.dateModified ?? opts.datePublished).toISOString(),
+    author: { "@type": "Organization", name: "Pixel Fix México" },
+    publisher: {
+      "@type": "Organization",
+      name: "Pixel Fix México",
+      logo: { "@type": "ImageObject", url: "https://www.pixelfixmexico.com/logo.png" },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": opts.url },
+  });
+}
+
 export function breadcrumbSchema(items: { name: string; url: string }[]) {
   return JSON.stringify({
     "@context": "https://schema.org",

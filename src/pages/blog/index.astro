@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { breadcrumbSchema } from "../../lib/seo";
+
+const posts = (await getCollection("blog")).sort(
+	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+
+const breadcrumbsSchema = breadcrumbSchema([
+	{ name: "Inicio", url: "https://www.pixelfixmexico.com/" },
+	{ name: "Blog", url: "https://www.pixelfixmexico.com/blog/" },
+]);
+---
+
+<Layout
+	title="Blog Pixel Fix | Cuidado y Reparación de Google Pixel"
+	description="Guías sobre cuidado, fallas comunes y reparación de Google Pixel: línea verde, batería, pantalla y más. Escrito por el taller especializado en Pixel en México."
+	url="https://www.pixelfixmexico.com/blog/"
+>
+	<script type="application/ld+json" set:html={breadcrumbsSchema} />
+
+	<main class="min-h-screen">
+		<section class="max-w-3xl mx-auto px-6 pt-10 pb-6">
+			<h1 class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-[1.05] mb-3">
+				Blog Pixel Fix.
+			</h1>
+			<p class="text-base text-muted leading-relaxed max-w-md">
+				Guías directas sobre fallas comunes, cuidado y reparación de Google
+				Pixel, escritas por el taller especializado en la marca.
+			</p>
+		</section>
+
+		<section class="max-w-3xl mx-auto px-6 py-10 border-t border-border reveal">
+			<div class="space-y-8">
+				{
+					posts.map((post) => (
+						<a
+							href={`/blog/${post.id}`}
+							data-umami-event="blog_index_post_click"
+							class="block p-6 border border-border rounded-xl hover:border-border-strong hover:shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-all"
+						>
+							<p class="text-[11px] font-mono uppercase tracking-wider text-muted-strong mb-2">
+								{post.data.publishDate.toLocaleDateString("es-MX", {
+									day: "numeric",
+									month: "long",
+									year: "numeric",
+								})}
+							</p>
+							<h2 class="text-xl font-medium text-ink mb-2">
+								{post.data.title}
+							</h2>
+							<p class="text-sm text-muted leading-[1.6]">
+								{post.data.description}
+							</p>
+						</a>
+					))
+				}
+			</div>
+		</section>
+	</main>
+</Layout>

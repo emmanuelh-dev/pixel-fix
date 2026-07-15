@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Faq from "../../components/Faq.astro";
+import { getCollection, render } from "astro:content";
+import { articleSchema, faqSchema, breadcrumbSchema } from "../../lib/seo";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+
+const url = `https://www.pixelfixmexico.com/blog/${post.id}/`;
+
+const postSchema = articleSchema({
+	headline: data.title,
+	description: data.description,
+	image: data.image ?? "https://www.pixelfixmexico.com/og-image.jpg",
+	url,
+	datePublished: data.publishDate,
+	dateModified: data.updatedDate,
+});
+
+const breadcrumbsSchema = breadcrumbSchema([
+	{ name: "Inicio", url: "https://www.pixelfixmexico.com/" },
+	{ name: "Blog", url: "https://www.pixelfixmexico.com/blog/" },
+	{ name: data.title, url },
+]);
+
+const questionsSchema = data.faqs ? faqSchema(data.faqs) : null;
+---
+
+<Layout
+	title={`${data.title} | Blog Pixel Fix`}
+	description={data.description}
+	image={data.image}
+	url={url}
+>
+	<script type="application/ld+json" set:html={postSchema} />
+	<script type="application/ld+json" set:html={breadcrumbsSchema} />
+	{questionsSchema && <script type="application/ld+json" set:html={questionsSchema} />}
+
+	<main class="min-h-screen">
+		<article class="max-w-3xl mx-auto px-6 pt-10 pb-16">
+			<p class="text-[11px] font-mono uppercase tracking-wider text-muted-strong mb-3">
+				<a href="/blog" class="hover:text-ink transition-colors">Blog</a>
+				· {data.publishDate.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })}
+				{data.updatedDate && (
+					<>
+						· Actualizado el {data.updatedDate.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })}
+					</>
+				)}
+			</p>
+			<h1 class="text-3xl md:text-4xl font-medium tracking-tight text-ink leading-[1.1] mb-8">
+				{data.title}
+			</h1>
+			<div class="prose prose-neutral max-w-none prose-headings:font-medium prose-headings:tracking-tight prose-headings:text-ink prose-p:text-muted-strong prose-li:text-muted-strong prose-a:text-ink prose-a:underline prose-a:underline-offset-2 hover:prose-a:text-accent prose-strong:text-ink prose-th:font-mono prose-th:text-[11px] prose-th:uppercase prose-th:tracking-wider prose-table:border prose-table:border-border prose-table:rounded-xl prose-td:text-ink">
+				<Content />
+			</div>
+		</article>
+
+		{data.faqs && (
+			<Faq
+				description="Respuestas directas relacionadas con este artículo."
+				items={data.faqs}
+			/>
+		)}
+	</main>
+</Layout>

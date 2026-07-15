@@ -27,6 +27,10 @@ Para dispositivos con fallas de hardware y garantía vigente con Google en USA, 
 - **Póliza:** Cualquier compra de refacciones sueltas o teléfonos incluye únicamente **28 días de garantía**.
 - **Devoluciones:** Transcurridos los 28 días, **no se aceptan devoluciones ni cambios** bajo ninguna circunstancia.
 
+## Blog
+Guías sobre cuidado y fallas comunes de Google Pixel, incluyendo causas y prevención de la línea verde en pantalla (Pixel 7, 8, 9 y 10) por exposición al calor/sol.
+- Blog: [/blog](https://www.pixelfixmexico.com/blog/)
+
 ## Enlaces Clave para Agentes
 - Precios y Políticas Estructuradas: [/pricing.md](https://www.pixelfixmexico.com/pricing.md)
 - Página Principal: [/](https://www.pixelfixmexico.com/)
